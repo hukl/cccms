@@ -1,0 +1,8 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  id: 1
+  lft: 1
+  rgt: 2
+  slug: my_first_page
+  unique_name: root/my_first_page
