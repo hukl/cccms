@@ -1,2 +1,9 @@
-Use this README file to introduce your application and point to useful places in the API for learning more.
-Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+CCCMS
+
+
+The basic structure of the cccms is built from Nodes. Nodes live within a 
+nested set. When a arbitrary url is entered it is dispatched to the
+ContentController action render_page. Based on the url parameters the
+render_page action retrieves the corresponding Node from the database. Rather
+than walking through the tree of the nested set to find the node, the Node is
+retrieved directly by its unique_name which matches the url parameters.
