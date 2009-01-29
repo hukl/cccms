@@ -1,0 +1,4 @@
+*.log
+database.yml
+schema.rb
+.DS_Store
