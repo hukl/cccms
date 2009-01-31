@@ -9,3 +9,12 @@ than walking through the tree of the nested set to find the node, the Node is
 retrieved directly by its unique_name which matches the url parameters.
 
 So much for now yeah
+
+
+git clone ssh://git@svn.medienhaus.udk-berlin.de/usr/local/git/cccms
+
+git checkout --track -b poc1 origin/poc1
+
+git submodule init
+
+git submodule update
