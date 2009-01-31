@@ -1,4 +1,5 @@
 require 'rexml/document'
+require 'iconv'
 
 class UpdateImporter
   
@@ -58,10 +59,11 @@ class UpdateImporter
       node.move_to_child_of parent_node
     end
     
-    create_node_for_page chaospage, node
+    create_node_for_page chaospage, node, date
   end
   
-  def create_node_for_page chaospage, node
+  def create_node_for_page chaospage, node, date
+    
     xhtml = convert_chaospage_to_xhtml(chaospage)
     
     body = ""
@@ -77,7 +79,9 @@ class UpdateImporter
       
     if node.pages.empty?
       node.pages.create!(
-        :body => body
+        :title => xhtml.elements['title'].get_text.to_s,
+        :body => body,
+        :published_at => date
       )
     end
   end
