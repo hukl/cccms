@@ -72,6 +72,7 @@
                   <h2><a href="a_barriere.html"><%= @page.title %></a></h2>
                   <h3><%= @page.published_at.to_s(:db) %>, gregoa</h3>
                   <hr class="subtitle" />
+                  <p><em><%= @page.abstract %></em></p>
                   <%= @page.body %>
                 </div>
               </div>
