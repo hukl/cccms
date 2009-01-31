@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :pages
+
   
   map.connect   ':language/*pagepath',
                 :controller => 'content', :action => 'render_page', 

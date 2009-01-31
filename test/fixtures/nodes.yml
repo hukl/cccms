@@ -3,6 +3,16 @@
 one:
   id: 1
   lft: 1
-  rgt: 2
+  rgt: 4
+  parent_id:
+  slug:
+  unique_name:
+
+
+two:
+  id: 2
+  lft: 2
+  rgt: 3
+  parent_id: 1
   slug: my_first_page
   unique_name: root/my_first_page
