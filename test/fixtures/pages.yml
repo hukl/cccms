@@ -6,10 +6,3 @@ one:
   abstract: MyText
   body: MyText
   revision: 1
-
-two:
-  node_id: 1
-  title: MyString
-  abstract: MyText
-  body: MyText
-  revision: 1

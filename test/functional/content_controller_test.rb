@@ -14,8 +14,10 @@ class ContentControllerTest < ActionController::TestCase
   
   def test_rendering_a_page
     assert Node.valid?
-    assert_not_nil Node.find_by_slug("my_first_page")
-    get :render_page, :language => 'de', :page_path => ["root", "my_first_page"]
+    assert_not_nil first_child = Node.find_by_slug("first_child")
+    first_child.pages.create :title => "First Child"
+    
+    get :render_page, :language => 'de', :page_path => ["first_child"]
     assert_response :success
     assert_equal "layouts/application", @response.layout
   end

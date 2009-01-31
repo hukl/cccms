@@ -3,7 +3,7 @@
 one:
   id: 1
   lft: 1
-  rgt: 4
+  rgt: 6
   parent_id:
   slug:
   unique_name:
@@ -14,5 +14,13 @@ two:
   lft: 2
   rgt: 3
   parent_id: 1
-  slug: my_first_page
-  unique_name: root/my_first_page
+  slug: first_child
+  unique_name: first_child
+
+three:
+  id: 3
+  lft: 4
+  rgt: 5
+  parent_id: 1
+  slug: second_child
+  unique_name: second_child
