@@ -6,7 +6,7 @@ class NodeTest < ActiveSupport::TestCase
     @root = Node.find(1)
     @first_child = Node.find(2)
   end
-  
+
   def test_creation_of_unique_name
     node = Node.create :slug => 'child'
     node.move_to_child_of @root
