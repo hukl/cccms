@@ -1,7 +1,7 @@
 class Node < ActiveRecord::Base
   acts_as_nested_set
   
-  has_many :pages
+  has_many :pages, :order => "revision ASC"
   
   # returns array with pages up to root excluding root
   def path_to_root

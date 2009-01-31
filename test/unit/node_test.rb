@@ -27,6 +27,16 @@ class NodeTest < ActiveSupport::TestCase
     
   end
   
+  def test_order_of_pages_by_revision
+    one   = @first_child.pages.create :title => "one"
+    two   = @first_child.pages.create :title => "two"
+    three = @first_child.pages.create :title => "three"
+    
+    @first_child.pages.reload
+    
+    assert_equal [1,2,3], @first_child.pages.map { |x| x.revision }
+  end
+  
   def test_behavior_of_acts_as_list
     one   = @first_child.pages.create :title => "one"
     two   = @first_child.pages.create :title => "two"
