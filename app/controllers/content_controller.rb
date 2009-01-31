@@ -1,12 +1,12 @@
 class ContentController < ApplicationController
 
   def render_page
-    path = params[:page_path].join('/')
+    path = params[:pagepath].join('/')
     
-    @node = Node.find_by_unique_name(path)
+    @page = Node.find_page(path)
     
     # Replace with real 404
-   render :status => 404 unless @node
+   render :status => 404 unless @page
   end
 
 end

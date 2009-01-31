@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type" />
+        <title>CCC Template</title>
+        <link rel="shortcut icon" href="/images/chaosknot.ico" type="image/ico" />
+        <%= stylesheet_link_tag 'styled' %>
+        <%= stylesheet_link_tag 'safari' %>
+        <%= stylesheet_link_tag 'ie' %>
+        <!--[if lt IE 7]>
+            <style type="text/css">@import url(css/ie.css);</style>
+        <![endif]-->
+    </head>
+    <body>
+        <div id="logo">
+            <a href="index.html" title="Startseite"><img src="/images/chaosknot.gif" alt="Chaosknoten" /></a>
+        </div>
+        <!-- HEAD -->
+        <div id="header">
+            <div id="yellow">
+            </div>
+            <div id="title">
+                <h1>Chaos Computer Club</h1>
+            </div>
+            <div id="topnav">
+                <ul id="navlist">
+                    <li>
+                        <a href="#">Startseite</a>
+                    </li>
+                    <li>
+                        &bull;
+                    </li>
+                    <li>
+                        <a href="#">CCC</a>
+                    </li>
+                    <li>
+                        &bull;
+                    </li>
+                    <li>
+                        <a href="#">Themen</a>
+                    </li>
+                    <li>
+                        &bull;
+                    </li>
+                    <li>
+                        <a href="#">Kampagne</a>
+                    </li>
+                    <li>
+                        &bull;
+                    </li>
+                    <li>
+                        <a href="#">Projekte</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- HEAD END -->
+        <!-- CONTENT -->
+        <div id="main">
+            <div id="content">
+                <div id="precontent">
+                    <h2 class="first">Precontent</h2>
+                    <p>
+                        Rhabarber, brable, bra..., bla, bla... (fasel)
+                    </p>
+                </div>
+                
+                <div class="article">
+                  <div class="teaserruler">
+                    <hr/>
+                  </div>
+                  <h2><a href="a_barriere.html"><%= @page.title %></a></h2>
+                  <h3><%= @page.published_at.to_s(:db) %>, gregoa</h3>
+                  <hr class="subtitle" />
+                  <%= @page.body %>
+                </div>
+              </div>
+
+            <!-- CONTENT END -->
+            <!-- TEASERBAR -->
+            <div id="teaserbar">
+                <div class="teaserimg">
+                    <ul class="teaserimg">
+                        <li>
+                            <a href="#" title="ChaosCommunicationsCongress"><img src="/images/t_congress.png" alt="Congress" /></a>
+                        </li>
+                        <li>
+                            <a href="#" title="Chinesewall.ccc.de"><img src="/images/t_chinese_wall.png" alt="www.chinesewall.ccc.de" /></a>
+                        </li>
+                        <li>
+                            <a href="#" title="Fingerabdr&uuml;cke"><img src="/images/t_fingers.png" alt="Fingerabrdr&uuml;cke" /></a>
+                        </li>
+                    </ul>
+                </div><hr/>
+                <div class="teasertext">
+                    <h2>Termine / News</h2>
+                    <ul class="teasertext">
+                        <li>
+                            <a href="#">Chaosdock 2008</a>
+                        </li>
+                        <li>
+                            <a href="#">Metarheinmain Chaosdays
+                                <br/>
+                                <span class="black">mrmcd111b</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#"><span class="black">Kˆln: <span class="orange">OpenChaos</span> zu Dynamisches Routing</span></a>
+                        </li>
+                        <li>
+                            <a href="#">CCCS <span class="black">- Braucht Freiheit (‹berwachungs-) Sicherheit?</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <hr/>
+                <div id="foerderer">
+                    <h2>Sponsoren</h2>
+                    <ul id="sponsorlist">
+                        <li>
+                            <a href="http://www.snafu.de/"><img src="/images/snafu_sm.png" alt="snafu: So geht man ins Netz" /></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- TEASERBAR END -->
+            <!-- NAVBAR -->
+            <div id="navbar">
+                <form method="get" action="/cgi-bin/search.pl">
+                    <p>
+                        <label>
+                            Finden
+                        </label>
+                        <br/>
+                        <input type="text" name="query" />
+                    </p>
+                </form>
+                <div class="navbarruler">
+                    <hr/>
+                </div>
+                <div class="firstnavbar">
+                    <ul class="firstnavbar">
+                        <li>
+                            <a href="#">Anmelden</a>
+                        </li>
+                        <li>
+                            <a href="#">Registrieren</a>
+                        </li>
+                        <li>
+                            <a href="#">Barrierefreiheit</a>
+                        </li>
+                        <li>
+                            <a href="page.zip" title="Current page">Download</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbarruler">
+                    <hr/>
+                </div>
+                <div id="secondnavbar">
+                    <h2>Topics</h2>
+                    <ul id="secnavbar">
+                        <li>
+                            <a href="#">Wahlcomputer</a>
+                        </li>
+                        <li>
+                            <a href="#">ePass</a>
+                        </li>
+                        <li>
+                            <a href="#">Rechtekontrolle</a>
+                        </li>
+                        <li>
+                            <a href="#">Plastikgeld</a>
+                        </li>
+                        <li>
+                            <a href="#">Hackerethik</a>
+                        </li>
+                        <li>
+                            <a href="#">Netzzensur</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- NAVBAR END -->
+        </div>
+        <!-- MAIN END -->
+        <!-- FOOTER -->
+        <div id="footer">
+            <div id="footer_left">
+                Kabelsalat ist gesund
+            </div>
+            <div id="footer_rest">
+                <a href="#">Impressum</a>
+            </div>
+        </div>
+        <div id="fnord">
+        </div>
+        <!-- FOOTER -->
+    </body>
+</html>

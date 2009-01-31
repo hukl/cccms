@@ -1,0 +1,16 @@
+* html #topnav {
+	margin: 0.9em 0 0 3.48em;
+}
+
+* html #main {
+	background: url(../images/bg_teaser.gif)
+}
+
+* html #teaserbar {
+	border: 0;
+}
+
+/*
+div {
+	border: solid 1px red;
+} */

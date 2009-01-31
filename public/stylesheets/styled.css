@@ -1,0 +1,486 @@
+/* CCC CSS:
+ * Start: 29. Oct. 2008
+ * Url: http://ccc.de//css/style.css
+ * 
+ * Body fontsize: 11px = 0.69em
+ * em calc: http://riddle.pl/emcalc/
+ * 
+ * Colors:
+ * #EEE = Header BG
+ * #FFCA08 = Yellow
+ * #999 = h2 Precontent
+ * #4d4d4d = Navigation
+ * #eab407 = Content Headers
+ * #fbb03b = Orange, Teaserbar Subheaders
+ */
+
+#wrapper {
+	margin:0;
+	padding: 0;
+	top: 0;
+	bottom: 0;
+}
+
+/* HEADER */
+#header {
+    background: #EEE;
+    height: 7.08em;
+    border: solid silver;
+    border-width: 0 0 .09em .09em;
+}
+
+#yellow {
+    background: #FFCA08;
+    height: 1.27em;
+}
+
+#title {
+    width: 68em;
+    margin: .68em 0 0 7em;
+}
+
+#title h1 {
+	float: left;
+    padding: 0;
+	margin: 0;
+    font-size: 1.91em;
+	font-weight: normal;
+	color: #000;
+}
+
+#topnav {
+	clear: left;
+	width: 68em;
+	padding: 0;
+	margin: 0.9em 0 0 7em;
+	float: left;
+	text-transform: uppercase;
+}
+
+#topnav ul {
+	margin: 0;
+	padding: 0;
+}
+
+#navlist li {
+    display: inline;
+    list-style-type: none;
+    padding-right: .7em;
+	color: #4d4d4d;
+}
+
+#navlist a {
+	text-decoration: none;
+	color: #4d4d4d;
+}
+
+#navlist a:hover {
+	text-decoration: underline;
+	color: #4d4d4d;
+}
+
+#logo {
+	position: absolute;
+	top: 2em;
+	left: 79.2em;
+	width: 12.27em;
+	height: 8.73em;
+}
+
+#logo img {
+	width: 12.27em;
+	height: 8.73em;
+}
+/* HEADER END */
+
+/* CONTENT */
+#main {
+	position: relative;
+	bottom: 3.5em;
+	width: 91.3em;
+	top: 0;
+}
+
+#content {
+	position: relative;
+	padding: .9em 6em 2em 8em;
+	width: 41.75em;
+	border-right: solid .09em silver;
+}
+
+#content .article {
+	position: relative;
+	padding-top: 1em;
+	clear: both;
+}
+
+#content .article img {
+	float:left; 
+	margin: .5em 1em 1em;
+	border: .09em solid silver;
+}
+
+#content h2.first {
+	padding: .28em 0 .45em 0;
+	margin: 0;
+	/* text-align: center;
+	/* color: #eab407; */
+}
+
+#content h2 {
+	padding: 1.2em 0 .45em 0;
+	margin: 0;
+	text-align: center;
+	color: #eab407;
+}
+
+#precontent h2 {
+	color: #999;
+	text-align: left;
+}
+
+#content h2 a {	
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	color: #eab407;
+	font-family: Georgia;
+	font-weight: normal;
+}
+
+#content h2 a:hover {
+	padding: 0;
+	text-decoration: underline;
+}
+
+#content h3 {
+	padding: 0 0 .45em 0;
+	margin: 0;
+	text-align: center;
+	color: #666;
+	font-family: Times;
+	font-size: 1.18em;
+	font-style: italic;
+	font-weight: normal;
+}
+
+hr.subtitle {
+	background: silver;
+    height: .09em;
+	width: 10.91em;
+}
+
+.quell {
+	color: #0000C0;
+	font-size: 1em;
+	line-height: 1.3em;
+	font-family: "Courier New",Courier,monospace;
+	
+}
+
+#content p {
+	color: #4d4d4d;
+	font-family: Verdana;
+	line-height: 1.8em;
+	margin: 0;
+	padding: 0;
+}
+
+#precontent p {
+	margin-top: 0;
+	line-height: 1.8em;
+}
+
+#content a {
+	padding: 1em;
+	margin: -1em;
+	color: #4d4d4d;
+	font-family: Verdana;
+	text-decoration: none;
+}
+
+#content a:hover {
+	padding: 1em;
+	text-decoration: underline;
+}
+
+div.teaserruler {
+	background: url(../images/hr.png);
+    border: 0 none;
+    height: .09em;
+}
+
+div.teaserruler hr {
+	display: none;
+}
+/* CONTENT END */
+
+/* TEASERBAR */
+#teaserbar {
+	position: absolute;
+	top: 0;
+	left: 55.88em;
+	bottom: 0;
+	float: left;
+	padding-top: 1.8em;
+	width: 19.9em;
+	border-right: solid .09em silver;
+}
+
+.teaserimg ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+.teaserimg img {
+	/* Size: 170px x 58px */
+	width: 15.45em;
+	height: 5.27em;
+}
+
+.teaserimg li {
+	padding-bottom: 1.1em;
+}
+
+.teasertext ul {
+	list-style-type: none;
+	padding: 0 1em;
+	margin: 0;
+}
+
+.teasertext li {
+	padding-bottom: 1.2em;
+}
+
+.teasertext a {
+	color: #fbb03b;
+	text-decoration: none;
+}
+
+.teasertext a:hover {
+	text-decoration: underline;
+}
+
+#foerderer {
+}
+
+#foerderer h2 {
+	padding: 0.686em 0pt 0.8em 0.7em;
+	margin: 0;
+}
+
+#foerderer ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+}
+
+#sponsorlist img {
+	/* Size: 160px x 49px */
+	width: 14.55em;
+	height: 4.45em;
+}
+
+#sponsorlist li {
+	padding-bottom: 1.1em;
+}
+/* TEASERBAR END */
+
+/* NAVBAR */
+#navbar {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 75.9em;
+	padding: 0.9em 1.5em;
+	width: 12.3em;
+}
+
+#navbar h2 {
+	padding: .28em 0 .45em 0;
+	margin: 0;
+	color: #999;
+}
+
+/* SEARCHFORM */
+form {
+	padding: 0 0 .3em .24em;
+	margin-top: -.23em;
+}
+
+form p {
+	margin: 0;
+}
+
+label {
+	color: #999;
+	font-family: Georgia;
+	font-size: 1.64em;
+	font-weight: normal;
+	margin-left: -.2em;
+	line-height: 2em;
+}
+
+input {
+	font-size: 1em;
+	width: 9em;
+	border:.09em solid #000;
+}
+
+input.check {
+	float:left;
+	width: 1em;
+	height: 1em;
+	margin: 0.3em 0;
+	color: #000;
+	background: #fff;
+	border: solid .09em #000;
+}
+
+label.foren {
+	padding-left: .4em;
+	color: #4d4d4d;
+	font-family: Verdana;
+	font-size: 1em;
+	line-height: 1.7em;
+}
+
+div.navbarruler {
+	margin: 1.3em -.2em .8em;
+	background: url(../images/hr.png);
+    border: 0 none;
+    height: .09em;
+}
+div.navbarruler hr {
+	display: none;
+}
+
+/* 1ST NAV RIGHT */
+.firstnavbar ul {
+	padding:0;
+	margin:0;
+	list-style: none
+}
+
+.firstnavbar li {
+	padding-bottom: 1em;
+	margin:0;
+	list-style: none
+}
+
+.firstnavbar li a {
+	color: #6f8745;
+	text-decoration: none;
+}
+
+.firstnavbar li a:hover {
+	color: #6f8745;
+	text-decoration: underline;
+}
+
+#secondnavbar ul {
+	padding-left: 1.1em;
+	margin: 0;
+}
+
+/* 2ND NAV RIGHT */
+#secnavbar li {
+	padding-bottom: 1em;
+	margin:0;
+	color: #6f8745;
+}
+
+#secnavbar a {
+	color: #6f8745;
+	text-decoration: none;
+}
+
+#secnavbar a:hover {
+	color: #6f8745;
+	text-decoration: underline;
+}
+/* NAVBAR END */
+
+/* FOOTER */
+#footer {
+	clear: both;
+	border: solid silver;
+	border-width: .09em 0 .09em 0;
+	height: 2.5em;
+	background: #fff;
+	width: 100%;
+}
+
+#footer_left {
+	float: left;
+	width: 16.7em;
+	height: 2.5em;
+	background: #FFCA08;
+	text-transform: uppercase;
+	text-align: center;
+	line-height: 2.3em;
+	border-right: solid .09em silver;
+}
+
+#footer_rest {
+	float: left;
+	padding-left: 1.9em;
+	line-height: 2.3em;
+}
+
+#fnord {
+	height: 1em;
+}
+/* FOOTER END */
+
+/* SYSTEMWEITE DEFS */
+.black {
+	color: #4d4d4d;
+}
+
+.orange {
+	color: #fbb03b;
+}
+
+h2 {
+	padding: .686em 0 .8em .7em;
+	margin: 0;
+	text-align: left;
+	color: #999;
+}
+
+a {
+	color: #999;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+hr {
+	border: 0;
+	background: silver;
+	height: .09em;
+}
+
+img {
+	border: 0;
+}
+
+h2 {
+	font-family: Georgia;
+	font-size: 1.64em;
+	font-weight: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #fff url(../images/bg.png) repeat-x;
+    font-family: Verdana;
+    font-size: 0.69em;
+}
