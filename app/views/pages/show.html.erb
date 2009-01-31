@@ -1,0 +1,28 @@
+<p>
+  <b>Node:</b>
+  <%=h @page.node_id %>
+</p>
+
+<p>
+  <b>Title:</b>
+  <%=h @page.title %>
+</p>
+
+<p>
+  <b>Abstract:</b>
+  <%=h @page.abstract %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%=h @page.body %>
+</p>
+
+<p>
+  <b>Revision:</b>
+  <%=h @page.revision %>
+</p>
+
+
+<%= link_to 'Edit', edit_page_path(@page) %> |
+<%= link_to 'Back', pages_path %>
