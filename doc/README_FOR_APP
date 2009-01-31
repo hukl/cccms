@@ -18,3 +18,14 @@ git checkout --track -b poc1 origin/poc1
 git submodule init
 
 git submodule update
+
+===============================================================================
+
+Import all Updates from the old ccc.de site:
+
+extract db/updates.tbz
+
+start a script/console and execute the following commands:
+
+i = UpdateImporter.new("#{RAILS_ROOT}/db/updates")
+i.import_xml

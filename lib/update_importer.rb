@@ -80,6 +80,7 @@ class UpdateImporter
     if node.pages.empty?
       node.pages.create!(
         :title => xhtml.elements['title'].get_text.to_s,
+        :abstract => xhtml.elements['abstract'].get_text.to_s,
         :body => body,
         :published_at => date
       )
@@ -133,7 +134,3 @@ class UpdateImporter
   end
   
 end
-
-i = UpdateImporter.new ('/Users/hukl/Desktop/updates')
-i.import_xml
-
