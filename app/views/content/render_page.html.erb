@@ -1,1 +1,17 @@
-<%= @page.body %>
+<div id="precontent">
+    <h2 class="first">Precontent</h2>
+    <p>
+        Rhabarber, brable, bra..., bla, bla... (fasel)
+    </p>
+</div>
+
+<div class="article">
+  <div class="teaserruler">
+    <hr/>
+  </div>
+  <h2><a href="a_barriere.html"><%= @page.title %></a></h2>
+  <h3><%= @page %>, gregoa</h3>
+  <hr class="subtitle" />
+  <p><em><%= @page.abstract %></em></p>
+  <%= @page.body %>
+</div>
