@@ -7,17 +7,22 @@ module ContentHelper
   def aggregate? content
     options = {}
     
-    if content =~ /<aggregate([^<>]*)>/
-      tag = $~.to_s
-      matched_data = $1.scan(/\w+\=\"[a-zA-Z\s\/_\d]*\"/)
-      
-      matched_data.each do |data|
-        splitted_data = data.split("=")
-        options[splitted_data[0].to_sym] = splitted_data[1].gsub(/\"/, "")
+    begin
+      if content =~ /<aggregate([^<>]*)>/
+        tag = $~.to_s
+        matched_data = $1.scan(/\w+\=\"[a-zA-Z\s\/_\d]*\"/)
+        
+        matched_data.each do |data|
+          splitted_data = data.split("=")
+          options[splitted_data[0].to_sym] = splitted_data[1].gsub(/\"/, "")
+        end
+        
+        content.sub(tag, render_collection(options))
       end
+      
+    rescue
+      content
     end
-    
-    content.sub(tag, render_collection(options))
   end
   
   def render_collection options
