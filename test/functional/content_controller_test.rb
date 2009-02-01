@@ -3,8 +3,8 @@ require 'test_helper'
 class ContentControllerTest < ActionController::TestCase
 
   def test_custom_page_route
-    assert_recognizes({ :controller => 'content', :action => 'render_page', :language => 'de', :pagepath => ['foo', 'bar'] }, '/de/foo/bar')
-    assert_recognizes({ :controller => 'content', :action => 'render_page', :language => 'en', :pagepath => ['home'] }, '/en/home')
+    assert_recognizes({ :controller => 'content', :action => 'render_page', :language => 'de', :page_path => ['foo', 'bar'] }, '/de/foo/bar')
+    assert_recognizes({ :controller => 'content', :action => 'render_page', :language => 'en', :page_path => ['home'] }, '/en/home')
   end
   
   def test_render_404_when_no_page_was_found
