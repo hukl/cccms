@@ -12,7 +12,6 @@ class ContentController < ApplicationController
         :status => 404
       )
     end
-   
+    
   end
-
 end

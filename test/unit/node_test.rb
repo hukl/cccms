@@ -41,7 +41,23 @@ class NodeTest < ActiveSupport::TestCase
   end
   
   def test_retrieving_page_by_revision
+    updates = Node.create(:slug => 'updates')
+    updates.move_to_child_of @root
     
+    year = Node.create(:slug => '2008')
+    year.move_to_child_of updates
+    
+    foo = Node.create(:slug => 'foo')
+    foo.move_to_child_of year
+    
+    assert_not_nil Node.find_by_unique_name('updates/2008/foo')
+    
+    foo.pages.create :title => "Version 1"
+    foo.pages.create :title => "Version 2"
+    foo.pages.create :title => "Version 3"
+    
+    page = Node.find_page("updates/2008/foo", 2)
+    assert_equal "Version 2", page.title
   end
   
   def test_order_of_pages_by_revision

@@ -5,16 +5,24 @@ class Node < ActiveRecord::Base
   
   # Class methods
   
-  def self.find_page path, revision = :current
+  
+  # Returns a page for a given node. If no revision is supplied, it returns
+  # the last / current one. If a specific revision number is supplied, the 
+  # corresponding revision of that page is returned. Get the current / latest 
+  # revision with -1. It raises an Argument error if the revision is not a 
+  # Fixnum
+  def self.find_page path, revision = -1
+    unless revision.class == Fixnum
+      raise ArgumentError, "revision must be a Fixnum" 
+    end
     
     node = Node.find_by_unique_name(path)
         
     if node
-      
       case revision
-      when :current        
+      when -1        
         return node.pages.last 
-      when /\d+/
+      else
         return node.pages.find_by_revision revision
       end
     end
