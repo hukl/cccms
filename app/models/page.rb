@@ -1,8 +1,18 @@
 class Page < ActiveRecord::Base
   
   belongs_to :node
+  has_and_belongs_to_many :flags
   
   acts_as_list :column => :revision, :scope => :node_id
+  
+  named_scope :with_flags, lambda {|flag_names| 
+    if (flags = Flag.find_all_by_name(flag_names)).empty?
+      {}
+    else
+      {:include => :flags, :conditions => ['flags_pages.flag_id IN (?)', flags.map(&:id)] }
+    end
+  }
+  
   
   
   # <aggregate 
@@ -30,13 +40,3 @@ class Page < ActiveRecord::Base
     )
   end
 end
-
-
-named_scope :flagged_as, lambda { |flags| 
-  conditions = {}
-  flags.each do |flag|
-    conditions[flag] = true
-  end
-  
-  { :conditions => conditions }
-}
