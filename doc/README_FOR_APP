@@ -1,15 +1,71 @@
 CCCMS
 
+==General
 
-The basic structure of the cccms is built from Nodes. Nodes live within a 
-nested set. When a arbitrary url is entered it is dispatched to the
-ContentController action render_page. Based on the url parameters the
-render_page action retrieves the corresponding Node from the database. Rather
-than walking through the tree of the nested set to find the node, the Node is
-retrieved directly by its unique_name which matches the url parameters.
+===Nodes
 
-So much for now yeah
+The structure of the cccms is built from Node objects which live within a nested
+set. Therefor a given node has parents, children, descendants etc.
 
+The position of a node within the nested set corresponds directly to the URL
+under which that node is accessible:
+
+root
+    \__updates
+              \__2009
+                     \___ultra_important_news
+                     
+=> http://domain/de/updates/2009/ultra_important_news
+
+Note that the first parameter after the domain is the locale. Everything after
+the locale identifier is the unique path of a given node. The unique path itself
+is generated from the slugs of the ancestors of a node. The last part of the 
+unique path is taken from the slug of the node.
+
+Once a node is added to the nested set or moved within, the unique path of that
+node is generated from all its ancestors up to the root node. The computed path
+is then saved on the node object itself, allowing the system to retrieve a 
+node simply by looking for the right url in the unique_path column. This is a 
+lot faster then walking down the tree.
+
+===Pages
+
+As the nodes only built the structure, another object is necessary to actually
+hold all the contents. This object is called a page and is associated to a node
+via a one-to-many association. A node can have multiple pages associated to it.
+The node is actually a proxy for the pages behind it, and the pages act as a 
+versioned page. By default, if you retrieve a node from the database by its
+unique path and ask this node for a page, the node would return the most recent
+one. It is also possible to get a page from a node, supplying a revision number.
+The node object would then retrieve the associated page with the corresponding
+revision number. For convenience purposes, the most recent page revision, in 
+the scope of a node, is flagged as the head of this collection. This is 
+primarily for making certain queries a lot easier where you only want to select
+upon the current pages in the db rather than on all.
+
+It is important to know that all the associations of a page, such as tags, 
+authors etc, must be copied one a new revision of a page is created. The Page
+class is providing a deep_copy method to make sure everything important is
+copied.
+
+===Keywords
+
+Pages of course come with meta data attatched to them. Keywords are one kind of
+meta data. They can be understood and used as tags, categories or any similar
+concept.
+
+===Aggregation
+
+Keywords and other meta data can be used to aggregate any ammount of pages
+into the body of another page. 
+
+<aggregate 
+  flags="updates pressemitteilungen"
+  limit="20"
+  order_by="published_at"
+  order_direction="DESC"
+/>
+ 
 
 git clone ssh://git@svn.medienhaus.udk-berlin.de/usr/local/git/cccms
 

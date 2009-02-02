@@ -13,5 +13,5 @@
   <h3><%= date_for_page @page %>, gregoa</h3>
   <hr class="subtitle" />
   <p><em><%= @page.abstract %></em></p>
-  <%= @page.body %>
+  <%= aggregate?(@page.body) %>
 </div>
