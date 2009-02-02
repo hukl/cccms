@@ -6,7 +6,7 @@ class Page < ActiveRecord::Base
   acts_as_list :column => :revision, :scope => :node_id
 
   # <aggregate 
-  #   flags="updates pressemitteilungen"
+  #   flags="update, pressemitteilung"
   #   limit="20"
   #   order_by="published_at"
   #   order_direction="DESC"
