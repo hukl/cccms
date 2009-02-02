@@ -21,7 +21,10 @@ class Page < ActiveRecord::Base
     }
     
     options = defaults.merge options
-    debugger
-    pages = Page.find_tagged_with(options[:flags], :match_all => true)
+    
+    pages = Page.find_tagged_with(
+      options[:flags].gsub(/\s/, ", "),
+      :match_all => true,
+      :order => "#{options[:order_by]} #{options[:order_direction]}")
   end
 end
