@@ -17,18 +17,7 @@ class UpdateImporter
       @updates = Node.create!( :slug => 'updates' )
       @updates.move_to_child_of Node.root
     end
-    
-    unless @update_flag = Flag.find_by_name("update")
-      @update_flag = Flag.create!( :name => "update" )
-    end
-    
-    unless @pm_flag = Flag.find_by_name("pressemitteilung")
-      @pm_flag = Flag.create!( :name => "pressemitteilung" )
-    end
-    
-    unless @event_flag = Flag.find_by_name("event")
-      @event_flag = Flag.create!( :name => "event" )
-    end
+
   end
   
   # Class Methods
@@ -96,12 +85,12 @@ class UpdateImporter
       )
     end
     
-    page.flags << @update_flag if page
+    page.tag_list.add("update") if page
     
     if (flags = xhtml.elements['flags']) && page
-      page.flags << @event_flag   if flags.attributes['calendar']
-      page.flags << @pm_flag      if flags.attributes['pm']
-      
+      page.tag_list.add("event")            if flags.attributes['calendar']
+      page.tag_list.add("pressemitteilung") if flags.attributes['pm']
+      page.save
       print "#{page.title} >>> "
       puts flags.attributes['calendar'].inspect
     end

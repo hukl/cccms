@@ -10,7 +10,7 @@ module ContentHelper
     begin
       if content =~ /<aggregate([^<>]*)>/
         tag = $~.to_s
-        matched_data = $1.scan(/\w+\=\"[a-zA-Z\s\/_\d]*\"/)
+        matched_data = $1.scan(/\w+\=\"[a-zA-Z\s\/_\d,]*\"/)
         
         matched_data.each do |data|
           splitted_data = data.split("=")
@@ -18,6 +18,8 @@ module ContentHelper
         end
         
         content.sub(tag, render_collection(options))
+      else
+        content
       end
       
     rescue
