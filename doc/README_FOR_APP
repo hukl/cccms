@@ -48,6 +48,24 @@ authors etc, must be copied one a new revision of a page is created. The Page
 class is providing a deep_copy method to make sure everything important is
 copied.
 
+===Keywords
+
+Pages of course come with meta data attatched to them. Keywords are one kind of
+meta data. They can be understood and used as tags, categories or any similar
+concept.
+
+===Aggregation
+
+Keywords and other meta data can be used to aggregate any ammount of pages
+into the body of another page. 
+
+<aggregate 
+  flags="updates pressemitteilungen"
+  limit="20"
+  order_by="published_at"
+  order_direction="DESC"
+/>
+ 
 
 git clone ssh://git@svn.medienhaus.udk-berlin.de/usr/local/git/cccms
 
