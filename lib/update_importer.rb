@@ -14,8 +14,20 @@ class UpdateImporter
     end
     
     unless @updates = Node.find_by_unique_name('updates')
-      @updates = Node.create! :slug => 'updates'
+      @updates = Node.create!( :slug => 'updates' )
       @updates.move_to_child_of Node.root
+    end
+    
+    unless @update_flag = Flag.find_by_name("update")
+      @update_flag = Flag.create!( :name => "update" )
+    end
+    
+    unless @pm_flag = Flag.find_by_name("pressemitteilung")
+      @pm_flag = Flag.create!( :name => "pressemitteilung" )
+    end
+    
+    unless @event_flag = Flag.find_by_name("event")
+      @event_flag = Flag.create!( :name => "event" )
     end
   end
   
@@ -75,15 +87,23 @@ class UpdateImporter
       element = element.next_sibling
     end
     
-    puts body
-      
     if node.pages.empty?
-      node.pages.create!(
+      page = node.pages.create!(
         :title => xhtml.elements['title'].get_text.to_s,
         :abstract => xhtml.elements['abstract'].get_text.to_s,
         :body => body,
         :published_at => date
       )
+    end
+    
+    page.flags << @update_flag if page
+    
+    if (flags = xhtml.elements['flags']) && page
+      page.flags << @event_flag   if flags.attributes['calendar']
+      page.flags << @pm_flag      if flags.attributes['pm']
+      
+      print "#{page.title} >>> "
+      puts flags.attributes['calendar'].inspect
     end
   end
   
