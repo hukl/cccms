@@ -8,7 +8,6 @@ module CollectiveIdea
           move_to_original target, position
           if self.class == Node
             self.update_unique_name
-            self.save
           end
         end
       end

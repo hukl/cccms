@@ -40,5 +40,6 @@ class Node < ActiveRecord::Base
   def update_unique_name
     path = self.path_to_root[1..-1]
     self.unique_name = path.join("/")
+    self.save
   end
 end

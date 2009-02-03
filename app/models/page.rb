@@ -4,13 +4,13 @@ class Page < ActiveRecord::Base
 
   acts_as_taggable  
   acts_as_list :column => :revision, :scope => :node_id
-
-  # <aggregate 
-  #   flags="update, pressemitteilung"
-  #   limit="20"
-  #   order_by="published_at"
-  #   order_direction="DESC"
-  # />
+  
+  # This method is most likely called from the ContentHelper.render_collection
+  # method which aggregates pages into a collection, based on parameters it 
+  # recieves. This method then calls Page.aggregate with these parameters.
+  # The Page.aggregate method comes with a defaults hash. These options are
+  # partially or entirely overwritten by the options hash. Afterwards the merged
+  # parameters are used to query the DB for Pages matching these parameters.
   def self.aggregate options
     
     defaults = {
