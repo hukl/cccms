@@ -1,0 +1,63 @@
+==
+  Die Besuchsszenarien des Webservers www.ccc.de
+==
+
+Ich gehe davon aus, dass der Server www.ccc.de von vier Benutzerprofilen besucht wird, die alle ihre eigene Erwartung an die Fuehrung durch das System stellen. Um all diese 
+Besucher zufriedenzustellen, muessen wir uns klar werden, was WIR denen eigentlich vermitteln wollen.
+
+--
+  1) Der www.ccc.de-pur Erst-Clicker
+--
+
+Dieser Benutzer hat wahrscheinlich aus der Presse, von Freunden oder auf ner Demo vom CCC erfahren und schaut sich nun auf der Startseite zum ersten Mal um.
+
+Um ihn dort abzuholen, braucht es hier gut sichtbar einen sehr kurzen Text, was der CCC ist, dekoriert mit einem Link, wo er unsere detailliertere Selbstdarstellung findet. Auf 
+dieser Selbstdarstellungsseite sollte es weiterfuehrende Links zu den regionalen Gruppen, den Mitgliedschaftsformalitaeten (inklusive Mitgliedsantrag) geben und -- am besten im 
+Fliesstext -- auf die aktuell brennenden Themen kurz eingegangen und der User dorthin ueber Links in die Themenseiten weitergefuehrt werden.
+
+--
+  2) Der google deep-link Besucher
+--
+
+Dieser Benutzer hat ueber eine Suchmaschine auf eine der Themenseiten, Pressemitteilungen oder Veranstaltungshinweise gefunden.
+
+Um ihn von dort abzuholen und weiter durch die Seite zu locken, sollten natuerlich zu allen an der Seite befestigten Keywords weitere passende Themenseiten, Meldungen und Termine 
+aufgefuehrt werden. Ihm sollten auch dezent alle aktuellen Meldungen in einer reduzierten Listenansicht in einer Box angezeigt werden, zusammen mit Veranstaltungs- und 
+Kampagnenhinweisen.
+
+--
+  3) Der update-Clicker
+--
+
+Dieser Benutzer kommt alle paar Tage auf www.ccc.de zurueck, um sich ueber Neuigkeiten zu informieren.
+
+Auf der Startseite sollte daher eine Liste der aktuellen Updates (inklusive Pressemeldungen und Calenderevents) gelistet werden, neben einer prominenten Ausstellung der aktuellen 
+Ausgaben des Chaosradios, der Datenschleuder (mit Cover zum Draufclicken) und anderer Medien.
+
+In der Theorie koennte ihm ein zufaelliges Thema des Tages praesentiert oder in irgendwas weniger Peinlichem als einer Tagcloud ein Zufalls- oder "Recently 
+Changed"-Einstiegspunkt in eine tiefere Projekt/Themenseite dargeboten werden.
+
+Auf bevorstehende Veranstaltungen sollten deutliche sichtbare Banner hinweisen. Alle Projekte, die mit eigener visueller Kennzeichnung kommen, koennten im Bannerbereich verlinkt 
+werden (der Fingerabdruck zeigt in die Biometrie- oder Fingerabdruck-kopieren Themenseite). Auf Mitgliederversammlungen muss hier auch hingewiesen werden.
+
+--
+  4) Mitglied oder Anfragende auf der akuten Suche nach Hilfe
+--
+
+Dieser Benutzer hat ein ganz praezises Anliegen, welches er mit moeglichst wenig Aufwand geloest wissen will, dazu zaehlen:
+
+* Suche nach der Adresse des naechsten Erfas => regional/
+* Suche nach Ansprechpartnern zur Mitgliedschaft => office/
+* Suche nach einer Mailingliste => faq/
+* Suche nach Ansprechpartnern fuer Presseanfragen => press/
+* Suche nach jemandem, der ihm was hackt => faq/
+* Suche nach Details zu einer konkreten (aktuellen) Veranstaltung
+* Typ-2-Clicker mit zu doof fuer google => suche/
+* Suche nach Merchandizing => shop/
+
+Also all das, was zur Zeit unter /contact versteckt ist. Auf allen Seiten sollte also deutlich ein grosser fetter KONTAKT-Knopf zu sehen sein.
+
+Sonstiger Club-Orga-Kram, wie Satzung oder MV-Protokolle oder aehnliches muessen nicht leicht aufgefunden werden koennen ;) Zumindest sollte eine gute Suche auf der Seite ohne Umschweife dorthin fuehren.
+
+
+Alle Besucher sollten eine von ueberall erreichbare "CCC unterstuetzen"-Seite erreichen koennen. Auf dieser Seite soll in einfachen Worten "Mitgliedwerden: Vor/Nachteile, hier clicken. Abonnoment: Kosten/Nutzen, hier clicken. Spenden: Vorteile, hier clicken. Merchandizing: hier clicken" erfahrbar sein.
