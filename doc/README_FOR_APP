@@ -48,11 +48,20 @@ authors etc, must be copied one a new revision of a page is created. The Page
 class is providing a deep_copy method to make sure everything important is
 copied.
 
-===Keywords
+===Tags
 
-Pages of course come with meta data attatched to them. Keywords are one kind of
-meta data. They can be understood and used as tags, categories or any similar
-concept.
+Pages of course come with meta data attatched to them. Tags are one kind of
+meta data. They can be understood and used as keywords, categories, tags or any 
+similar concept.
+
+===Templates
+
+Althought there is only one, simple and unified, template for editing pages, it 
+is possible to select from different templates for public display. This 
+selection of templates allows slight alterations of the layout. For example one
+template would display every attribute of a page (like date, author, abstract)
+while another template would hide this information away. One would show the tags
+of a page, another wouldn't.
 
 ===Aggregation
 
