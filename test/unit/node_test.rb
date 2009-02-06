@@ -36,6 +36,9 @@ class NodeTest < ActiveSupport::TestCase
     foo.pages.create :title => "Version 2"
     foo.pages.create :title => "Version 3"
     
+    foo.head = foo.pages.last
+    foo.save!
+    
     page = Node.find_page("updates/2008/foo")
     assert_equal page, foo.pages.find_by_revision(3)
   end

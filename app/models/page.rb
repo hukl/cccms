@@ -14,7 +14,7 @@ class Page < ActiveRecord::Base
   def self.aggregate options
     
     defaults = {
-      :flags            => "",
+      :tags             => "",
       :limit            => 20,
       :order_by         => "id",
       :order_direction  => "ASC"
@@ -23,7 +23,7 @@ class Page < ActiveRecord::Base
     options = defaults.merge options
     
     pages = Page.find_tagged_with(
-      options[:flags].gsub(/\s/, ", "),
+      options[:tags].gsub(/\s/, ", "),
       :match_all => true,
       :order => "#{options[:order_by]} #{options[:order_direction]}")
   end

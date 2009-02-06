@@ -90,9 +90,13 @@ class UpdateImporter
     if (flags = xhtml.elements['flags']) && page
       page.tag_list.add("event")            if flags.attributes['calendar']
       page.tag_list.add("pressemitteilung") if flags.attributes['pm']
-      page.save
-      print "#{page.title} >>> "
-      puts flags.attributes['calendar'].inspect
+      page.save!
+    end
+    
+    if node.head.nil? && page
+      puts page.title
+      node.head = page
+      node.save!
     end
   end
   

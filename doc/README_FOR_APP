@@ -69,7 +69,7 @@ Keywords and other meta data can be used to aggregate any ammount of pages
 into the body of another page. 
 
 <aggregate 
-  flags="updates pressemitteilungen"
+  tags="update pressemitteilung"
   limit="20"
   order_by="published_at"
   order_direction="DESC"

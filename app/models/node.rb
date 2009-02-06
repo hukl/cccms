@@ -1,7 +1,8 @@
 class Node < ActiveRecord::Base
   acts_as_nested_set
   
-  has_many :pages, :order => "revision ASC"
+  has_many    :pages, :order => "revision ASC"
+  belongs_to  :head,  :class_name => "Page",  :foreign_key => :head_id
   
   # Class methods
   
@@ -21,7 +22,7 @@ class Node < ActiveRecord::Base
     if node
       case revision
       when -1        
-        return node.pages.last 
+        return node.head
       else
         return node.pages.find_by_revision revision
       end
