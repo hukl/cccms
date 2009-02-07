@@ -33,6 +33,22 @@ class Node < ActiveRecord::Base
   
   # Instance Methods
   
+  def draft
+    
+    # check if there is a page which has a nil :published_at column
+    # if there is one - it is considered a draft else a new revision is 
+    # created
+    
+    if draft = pages.find_by_published_at(nil)
+      draft
+    else
+      # make a new fresh page with node reference
+      draft = Page.new( :node_id => id)
+    end
+    
+    draft
+  end
+  
   # returns an array with all parts of a unique_name rather than a string
   def unique_path
     unique_name.split("/") rescue unique_name
