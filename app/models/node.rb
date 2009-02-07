@@ -33,6 +33,11 @@ class Node < ActiveRecord::Base
   
   # Instance Methods
   
+  # returns an array with all parts of a unique_name rather than a string
+  def unique_path
+    unique_name.split("/") rescue unique_name
+  end
+  
   # returns array with pages up to root excluding root
   def path_to_root
     parent.nil? && [slug] || parent.path_to_root.push(slug)

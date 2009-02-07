@@ -13,10 +13,7 @@
   <tr>
     <td><%=h page.node_id %></td>
     <td><%=h page.title %></td>
-    <td><%=h page.abstract %></td>
-    <td><%=h page.body %></td>
-    <td><%=h page.revision %></td>
-    <td><%= link_to 'Show', page %></td>
+    <td><%= link_to 'Show', link_to_path(page.node.unique_path) %></td>
     <td><%= link_to 'Edit', edit_page_path(page) %></td>
     <td><%= link_to 'Destroy', page, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
