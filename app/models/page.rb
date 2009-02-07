@@ -1,9 +1,15 @@
 class Page < ActiveRecord::Base
   
-  belongs_to :node
-
+  # Mixins and Plugins
   acts_as_taggable  
   acts_as_list :column => :revision, :scope => :node_id
+  
+  translates :title, :abstract, :body # Globalize2
+  
+  # Associations
+  belongs_to :node
+
+  # Class Methods
   
   # This method is most likely called from the ContentHelper.render_collection
   # method which aggregates pages into a collection, based on parameters it 
@@ -27,4 +33,6 @@ class Page < ActiveRecord::Base
       :match_all => true,
       :order => "#{options[:order_by]} #{options[:order_direction]}")
   end
+  
+  # Instance Methods
 end

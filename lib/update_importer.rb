@@ -31,15 +31,17 @@ class UpdateImporter
       next if dir =~ /index\.xml/
       chaospage = REXML::Document.new(File.new(dir))
       
+      puts dir
       lang =  case dir
-              when /\.de$/ then "de"
-              when /\.en$/ then "en"
-              else "de"
+              when /\.de$/ then :de
+              when /\.en$/ then :en
+              else 
+                :de
               end
       
       tmp_dir = dir.sub(@path, "").split(/\//).last
       chaos_id = tmp_dir.split(/\./)[0]
-                
+       
       create_node_and_page( chaospage.root, lang, chaos_id )
     end
   end
@@ -53,17 +55,16 @@ class UpdateImporter
       parent_node.move_to_child_of @updates
     end
     
-    # puts "#{chaos_id} >>> #{lang} >>> #{date.year}"
     
     unless node = Node.find_by_unique_name(unique_name)
       node = Node.create :slug => chaos_id
       node.move_to_child_of parent_node
     end
     
-    create_node_for_page chaospage, node, date
+    create_node_for_page chaospage, node, date, lang
   end
   
-  def create_node_for_page chaospage, node, date
+  def create_node_for_page chaospage, node, date, lang
     
     xhtml = convert_chaospage_to_xhtml(chaospage)
     
@@ -77,12 +78,27 @@ class UpdateImporter
     end
     
     if node.pages.empty?
+      
+      I18n.locale = lang
+      
       page = node.pages.create!(
         :title => xhtml.elements['title'].get_text.to_s,
         :abstract => xhtml.elements['abstract'].get_text.to_s,
         :body => body,
         :published_at => date
       )
+    else
+      page = node.pages.first
+      
+      I18n.locale = lang
+      
+      page.update_attributes(
+        :title => xhtml.elements['title'].get_text.to_s,
+        :abstract => xhtml.elements['abstract'].get_text.to_s,
+        :body => body
+      )
+      
+      page.save
     end
     
     page.tag_list.add("update") if page
