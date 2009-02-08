@@ -1,4 +1,23 @@
-CCCMS
+=CCCMS
+
+==Setup
+
+git clone ssh://git@svn.medienhaus.udk-berlin.de/usr/local/git/cccms
+
+git checkout --track -b poc1 origin/poc1
+
+git submodule init
+
+git submodule update
+
+==Import old xml files
+
+extract db/updates.tbz
+
+start a script/console and execute the following commands:
+
+i = UpdateImporter.new("#{RAILS_ROOT}/db/updates")
+i.import_xml
 
 ==General
 
@@ -92,23 +111,3 @@ into the body of another page.
   order_by="published_at"
   order_direction="DESC"
 />
- 
-
-git clone ssh://git@svn.medienhaus.udk-berlin.de/usr/local/git/cccms
-
-git checkout --track -b poc1 origin/poc1
-
-git submodule init
-
-git submodule update
-
-===============================================================================
-
-Import all Updates from the old ccc.de site:
-
-extract db/updates.tbz
-
-start a script/console and execute the following commands:
-
-i = UpdateImporter.new("#{RAILS_ROOT}/db/updates")
-i.import_xml
