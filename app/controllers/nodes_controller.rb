@@ -4,6 +4,7 @@ class NodesController < ApplicationController
   
   before_filter :find_node, :only => [:create, :show, :edit, :update, :destroy]
   
+
   def index
     @nodes = Node.root.children.all(:include => :head)
   end
@@ -44,5 +45,4 @@ class NodesController < ApplicationController
     def find_node
       @node = Node.find(params[:id])
     end
-
 end
