@@ -1,13 +1,18 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  login: MyString
-  email: MyString
-  crypted_password: MyString
-  salt: MyString
+quentin:
+  id:                        1
+  login:                     quentin
+  email:                     quentin@example.com
+  salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
+  crypted_password:          89e27e324f2dee0fb72034631aa1bc3ca28ea574 # 'monkey'
+  created_at:                <%= 5.days.ago.to_s :db  %>
+      
+aaron:
+  id:                        2
+  login:                     aaron
+  email:                     aaron@example.com
+  salt:                      da4b9237bacccdf19c0760cab7aec4a8359010b0 # SHA1('1')
+  crypted_password:          cf39f8e6972c25ac72ccc801cab755ef15bca09b # 'monkey'
+  created_at:                <%= 1.days.ago.to_s :db %>
 
-two:
-  login: MyString
-  email: MyString
-  crypted_password: MyString
-  salt: MyString
+

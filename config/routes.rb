@@ -1,7 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :pages
   map.resources :nodes
-
+  
+  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+  map.login '/login',   :controller => 'sessions', :action => 'new'
+  map.resources :users
+  map.resource  :session
   
   map.connect   ':language/*page_path',
                 :controller => 'content', :action => 'render_page', 
