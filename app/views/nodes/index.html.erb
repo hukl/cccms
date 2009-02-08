@@ -1,0 +1,7 @@
+<h1>Nodes</h1>
+
+<ul>
+  <% @nodes.each do |node| %>
+  <li><%= link_to node.unique_name, node_path(node) %></li>
+  <% end %>
+</ul>

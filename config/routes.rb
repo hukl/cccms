@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :pages
+  map.resources :nodes
 
   
   map.connect   ':language/*page_path',
