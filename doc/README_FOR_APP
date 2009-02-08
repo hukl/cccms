@@ -4,8 +4,9 @@ CCCMS
 
 ===Nodes
 
-The structure of the cccms is built from Node objects which live within a nested
-set. Therefor a given node has parents, children, descendants etc.
+The whole structure of the website is built from nodes. They live within a
+nested set structure. Therefor a given node has parents, children, descendants 
+etc.
 
 The position of a node within the nested set corresponds directly to the URL
 under which that node is accessible:
@@ -15,7 +16,7 @@ root
               \__2009
                      \___ultra_important_news
                      
-=> http://domain/de/updates/2009/ultra_important_news
+http://domain/de/updates/2009/ultra_important_news
 
 Note that the first parameter after the domain is the locale. Everything after
 the locale identifier is the unique path of a given node. The unique path itself
@@ -28,25 +29,42 @@ is then saved on the node object itself, allowing the system to retrieve a
 node simply by looking for the right url in the unique_path column. This is a 
 lot faster then walking down the tree.
 
+Nodes are really just proxy objects. They point to information but they don't 
+hold that information themselves. Instead they have pages associated to them. 
+When you want to render a particular node, you actually render a page associated 
+to that node. When multiple pages are attached to a node, they act as one page 
+with many revisions. The node itself holds the pointer to current or head 
+revision.
+
 ===Pages
 
-As the nodes only built the structure, another object is necessary to actually
-hold all the contents. This object is called a page and is associated to a node
-via a one-to-many association. A node can have multiple pages associated to it.
-The node is actually a proxy for the pages behind it, and the pages act as a 
-versioned page. By default, if you retrieve a node from the database by its
-unique path and ask this node for a page, the node would return the most recent
-one. It is also possible to get a page from a node, supplying a revision number.
-The node object would then retrieve the associated page with the corresponding
-revision number. For convenience purposes, the most recent page revision, in 
-the scope of a node, is flagged as the head of this collection. This is 
-primarily for making certain queries a lot easier where you only want to select
-upon the current pages in the db rather than on all.
+Although there is really one Page class, the pages associated to one node differ
+slightly. Obviously there is a slight difference between the head and the other
+revisions. While the head is always the most recent page which is publicly
+available, all the older revisions are only kind of a history. 
 
-It is important to know that all the associations of a page, such as tags, 
-authors etc, must be copied one a new revision of a page is created. The Page
-class is providing a deep_copy method to make sure everything important is
-copied.
+Now when a user wants to modify or edit the content of the head revision he or
+she is editing a new revision instead. This new revision is considered a draft
+and has the current content of the head revision copied onto itself.
+
+====Draft
+
+A draft has an author attached to it which makes sure that only the creator of
+that draft is able to edit it. This is a form of pessimistic locking as it 
+prevents more than one user from editing and saving the same page.
+
+However, if an author should choose to abandon his draft or to let somebody else
+finish it, the author can withdraw his lock. In this case, the draft has no 
+longer an author associated to itself which enables another user to edit this
+draft.
+
+To abandon or revert a draft, the author can also delete it entirely so that 
+when another user is editing, he or she would get a fresh copy from the current
+head revision.
+
+Of course a admin user can always override or remove locks on drafts. In case
+an author created a draft but simply didn't care anymore, an admin could remove
+that draft or the lock on it, enabling other users to edit that page again.
 
 ===Tags
 
@@ -94,44 +112,3 @@ start a script/console and execute the following commands:
 
 i = UpdateImporter.new("#{RAILS_ROOT}/db/updates")
 i.import_xml
-
-===============================================================================
-Node
-
-The whole structure of the website is built from nodes. They live within a
-nested set structure. Nodes are really just proxy objects though. They point to 
-information but they don't hold that information themselves. Instead they have
-pages associated to them. When you want to render a particular node, you 
-actually render a page associated to that node. When multiple pages are attached
-to a node, they act as one page with many revisions. The node itself holds the 
-pointer to current or head revision.
-
-Page
-
-Although there is really on Page class, the pages associated to one node differ
-slightly. Obviously there is a slight difference between the head and the other
-revisions. While the head is always the most recent page which is publicly
-available, all the older revisions are only kind of a history. 
-
-Now when a user wants to modify or edit the content of the head revision he or
-she is editing a new revision instead. This new revision is considered a draft
-and has the current content of the head revision copied onto itself.
-
-Draft
-
-A draft has an author attached to it which makes sure that only the creator of
-that draft is able to edit it. This is a form of pessimistic locking as it 
-prevents more than one user from editing and saving the same page.
-
-However, if an author should choose to abandon his draft or to let somebody else
-finish it, the author can withdraw his lock. In this case, the draft has no 
-longer an author associated to itself which enables another user to edit this
-draft.
-
-To abandon or revert a draft, the author can also delete it entirely so that 
-when another user is editing, he or she would get a fresh copy from the current
-head revision.
-
-Of course a admin user can always override or remove locks on drafts. In case
-an author created a draft but simply didn't care anymore, an admin could remove
-that draft or the lock on it enabling other users to edit that page again.
