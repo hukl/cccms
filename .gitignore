@@ -4,3 +4,4 @@ schema.rb
 .DS_Store
 doc/app
 coverage
+.project
