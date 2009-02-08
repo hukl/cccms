@@ -8,6 +8,7 @@ class Page < ActiveRecord::Base
   
   # Associations
   belongs_to :node
+  belongs_to :user
 
   # Class Methods
   

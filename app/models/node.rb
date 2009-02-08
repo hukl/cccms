@@ -10,7 +10,6 @@ class Node < ActiveRecord::Base
   
   # Class methods
   
-  
   # Returns a page for a given node. If no revision is supplied, it returns
   # the last / current one. If a specific revision number is supplied, the 
   # corresponding revision of that page is returned. Get the current / latest 
@@ -37,28 +36,34 @@ class Node < ActiveRecord::Base
   
   # Instance Methods
   
+  # check if there is a page which has a nil :published_at column
+  # if there is one - it is considered a draft 
   def draft
-    
-    # check if there is a page which has a nil :published_at column
-    # if there is one - it is considered a draft else a new revision is 
-    # created
-    
     if draft = pages.find_by_published_at(nil)
       draft
-    else
-      # make a new fresh page with node reference
-      draft = Page.create( head.attributes )
     end
-    
-    draft
+  end
+  
+  def find_or_create_draft user
+    if draft && draft.user == user
+      draft
+    elsif draft && draft.user != user
+      raise "Page is locked"
+    else
+      self.pages.create! :user_id => user.id
+    end
   end
   
   def publish_draft!
-    self.head = self.draft
-    self.save!
-    
-    self.head.published_at = Time.now
-    self.head.save!
+    if self.draft
+      self.head = self.draft
+      self.save!
+      
+      self.head.published_at = Time.now
+      self.head.save!
+    else
+      nil
+    end
   end
   
   # returns an array with all parts of a unique_name rather than a string
