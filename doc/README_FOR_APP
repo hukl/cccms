@@ -94,3 +94,44 @@ start a script/console and execute the following commands:
 
 i = UpdateImporter.new("#{RAILS_ROOT}/db/updates")
 i.import_xml
+
+===============================================================================
+Node
+
+The whole structure of the website is built from nodes. They live within a
+nested set structure. Nodes are really just proxy objects though. They point to 
+information but they don't hold that information themselves. Instead they have
+pages associated to them. When you want to render a particular node, you 
+actually render a page associated to that node. When multiple pages are attached
+to a node, they act as one page with many revisions. The node itself holds the 
+pointer to current or head revision.
+
+Page
+
+Although there is really on Page class, the pages associated to one node differ
+slightly. Obviously there is a slight difference between the head and the other
+revisions. While the head is always the most recent page which is publicly
+available, all the older revisions are only kind of a history. 
+
+Now when a user wants to modify or edit the content of the head revision he or
+she is editing a new revision instead. This new revision is considered a draft
+and has the current content of the head revision copied onto itself.
+
+Draft
+
+A draft has an author attached to it which makes sure that only the creator of
+that draft is able to edit it. This is a form of pessimistic locking as it 
+prevents more than one user from editing and saving the same page.
+
+However, if an author should choose to abandon his draft or to let somebody else
+finish it, the author can withdraw his lock. In this case, the draft has no 
+longer an author associated to itself which enables another user to edit this
+draft.
+
+To abandon or revert a draft, the author can also delete it entirely so that 
+when another user is editing, he or she would get a fresh copy from the current
+head revision.
+
+Of course a admin user can always override or remove locks on drafts. In case
+an author created a draft but simply didn't care anymore, an admin could remove
+that draft or the lock on it enabling other users to edit that page again.
