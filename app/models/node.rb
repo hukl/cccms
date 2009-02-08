@@ -4,6 +4,10 @@ class Node < ActiveRecord::Base
   has_many    :pages, :order => "revision ASC"
   belongs_to  :head,  :class_name => "Page",  :foreign_key => :head_id
   
+  # Callbacks
+  
+  after_create :initialize_empty_page
+  
   # Class methods
   
   
@@ -43,10 +47,18 @@ class Node < ActiveRecord::Base
       draft
     else
       # make a new fresh page with node reference
-      draft = Page.new( :node_id => id)
+      draft = Page.create( head.attributes )
     end
     
     draft
+  end
+  
+  def publish_draft!
+    self.head = self.draft
+    self.save!
+    
+    self.head.published_at = Time.now
+    self.head.save!
   end
   
   # returns an array with all parts of a unique_name rather than a string
@@ -64,4 +76,17 @@ class Node < ActiveRecord::Base
     self.unique_name = path.join("/")
     self.save
   end
+  
+  protected
+  
+    # Creates an empty page, associates it to the given node and sets its
+    # published_at date so it isn't considered a draft. Look up the draft
+    # method!
+    def initialize_empty_page
+      if self.pages.empty?
+        self.pages.create!
+      end
+    end
 end
+
+
