@@ -19,8 +19,7 @@ class SessionsController < ApplicationController
       flash[:notice] = "Logged in successfully"
     else
       note_failed_signin
-      @login       = params[:login]
-      @remember_me = params[:remember_me]
+      @login = params[:login]
       render :action => 'new'
     end
   end

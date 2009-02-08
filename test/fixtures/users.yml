@@ -3,16 +3,16 @@ quentin:
   id:                        1
   login:                     quentin
   email:                     quentin@example.com
-  salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
-  crypted_password:          89e27e324f2dee0fb72034631aa1bc3ca28ea574 # 'monkey'
+  salt:                      cf993996a70d31f924aff17a5f997722cb6ec2dd
+  crypted_password:          11c672158b0eb6e8c91c438b3eb844902308b138 # 'monkey'
   created_at:                <%= 5.days.ago.to_s :db  %>
       
 aaron:
   id:                        2
   login:                     aaron
   email:                     aaron@example.com
-  salt:                      da4b9237bacccdf19c0760cab7aec4a8359010b0 # SHA1('1')
-  crypted_password:          cf39f8e6972c25ac72ccc801cab755ef15bca09b # 'monkey'
+  salt:                      5be6f9cdd04fd7ab3c91cd32a5334ba2339b8005
+  crypted_password:          740a48caf7dd5ff11318d812d57c0a0928cfbc12 # 'monkey'
   created_at:                <%= 1.days.ago.to_s :db %>
 
 
