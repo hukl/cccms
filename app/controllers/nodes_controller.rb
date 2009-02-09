@@ -1,6 +1,6 @@
 class NodesController < ApplicationController
   include Auditing
-  
+
   layout 'admin'
   
   before_filter :find_node, :only => [:create, :show, :edit, :update, :destroy]
