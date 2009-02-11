@@ -1,10 +1,12 @@
 class Node < ActiveRecord::Base
+  # Mixins and Plugins
   acts_as_nested_set
   
   # Associations
   has_many    :pages, :order => "revision ASC"
   belongs_to  :head,  :class_name => "Page",  :foreign_key => :head_id
-
+  has_many    :permissions
+  
   # Callbacks
   after_create :initialize_empty_page
   

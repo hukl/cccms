@@ -1,4 +1,5 @@
 class Permission < ActiveRecord::Base
+  # Validations
   validates_presence_of :user_id, :node_id, :granted
   
   # Associations
