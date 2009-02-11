@@ -9,7 +9,10 @@ class Page < ActiveRecord::Base
   # Associations
   belongs_to :node
   belongs_to :user
-
+  
+  # Security
+  attr_accessible :title, :abstract, :body
+  
   # Class Methods
   
   # This method is most likely called from the ContentHelper.render_collection

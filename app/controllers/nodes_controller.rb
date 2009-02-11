@@ -1,5 +1,4 @@
 class NodesController < ApplicationController
-  include Auditing
 
   layout 'admin'
   

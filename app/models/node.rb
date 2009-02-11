@@ -1,11 +1,11 @@
 class Node < ActiveRecord::Base
   acts_as_nested_set
   
+  # Associations
   has_many    :pages, :order => "revision ASC"
   belongs_to  :head,  :class_name => "Page",  :foreign_key => :head_id
-  
+
   # Callbacks
-  
   after_create :initialize_empty_page
   
   # Class methods

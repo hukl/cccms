@@ -1,5 +1,4 @@
 class PagesController < ApplicationController
-  include Auditing
     
   # GET /pages
   # GET /pages.xml
