@@ -19,6 +19,13 @@ start a script/console and execute the following commands:
 i = UpdateImporter.new("#{RAILS_ROOT}/db/updates")
 i.import_xml
 
+==Documentation
+
+User stories in doc/success_stories.txt
+
+execute: rake doc:app on the command line to get a html api documentation in
+doc/app
+
 ==General
 
 ===Nodes
