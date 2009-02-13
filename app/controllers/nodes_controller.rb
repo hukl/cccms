@@ -17,7 +17,8 @@ class NodesController < ApplicationController
   end
 
   def edit
-    @page = Node.find(params[:id]).draft
+    node = Node.find(params[:id])
+    @page = node.find_or_create_draft current_user
   end
 
   def update
