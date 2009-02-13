@@ -2,7 +2,7 @@
 
 ==Setup
 
-git clone git://github.com/hukl/cccms.git
+git clone ssh://git@svn.medienhaus.udk-berlin.de/usr/local/git/cccms
 
 git checkout --track -b poc1 origin/poc1
 
