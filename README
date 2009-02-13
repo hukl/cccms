@@ -1,243 +1,113 @@
-== Welcome to Rails
+=CCCMS
 
-Rails is a web-application framework that includes everything needed to create 
-database-backed web applications according to the Model-View-Control pattern. 
+==Setup
 
-This pattern splits the view (also called the presentation) into "dumb" templates
-that are primarily responsible for inserting pre-built data in between HTML tags.
-The model contains the "smart" domain objects (such as Account, Product, Person,
-Post) that holds all the business logic and knows how to persist themselves to
-a database. The controller handles the incoming requests (such as Save New Account,
-Update Product, Show Post) by manipulating the model and directing data to the view.
+git clone ssh://git@svn.medienhaus.udk-berlin.de/usr/local/git/cccms
 
-In Rails, the model is handled by what's called an object-relational mapping
-layer entitled Active Record. This layer allows you to present the data from
-database rows as objects and embellish these data objects with business logic
-methods. You can read more about Active Record in
-link:files/vendor/rails/activerecord/README.html.
+git checkout --track -b poc1 origin/poc1
 
-The controller and view are handled by the Action Pack, which handles both
-layers by its two parts: Action View and Action Controller. These two layers
-are bundled in a single package due to their heavy interdependence. This is
-unlike the relationship between the Active Record and Action Pack that is much
-more separate. Each of these packages can be used independently outside of
-Rails.  You can read more about Action Pack in
-link:files/vendor/rails/actionpack/README.html.
+git submodule init
 
+git submodule update
 
-== Getting Started
+==Import old xml files
 
-1. At the command prompt, start a new Rails application using the <tt>rails</tt> command
-   and your application name. Ex: rails myapp
-2. Change directory into myapp and start the web server: <tt>script/server</tt> (run with --help for options)
-3. Go to http://localhost:3000/ and get "Welcome aboard: You're riding the Rails!"
-4. Follow the guidelines to start developing your application
+extract db/updates.tbz
 
+start a script/console and execute the following commands:
 
-== Web Servers
+i = UpdateImporter.new("#{RAILS_ROOT}/db/updates")
+i.import_xml
 
-By default, Rails will try to use Mongrel if it's are installed when started with script/server, otherwise Rails will use WEBrick, the webserver that ships with Ruby. But you can also use Rails
-with a variety of other web servers.
+==General
 
-Mongrel is a Ruby-based webserver with a C component (which requires compilation) that is
-suitable for development and deployment of Rails applications. If you have Ruby Gems installed,
-getting up and running with mongrel is as easy as: <tt>gem install mongrel</tt>.
-More info at: http://mongrel.rubyforge.org
+===Nodes
 
-Say other Ruby web servers like Thin and Ebb or regular web servers like Apache or LiteSpeed or
-Lighttpd or IIS. The Ruby web servers are run through Rack and the latter can either be setup to use
-FCGI or proxy to a pack of Mongrels/Thin/Ebb servers.
+The whole structure of the website is built from nodes. They live within a
+nested set structure. Therefor a given node has parents, children, descendants 
+etc.
 
-== Apache .htaccess example for FCGI/CGI
+The position of a node within the nested set corresponds directly to the URL
+under which that node is accessible:
 
-# General Apache options
-AddHandler fastcgi-script .fcgi
-AddHandler cgi-script .cgi
-Options +FollowSymLinks +ExecCGI
+root
+    \__updates
+              \__2009
+                     \___ultra_important_news
+                     
+http://domain/de/updates/2009/ultra_important_news
 
-# If you don't want Rails to look in certain directories,
-# use the following rewrite rules so that Apache won't rewrite certain requests
-# 
-# Example:
-#   RewriteCond %{REQUEST_URI} ^/notrails.*
-#   RewriteRule .* - [L]
+Note that the first parameter after the domain is the locale. Everything after
+the locale identifier is the unique path of a given node. The unique path itself
+is generated from the slugs of the ancestors of a node. The last part of the 
+unique path is taken from the slug of the node.
 
-# Redirect all requests not available on the filesystem to Rails
-# By default the cgi dispatcher is used which is very slow
-# 
-# For better performance replace the dispatcher with the fastcgi one
-#
-# Example:
-#   RewriteRule ^(.*)$ dispatch.fcgi [QSA,L]
-RewriteEngine On
+Once a node is added to the nested set or moved within, the unique path of that
+node is generated from all its ancestors up to the root node. The computed path
+is then saved on the node object itself, allowing the system to retrieve a 
+node simply by looking for the right url in the unique_path column. This is a 
+lot faster then walking down the tree.
 
-# If your Rails application is accessed via an Alias directive,
-# then you MUST also set the RewriteBase in this htaccess file.
-#
-# Example:
-#   Alias /myrailsapp /path/to/myrailsapp/public
-#   RewriteBase /myrailsapp
+Nodes are really just proxy objects. They point to information but they don't 
+hold that information themselves. Instead they have pages associated to them. 
+When you want to render a particular node, you actually render a page associated 
+to that node. When multiple pages are attached to a node, they act as one page 
+with many revisions. The node itself holds the pointer to current or head 
+revision.
 
-RewriteRule ^$ index.html [QSA]
-RewriteRule ^([^.]+)$ $1.html [QSA]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ dispatch.cgi [QSA,L]
+===Pages
 
-# In case Rails experiences terminal errors
-# Instead of displaying this message you can supply a file here which will be rendered instead
-# 
-# Example:
-#   ErrorDocument 500 /500.html
+Although there is really one Page class, the pages associated to one node differ
+slightly. Obviously there is a slight difference between the head and the other
+revisions. While the head is always the most recent page which is publicly
+available, all the older revisions are only kind of a history. 
 
-ErrorDocument 500 "<h2>Application error</h2>Rails application failed to start properly"
+Now when a user wants to modify or edit the content of the head revision he or
+she is editing a new revision instead. This new revision is considered a draft
+and has the current content of the head revision copied onto itself.
 
+====Draft
 
-== Debugging Rails
+A draft has an author attached to it which makes sure that only the creator of
+that draft is able to edit it. This is a form of pessimistic locking as it 
+prevents more than one user from editing and saving the same page.
 
-Sometimes your application goes wrong.  Fortunately there are a lot of tools that
-will help you debug it and get it back on the rails.
+However, if an author should choose to abandon his draft or to let somebody else
+finish it, the author can withdraw his lock. In this case, the draft has no 
+longer an author associated to itself which enables another user to edit this
+draft.
 
-First area to check is the application log files.  Have "tail -f" commands running
-on the server.log and development.log. Rails will automatically display debugging
-and runtime information to these files. Debugging info will also be shown in the
-browser on requests from 127.0.0.1.
+To abandon or revert a draft, the author can also delete it entirely so that 
+when another user is editing, he or she would get a fresh copy from the current
+head revision.
 
-You can also log your own messages directly into the log file from your code using
-the Ruby logger class from inside your controllers. Example:
+Of course a admin user can always override or remove locks on drafts. In case
+an author created a draft but simply didn't care anymore, an admin could remove
+that draft or the lock on it, enabling other users to edit that page again.
 
-  class WeblogController < ActionController::Base
-    def destroy
-      @weblog = Weblog.find(params[:id])
-      @weblog.destroy
-      logger.info("#{Time.now} Destroyed Weblog ID ##{@weblog.id}!")
-    end
-  end
+===Tags
 
-The result will be a message in your log file along the lines of:
+Pages of course come with meta data attatched to them. Tags are one kind of
+meta data. They can be understood and used as keywords, categories, tags or any 
+similar concept.
 
-  Mon Oct 08 14:22:29 +1000 2007 Destroyed Weblog ID #1
+===Templates
 
-More information on how to use the logger is at http://www.ruby-doc.org/core/
+Althought there is only one, simple and unified, template for editing pages, it 
+is possible to select from different templates for public display. This 
+selection of templates allows slight alterations of the layout. For example one
+template would display every attribute of a page (like date, author, abstract)
+while another template would hide this information away. One would show the tags
+of a page, another wouldn't.
 
-Also, Ruby documentation can be found at http://www.ruby-lang.org/ including:
+===Aggregation
 
-* The Learning Ruby (Pickaxe) Book: http://www.ruby-doc.org/docs/ProgrammingRuby/
-* Learn to Program: http://pine.fm/LearnToProgram/  (a beginners guide)
+Keywords and other meta data can be used to aggregate any ammount of pages
+into the body of another page. 
 
-These two online (and free) books will bring you up to speed on the Ruby language
-and also on programming in general.
-
-
-== Debugger
-
-Debugger support is available through the debugger command when you start your Mongrel or
-Webrick server with --debugger. This means that you can break out of execution at any point
-in the code, investigate and change the model, AND then resume execution! 
-You need to install ruby-debug to run the server in debugging mode. With gems, use 'gem install ruby-debug'
-Example:
-
-  class WeblogController < ActionController::Base
-    def index
-      @posts = Post.find(:all)
-      debugger
-    end
-  end
-
-So the controller will accept the action, run the first line, then present you
-with a IRB prompt in the server window. Here you can do things like:
-
-  >> @posts.inspect
-  => "[#<Post:0x14a6be8 @attributes={\"title\"=>nil, \"body\"=>nil, \"id\"=>\"1\"}>,
-       #<Post:0x14a6620 @attributes={\"title\"=>\"Rails you know!\", \"body\"=>\"Only ten..\", \"id\"=>\"2\"}>]"
-  >> @posts.first.title = "hello from a debugger"
-  => "hello from a debugger"
-
-...and even better is that you can examine how your runtime objects actually work:
-
-  >> f = @posts.first
-  => #<Post:0x13630c4 @attributes={"title"=>nil, "body"=>nil, "id"=>"1"}>
-  >> f.
-  Display all 152 possibilities? (y or n)
-
-Finally, when you're ready to resume execution, you enter "cont"
-
-
-== Console
-
-You can interact with the domain model by starting the console through <tt>script/console</tt>.
-Here you'll have all parts of the application configured, just like it is when the
-application is running. You can inspect domain models, change values, and save to the
-database. Starting the script without arguments will launch it in the development environment.
-Passing an argument will specify a different environment, like <tt>script/console production</tt>.
-
-To reload your controllers and models after launching the console run <tt>reload!</tt>
-
-== dbconsole
-
-You can go to the command line of your database directly through <tt>script/dbconsole</tt>.
-You would be connected to the database with the credentials defined in database.yml.
-Starting the script without arguments will connect you to the development database. Passing an
-argument will connect you to a different database, like <tt>script/dbconsole production</tt>.
-Currently works for mysql, postgresql and sqlite.
-
-== Description of Contents
-
-app
-  Holds all the code that's specific to this particular application.
-
-app/controllers
-  Holds controllers that should be named like weblogs_controller.rb for
-  automated URL mapping. All controllers should descend from ApplicationController
-  which itself descends from ActionController::Base.
-
-app/models
-  Holds models that should be named like post.rb.
-  Most models will descend from ActiveRecord::Base.
-
-app/views
-  Holds the template files for the view that should be named like
-  weblogs/index.html.erb for the WeblogsController#index action. All views use eRuby
-  syntax.
-
-app/views/layouts
-  Holds the template files for layouts to be used with views. This models the common
-  header/footer method of wrapping views. In your views, define a layout using the
-  <tt>layout :default</tt> and create a file named default.html.erb. Inside default.html.erb,
-  call <% yield %> to render the view using this layout.
-
-app/helpers
-  Holds view helpers that should be named like weblogs_helper.rb. These are generated
-  for you automatically when using script/generate for controllers. Helpers can be used to
-  wrap functionality for your views into methods.
-
-config
-  Configuration files for the Rails environment, the routing map, the database, and other dependencies.
-
-db
-  Contains the database schema in schema.rb.  db/migrate contains all
-  the sequence of Migrations for your schema.
-
-doc
-  This directory is where your application documentation will be stored when generated
-  using <tt>rake doc:app</tt>
-
-lib
-  Application specific libraries. Basically, any kind of custom code that doesn't
-  belong under controllers, models, or helpers. This directory is in the load path.
-
-public
-  The directory available for the web server. Contains subdirectories for images, stylesheets,
-  and javascripts. Also contains the dispatchers and the default HTML files. This should be
-  set as the DOCUMENT_ROOT of your web server.
-
-script
-  Helper scripts for automation and generation.
-
-test
-  Unit and functional tests along with fixtures. When using the script/generate scripts, template
-  test files will be generated for you and placed in this directory.
-
-vendor
-  External libraries that the application depends on. Also includes the plugins subdirectory.
-  If the app has frozen rails, those gems also go here, under vendor/rails/.
-  This directory is in the load path.
+<aggregate 
+  tags="update pressemitteilung"
+  limit="20"
+  order_by="published_at"
+  order_direction="DESC"
+/>
