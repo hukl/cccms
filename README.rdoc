@@ -112,9 +112,30 @@ of a page, another wouldn't.
 Keywords and other meta data can be used to aggregate any ammount of pages
 into the body of another page. 
 
-<aggregate 
-  tags="update pressemitteilung"
-  limit="20"
-  order_by="published_at"
-  order_direction="DESC"
-/>
+  <aggregate 
+    tags="update pressemitteilung"
+    limit="20"
+    order_by="published_at"
+    order_direction="DESC"
+  />
+
+===Permissions
+  
+The permission system is geared towards our use-case which means you won't find
+the standard create/update/destroy derived permissions.
+Every user without having any permissions is allowed to perform non-destructive
+tasks that won't affect the frontend (published pages). What am I talking about?
+
+Bob has no permissions whatsoever still he is allowed to edit a #Page anywhere, 
+because this action will only create a new revision of the #Page which is not 
+immediately published. He won't be able to manipulate a #Node in any way 
+(unique_name, slug, ordering, structure) because this would affect the frontend
+without further notice.
+
+Having a #Permission on a #Node makes Bob an admin for this #Node and all it's
+children. Now Bob can do pretty much anything on these nodes including such fun
+things as:
+  - Create/Update/Delete a #Node
+  - Reorder children of the #Node
+  - Rejecting a draft and telling the author to get his/her spelling right.
+  - Clear a stale lock on a #Node
