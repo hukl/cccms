@@ -33,7 +33,8 @@ class NodesController < ApplicationController
 
   def update
     draft = @node.find_or_create_draft current_user
-    if request.post? && draft.update_attributes( params[:page] )
+    
+    if draft.update_attributes( params[:page] )
       redirect_to(@node)
     else
       render :action => :edit
