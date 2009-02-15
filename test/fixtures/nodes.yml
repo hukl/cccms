@@ -1,6 +1,6 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
+root:
   id: 1
   lft: 1
   rgt: 6
@@ -9,7 +9,7 @@ one:
   unique_name:
 
 
-two:
+first_child:
   id: 2
   lft: 2
   rgt: 3
@@ -17,7 +17,7 @@ two:
   slug: first_child
   unique_name: first_child
 
-three:
+second_child:
   id: 3
   lft: 4
   rgt: 5
