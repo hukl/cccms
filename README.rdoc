@@ -37,11 +37,11 @@ etc.
 The position of a node within the nested set corresponds directly to the URL
 under which that node is accessible:
 
-root
-    \__updates
-              \__2009
-                     \___ultra_important_news
-                     
+  root
+      \__updates
+                \__2009
+                       \___ultra_important_news
+                       
 http://domain/de/updates/2009/ultra_important_news
 
 Note that the first parameter after the domain is the locale. Everything after
