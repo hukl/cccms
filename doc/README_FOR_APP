@@ -123,6 +123,7 @@ Bob has no permissions whatsoever still he is allowed to edit a #Page anywhere,
 because this action will only create a new revision of the #Page which is not 
 immediately published. He won't be able to manipulate a #Node in any way 
 (unique_name, slug, ordering, structure) because this would affect the frontend
+without further notice.
 
 Having a #Permission on a #Node makes Bob an admin for this #Node and all it's
 children. Now Bob can do pretty much anything on these nodes including such fun
