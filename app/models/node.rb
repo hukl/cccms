@@ -47,6 +47,11 @@ class Node < ActiveRecord::Base
   def find_or_create_draft user
     if draft && draft.user == user
       draft
+    elsif draft && draft.user.nil?
+      tmp_draft = draft
+      tmp_draft.user = user
+      tmp_draft.save
+      tmp_draft
     elsif draft && draft.user != user
       raise "Page is locked"
     else

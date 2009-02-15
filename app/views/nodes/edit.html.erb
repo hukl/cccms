@@ -2,29 +2,31 @@
 
 <h1>Editing page</h1>
 
-<% form_for(@page) do |f| %>
+<% form_for(@node) do |f| %>
   <%= f.error_messages %>
 
+  <% if draft = @node.find_or_create_draft( User.first ) %>
+  
+  <% fields_for @node.draft do |d| %>
   <p>
-    <%= f.label :node_id %><br />
-    <%= f.text_field :node_id %>
+    <%= d.label :title %><br />
+    <%= d.text_field :title %>
   </p>
   <p>
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
+    <%= d.label :abstract %><br />
+    <%= d.text_area :abstract %>
   </p>
   <p>
-    <%= f.label :abstract %><br />
-    <%= f.text_area :abstract %>
+    <%= d.label :body %><br />
+    <%= d.text_area :body %>
   </p>
-  <p>
-    <%= f.label :body %><br />
-    <%= f.text_area :body %>
-  </p>
-  <p>
-    <%= f.label :revision %><br />
-    <%= f.text_field :revision %>
-  </p>
+  <% end %>
+  
+  <% else %>
+  
+  <p>Page is locked</p>
+  
+  <% end %>
   <p>
     <%= f.submit "Update" %>
   </p>
