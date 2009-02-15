@@ -119,7 +119,10 @@ the standard create/update/destroy derived permissions.
 Every user without having any permissions is allowed to perform non-destructive
 tasks that won't affect the frontend (published pages). What am I talking about?
 
-Bob has no permissions whatsoever still he is allowed to edit a #Page anywhere, because this action will only create a new revision of the #Page which is not immediately published. He won't be able to manipulate a #Node in any way (unique_name, slug, ordering, structure) because this would affect the frontend
+Bob has no permissions whatsoever still he is allowed to edit a #Page anywhere, 
+because this action will only create a new revision of the #Page which is not 
+immediately published. He won't be able to manipulate a #Node in any way 
+(unique_name, slug, ordering, structure) because this would affect the frontend
 without further notice.
 
 Having a #Permission on a #Node makes Bob an admin for this #Node and all it's
