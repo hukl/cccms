@@ -1,7 +1,19 @@
 <h1>Nodes</h1>
 
-<ul>
+<%= will_paginate @nodes %>
+
+<table id="node_table">
   <% @nodes.each do |node| %>
-  <li><%= link_to node.unique_name, node_path(node) %></li>
+  <tr>
+    <td><%= link_to node.unique_name, node_path(node) %></td>
+    <td><%= node.head.title if node.head %></td>
+    <td>
+      <%= link_to 'Show',     node_path(node) %>
+      <%= link_to 'Edit',     edit_node_path(node) %>
+      <%= link_to 'Destroy',  node, :method => :delete %>
+    </td>
+  </tr>
   <% end %>
-</ul>
+</table>
+
+<%= will_paginate @nodes %>
