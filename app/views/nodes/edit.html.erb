@@ -2,28 +2,36 @@
 
 <h1>Editing page</h1>
 
-<% form_for(@node) do |f| %>
-  <%= f.error_messages %>
-  
-  <% fields_for @node.find_or_create_draft( current_user ) do |d| %>
-  <p>
-    <%= d.label :title %><br />
-    <%= d.text_field :title %>
-  </p>
-  <p>
-    <%= d.label :abstract %><br />
-    <%= d.text_area :abstract %>
-  </p>
-  <p>
-    <%= d.label :body %><br />
-    <%= d.text_area :body %>
-  </p>
-  <% end %>
-    
-  <p>
-    <%= f.submit "Update" %>
-  </p>
-<% end %>
+<%= I18n.locale %>
 
-<%= link_to 'Show', @page %> |
-<%= link_to 'Back', pages_path %>
+<%= @node.unique_name %>
+
+<div class="page_editor">
+  <% form_for(@node) do |f| %>
+    <%= f.error_messages %>
+    
+    <% draft = @node.find_or_create_draft( current_user ) %>
+    <% fields_for draft do |d| %>
+    <p></p>
+    <p>
+      <%= d.label :title %><br />
+      <%= d.text_field :title, :value => draft.title %>
+    </p>
+    <p>
+      <%= d.label :abstract %><br />
+      <%= d.text_area :abstract, :value => draft.abstract %>
+    </p>
+    <p>
+      <%= d.label :body %><br />
+      <%= d.text_area :body, :value => draft.body, :class => 'with_editor' %>
+    </p>
+    <% end %>
+      
+    <p>
+      <%= f.submit "Update" %>
+    </p>
+  <% end %>
+  
+  <%= link_to 'Show', @node %> |
+  <%= link_to 'Back', nodes_path %>
+</div>
