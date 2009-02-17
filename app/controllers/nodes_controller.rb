@@ -5,7 +5,12 @@ class NodesController < ApplicationController
   before_filter :find_node, :only => [:create, :show, :edit, :update, :destroy]
 
   def index
-    @nodes = Node.root.children.all(:include => :head)
+    @nodes = Node.root.descendants.paginate( 
+      :include => :head, 
+      :page => params[:page], 
+      :per_page => 30
+    )
+    #@nodes = Node.root.descendants.all(:include => :head)
   end
 
   def new
