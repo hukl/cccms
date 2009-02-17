@@ -1,19 +1,24 @@
 <h1>Nodes</h1>
 
 <%= will_paginate @nodes %>
-
-<table id="node_table">
-  <% @nodes.each do |node| %>
-  <tr>
-    <td><%= link_to node.unique_name, node_path(node) %></td>
-    <td><%= node.head.title if node.head %></td>
-    <td>
-      <%= link_to 'Show',     node_path(node) %>
-      <%= link_to 'Edit',     edit_node_path(node) %>
-      <%= link_to 'Destroy',  node, :method => :delete %>
-    </td>
-  </tr>
-  <% end %>
-</table>
-
+<p>
+  <table id="node_table">
+    <tr>
+      <th class="title">Title</th>
+      <th class="path">Path</th>
+      <th class="actions">Actions</th>
+    </tr>
+    <% @nodes.each do |node| %>
+    <tr class="<%= cycle("even", "odd") %>">
+      <td><%= node.head.title if node.head %></td>
+      <td><%= node.unique_name %></td>
+      <td>
+        <%= link_to 'Show',     node_path(node) %>
+        <%= link_to 'Edit',     edit_node_path(node) %>
+        <%= link_to 'Destroy',  node, :method => :delete %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</p>
 <%= will_paginate @nodes %>

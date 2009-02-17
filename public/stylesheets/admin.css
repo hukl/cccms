@@ -2,3 +2,43 @@ body {
   font-family: Arial, sans-serif;
   font-size: 10pt;
 }
+
+a {
+  color: #009cff;
+}
+
+table {}
+
+table#node_table {
+  width: 800px;
+}
+
+tr.odd {
+  background-color: #f1f1f1;
+}
+
+th {
+  text-align: left;
+}
+
+th.title {
+  width: 450px;
+}
+
+th.path {
+  width: 300px;
+}
+
+th.actions {
+  width: 150px;
+}
+
+td {}
+
+.page_editor input[type=text] {
+  width: 600px;
+}
+
+.page_editor textarea {
+  width: 600px;
+}
