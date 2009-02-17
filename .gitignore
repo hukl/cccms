@@ -5,3 +5,4 @@ schema.rb
 doc/app
 coverage
 .project
+db/updates/
