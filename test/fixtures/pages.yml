@@ -1,8 +1,1 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  node_id: 1
-  title: MyString
-  abstract: MyText
-  body: MyText
-  revision: 1
