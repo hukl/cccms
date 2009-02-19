@@ -6,7 +6,6 @@ class ContentController < ApplicationController
   # return a node though, the node is really a proxy object for pages. It 
   # returns the most recent page associated to this node instead.
   def render_page
-    I18n.locale = params[:language]
     path = params[:page_path].join('/')
     
     @page = Node.find_page(path)
