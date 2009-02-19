@@ -24,6 +24,12 @@
   </head>
   
   <body>
-    <%= yield :layout %>
+    <div id="navigation">
+      <p><%= I18n.locale %></p>
+      <%= language_selector %>
+    </div>
+    <div id="content">
+      <%= yield :layout %>
+    </div>
   </body>
 </html>
