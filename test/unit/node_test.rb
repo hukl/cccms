@@ -7,8 +7,8 @@ class NodeTest < ActiveSupport::TestCase
     @first_child = Node.find(2)
     @second_child = Node.find(3)
     
-    @user1 = User.create :login => 'demo'
-    @user2 = User.create :login => 'show'
+    @user1 = User.create :login => 'demo', :email => "f@b.com", :password => 'foobar', :password_confirmation => 'foobar'
+    @user2 = User.create :login => 'show', :email => "f@b.com", :password => 'foobar', :password_confirmation => 'foobar'
   end
   
   def test_created_nodes_have_an_empty_draft_and_no_head
@@ -50,9 +50,9 @@ class NodeTest < ActiveSupport::TestCase
     node = Node.create :slug => "third_child"
     node.move_to_child_of @root
     node.publish_draft!
-    
+
     node.find_or_create_draft @user1
-    
+
     assert_raise(RuntimeError) do
       node.find_or_create_draft @user2
     end
