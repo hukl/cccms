@@ -57,7 +57,10 @@ class Node < ActiveRecord::Base
     elsif draft && draft.user != user
       raise "Page is locked"
     else
-      self.pages.create! :user_id => user.id
+      p = self.pages.create!
+      p.user = user
+      p.save
+      p
     end
   end
   
