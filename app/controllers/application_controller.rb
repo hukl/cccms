@@ -9,4 +9,12 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password, :password_confirmation
+  
+  before_filter :set_locale
+  
+  protected
+  
+    def set_locale
+      I18n.locale = params[:locale] || :en
+    end
 end
