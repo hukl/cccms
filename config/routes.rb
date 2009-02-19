@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.filter :locale
+  
   map.resources :pages
   map.resources :nodes
   
@@ -7,7 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users
   map.resource  :session
   
-  map.connect   ':language/*page_path',
+  map.connect   '/*page_path',
                 :controller => 'content', :action => 'render_page', 
                 :requirements => {:language => /\w{2}/}
   
