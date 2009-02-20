@@ -3,7 +3,7 @@ require 'routing_filter/base'
 
 module RoutingFilter
   class Locale < Base
-    @@default_locale = :en
+    @@default_locale = :he
     cattr_reader :default_locale
     
     class << self
@@ -26,7 +26,9 @@ module RoutingFilter
       locale = args.extract_options!.delete(:locale) || I18n.locale
       returning yield do |result|
         if locale.to_sym != @@default_locale
-          result.sub!(%r(^(http.?://[^/]*)?(.*))){ "#{$1}/#{locale}#{$2}" }
+          if result.respond_to?(:sub)
+            result.sub!(%r(^(http.?://[^/]*)?(.*))){ "#{$1}/#{locale}#{$2}" }        
+          end
         end 
       end
     end
