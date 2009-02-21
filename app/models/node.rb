@@ -58,11 +58,17 @@ class Node < ActiveRecord::Base
       raise "Page is locked"
     else
       # TODO clone tags later on
-      p = self.pages.create!( 
-        :title => self.head.title, 
-        :abstract => self.head.abstract, 
-        :body => self.head.body
-      )
+      p = self.pages.create!
+      
+      I18n.available_locales.each do |l|
+        next if l == :root
+        I18n.locale = l 
+        
+        p.title = self.head.title
+        p.abstract = self.head.abstract
+        p.body = self.head.body
+      end
+      
       p.user = user
       p.save
       p

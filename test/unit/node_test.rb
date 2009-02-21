@@ -11,6 +11,34 @@ class NodeTest < ActiveSupport::TestCase
     @user2 = User.create :login => 'show', :email => "f@b.com", :password => 'foobar', :password_confirmation => 'foobar'
   end
   
+  def test_cloning_a_head_page_to_a_new_draft_with_translations
+    assert_not_nil draft = @first_child.draft
+    I18n.locale = :de
+    draft.title = "Hallo"
+    draft.abstract = "Bitte"
+    draft.body = "Danke"
+    draft.save
+    I18n.locale = :en
+    draft.title = "Hello"
+    draft.abstract = "Please"
+    draft.body = "Thanks"
+    draft.save
+    
+    @first_child.publish_draft!
+    
+    draft1 = @first_child.find_or_create_draft(@user1)
+    
+    I18n.locale = :de
+    assert_equal "Hallo",   draft1.title
+    assert_equal "Bitte",   draft1.abstract
+    assert_equal "Danke",   draft1.body
+    
+    I18n.locale = :en
+    assert_equal "Hello",   draft1.title
+    assert_equal "Please",  draft1.abstract
+    assert_equal "Thanks",  draft1.body
+  end
+  
   def test_created_nodes_have_an_empty_draft_and_no_head
     node = Node.create :slug => "third_child"
     node.move_to_child_of @root
