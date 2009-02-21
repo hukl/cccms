@@ -99,6 +99,11 @@ class UpdateImporter
       
     end
     
+    if xhtml.elements['author']
+      user = User.find_by_login(xhtml.elements['author'].get_text.to_s)
+      page.user = user
+    end
+    
     page.published_at = date.to_time
     page.save!
     
