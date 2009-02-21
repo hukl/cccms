@@ -84,8 +84,7 @@ class UpdateImporter
       page = node.pages.create!(
         :title => xhtml.elements['title'].get_text.to_s,
         :abstract => xhtml.elements['abstract'].get_text.to_s,
-        :body => body,
-        :published_at => date
+        :body => body
       )
     else
       page = node.pages.first
@@ -98,8 +97,12 @@ class UpdateImporter
         :body => body
       )
       
-      page.save
     end
+    
+    page.published_at = date.to_time
+    page.save!
+    
+    puts page.published_at
     
     page.tag_list.add("update") if page
     
@@ -110,7 +113,6 @@ class UpdateImporter
     end
     
     if node.head.nil? && page
-      puts page.title
       node.head = page
       node.save!
     end
