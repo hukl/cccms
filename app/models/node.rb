@@ -57,7 +57,12 @@ class Node < ActiveRecord::Base
     elsif draft && draft.user != user
       raise "Page is locked"
     else
-      p = self.pages.create!
+      # TODO clone tags later on
+      p = self.pages.create!( 
+        :title => self.head.title, 
+        :abstract => self.head.abstract, 
+        :body => self.head.body
+      )
       p.user = user
       p.save
       p
