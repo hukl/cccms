@@ -15,15 +15,15 @@
     <p></p>
     <p>
       <%= d.label :title %><br />
-      <%= d.text_field :title, :value => draft.title %>
+      <%= d.text_field :title %>
     </p>
     <p>
       <%= d.label :abstract %><br />
-      <%= d.text_area :abstract, :value => draft.abstract %>
+      <%= d.text_area :abstract %>
     </p>
     <p>
       <%= d.label :body %><br />
-      <%= d.text_area :body, :value => draft.body, :class => 'with_editor' %>
+      <%= d.text_area :body, :class => 'with_editor' %>
     </p>
     <% end %>
       
