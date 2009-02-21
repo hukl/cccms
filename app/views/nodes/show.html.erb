@@ -1,10 +1,5 @@
-<h1>Nodes</h1>
+<h1>Node</h1>
 
-<table>
-  <% @nodes.each do |node| %>
-  <tr>
-    <td><%= link_to node.unique_name, node_path(node) %></td>
-    <td><%= link_to 'Edit', edit_node_path(node) %></td>
-  </tr>
-  <% end %>
-</table>
+<%= @node.unique_name %>
+
+<%= link_to 'Edit', edit_node_path %>

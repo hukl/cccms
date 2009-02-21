@@ -58,6 +58,8 @@ class NodesController < ApplicationController
   
   def publish
     @node.publish_draft!
+    flash[:notice] = "Draft has been published"
+    redirect_to node_path
   end
   
   def move_to

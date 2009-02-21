@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
       reset_session
       
       self.current_user = user
-      redirect_back_or_default('/')   # TODO: insert appropriate path to cms main page
+      redirect_back_or_default('/de/admin')   # TODO: insert appropriate path to cms main page
       flash[:notice] = "Logged in successfully"
     else
       note_failed_signin

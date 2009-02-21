@@ -25,7 +25,12 @@
   
   <body>
     <div id="navigation">
-      <%= I18n.locale %> <%= language_selector %>
+      <%= I18n.locale %> <%= language_selector %> |
+      
+      <%= link_to 'Nodes', nodes_path %>
+    </div>
+    <div id="flash">
+      <%= flash[:notice] %>
     </div>
     <div id="content">
       <%= yield :layout %>
