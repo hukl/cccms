@@ -2,7 +2,14 @@ class NodesController < ApplicationController
   
   layout 'admin'
   before_filter :login_required
-  before_filter :find_node, :only => [:create, :show, :edit, :update, :destroy]
+  before_filter :find_node, :only => [
+                              :create, 
+                              :show, 
+                              :edit, 
+                              :update, 
+                              :destroy,
+                              :publish
+                            ]
 
   def index
     @nodes = Node.root.descendants.paginate( 
