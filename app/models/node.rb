@@ -11,7 +11,7 @@ class Node < ActiveRecord::Base
   after_create :initialize_empty_page
   
   # Validations
-  validates_length_of :slug, :within => 3..40
+  # validates_length_of :slug, :within => 3..40
   
   # Class methods
   
