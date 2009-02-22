@@ -24,15 +24,15 @@ class NodesController < ApplicationController
   end
 
   def create
-    parent = Node.find_by_unique_name(params[:parent_unique_name])
-    parent ||= Node.root
-    
     @node = Node.new( params[:node] )
     
-    if request.post? and @node.save
+    parent = Node.find(params[:parent_id])
+    
+    if parent and @node.save
       @node.move_to_child_of parent
       redirect_to(@node)
     else
+      @node.errors.add("Parent node")
       render :action => :new
     end
   end
@@ -46,9 +46,9 @@ class NodesController < ApplicationController
   end
 
   def update
-    draft = @node.find_or_create_draft current_user
-    
-    if draft.update_attributes( params[:page] )
+    @draft = @node.find_or_create_draft current_user
+    @draft.tag_list = params[:tag_list]
+    if @draft.update_attributes( params[:page] )
       redirect_to(@node)
     else
       render :action => :edit

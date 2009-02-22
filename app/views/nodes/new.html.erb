@@ -4,8 +4,13 @@
 
 <% form_for @node do |f| %>
   <p>
-    <%= f.label 'Parent node - Leave empty for top level' %><br />
-    <%= text_field_tag :parent_unique_name %>
+    <%= f.label 'Parent node' %><br />
+    <%= select_tag( 
+          :parent_id, 
+          options_for_select(
+            Node.root.self_and_descendants.select{|x| x.level < 3}.map{|x| [x.unique_name,x.id]}
+          )
+        ) %>
   </p>
   <p>
     <%= f.label :slug %><br />
