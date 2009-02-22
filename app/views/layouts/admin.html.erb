@@ -25,12 +25,7 @@
   
   <body>
     <div id="navigation">
-      <%= language_selector %> |
-      
-      <%= link_to 'Overview', :controller => :admin, :action => 'index' %> |
-      <%= link_to 'Nodes', nodes_path %> |
-      <%= link_to 'User', users_path %> | Actions:
-      <%= yield :menu %>
+      <%= render :partial => 'admin/menu' if current_user %>
     </div>
     <div id="flash">
       <%= flash[:notice] %>

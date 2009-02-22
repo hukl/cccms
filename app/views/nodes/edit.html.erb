@@ -1,3 +1,9 @@
+<div id='subnavigation'>
+  <%= link_to 'Show', @node %>
+  <%= link_to 'Back', nodes_path %>
+  <%= link_to 'Publish', publish_node_path, :method => :put %>
+</div>
+
 <h1>Editing page</h1>
 
 <strong>Sprache:</strong> <%= I18n.locale %> <strong>Pfad:</strong> <%= @node.unique_name %>
@@ -27,9 +33,4 @@
       <%= f.submit "Update" %>
     </p>
   <% end %>
-
-
-  <%= link_to 'Show', @node %> |
-  <%= link_to 'Back', nodes_path %> |
-  <%= link_to 'Publish', publish_node_path, :method => :put %>
 </div>

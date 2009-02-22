@@ -3,7 +3,6 @@ class NodesController < ApplicationController
   layout 'admin'
   before_filter :login_required
   before_filter :find_node, :only => [
-                              :create, 
                               :show, 
                               :edit, 
                               :update, 
@@ -21,15 +20,18 @@ class NodesController < ApplicationController
   end
 
   def new
-    @node = Node.new
+    @node = Node.new params[:node]
   end
 
   def create
-    tmp_node = Node.new( params[:node] )
+    parent = Node.find_by_unique_name(params[:parent_unique_name])
+    parent ||= Node.root
     
-    if request.post? and tmp_node.save
-      tmp_node.move_to_child_of @node
-      redirect_to(tmp_node)
+    @node = Node.new( params[:node] )
+    
+    if request.post? and @node.save
+      @node.move_to_child_of parent
+      redirect_to(@node)
     else
       render :action => :new
     end

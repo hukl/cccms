@@ -56,6 +56,11 @@ input[type=text] {
   line-height: 30px;
 }
 
+#subnavigation {
+  font-size: 15px;
+  padding-top: 10px;
+}
+
 #navigation a {
   text-decoration: none;
 }

@@ -1,12 +1,15 @@
 <h1>Create new node</h1>
 
+<%= error_messages_for :node %>
+
 <% form_for @node do |f| %>
   <p>
-    <%= f.label 'Parent node' %><br />
+    <%= f.label 'Parent node - Leave empty for top level' %><br />
     <%= text_field_tag :parent_unique_name %>
   </p>
   <p>
     <%= f.label :slug %><br />
     <%= f.text_field :slug %>
   </p>
+  <p><%= f.submit 'Create node' %></p>
 <% end %>
