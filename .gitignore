@@ -4,5 +4,6 @@ schema.rb
 .DS_Store
 doc/app
 coverage
+coverage.data
 .project
 db/updates/
