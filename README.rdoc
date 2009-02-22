@@ -10,7 +10,7 @@
 * untar db/updates.tbz
 * rake cccms:create_admin_user (admin:foobar)
 * rake cccms:import_updates
-* rake cccms:create_homepage
+* rake cccms:create_home_page
 * ./script/server to start the webserver
 
 ==Documentation
