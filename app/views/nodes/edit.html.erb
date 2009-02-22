@@ -20,6 +20,10 @@
       <%= d.text_field :title %>
     </p>
     <p>
+       <%= d.label 'Tags, comma sperated' %><br />
+       <%= text_field_tag :tag_list, draft.tag_list.join(", ") %>
+    </p>
+    <p>
       <%= d.label :abstract %><br />
       <%= d.text_area :abstract %>
     </p>
