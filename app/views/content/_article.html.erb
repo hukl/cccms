@@ -2,5 +2,5 @@
   <hr/>
 </div>
 <h2><%= article.title %></h2>
-<h3><%= date_for_page article %>, gregoa</h3>
+<h3><%= date_for_page article %>, <%= @page.user.login %></h3>
 <p><%= article.abstract %></p>

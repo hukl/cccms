@@ -10,7 +10,11 @@
     </tr>
     <% @nodes.each do |node| %>
     <tr class="<%= cycle("even", "odd") %>">
-      <td><%= node.head.title if node.head %></td>
+      <td>
+        <strong>
+          <%= truncate(node.head.title, 50) if node.head %>
+        </strong>
+      </td>
       <td><%= node.unique_name %></td>
       <td>
         <%= link_to 'Show',     node_path(node) %>
@@ -22,3 +26,7 @@
   </table>
 </p>
 <%= will_paginate @nodes %>
+
+<% content_for :menu do %>
+  <%= link_to 'Create', new_node_path %>
+<% end %>

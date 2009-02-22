@@ -1,2 +1,12 @@
-<h1>Nodes#new</h1>
-<p>Find me in app/views/nodes/new.html.erb</p>
+<h1>Create new node</h1>
+
+<% form_for @node do |f| %>
+  <p>
+    <%= f.label 'Parent node' %><br />
+    <%= text_field_tag :parent_unique_name %>
+  </p>
+  <p>
+    <%= f.label :slug %><br />
+    <%= f.text_field :slug %>
+  </p>
+<% end %>

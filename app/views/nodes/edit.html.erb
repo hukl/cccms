@@ -1,12 +1,6 @@
-<h1>Nodes#edit</h1>
-
-<%= link_to 'Publish', publish_node_path, :method => :put %>
-
 <h1>Editing page</h1>
 
-<%= I18n.locale %>
-
-<%= @node.unique_name %>
+<strong>Sprache:</strong> <%= I18n.locale %> <strong>Pfad:</strong> <%= @node.unique_name %>
 
 <div class="page_editor">
   <% form_for(@node) do |f| %>
@@ -33,7 +27,9 @@
       <%= f.submit "Update" %>
     </p>
   <% end %>
-  
+
+
   <%= link_to 'Show', @node %> |
-  <%= link_to 'Back', nodes_path %>
+  <%= link_to 'Back', nodes_path %> |
+  <%= link_to 'Publish', publish_node_path, :method => :put %>
 </div>

@@ -10,7 +10,7 @@
     <hr/>
   </div>
   <h2><a href="a_barriere.html"><%= @page.title %></a></h2>
-  <h3><%= date_for_page @page %>, gregoa</h3>
+  <h3><%= date_for_page @page %>, <%= @page.user.try(:login) %></h3>
   <hr class="subtitle" />
   <p><em><%= @page.abstract %></em></p>
   <%= aggregate?(@page.body) %>

@@ -15,12 +15,13 @@ class NodesController < ApplicationController
     @nodes = Node.root.descendants.paginate( 
       :include => :head, 
       :page => params[:page], 
-      :per_page => 30
+      :per_page => 25,
+      :order => 'id DESC'
     )
   end
 
   def new
-    
+    @node = Node.new
   end
 
   def create

@@ -33,7 +33,13 @@ th.actions {
   width: 150px;
 }
 
-td {}
+td {
+  padding: 3px;
+}
+
+input[type=text] {
+  width: 300px;
+}
 
 .page_editor input[type=text] {
   width: 600px;
@@ -41,4 +47,15 @@ td {}
 
 .page_editor textarea {
   width: 600px;
+}
+
+#navigation {
+  height: 40px;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+#navigation a {
+  text-decoration: none;
 }
