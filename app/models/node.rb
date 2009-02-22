@@ -60,22 +60,27 @@ class Node < ActiveRecord::Base
     elsif draft && draft.user != user
       raise "Page is locked"
     else
-      # TODO clone tags later on
-      p = self.pages.create!
-      
-      I18n.available_locales.each do |l|
-        next if l == :root
-        I18n.locale = l 
-        
-        p.title = self.head.title
-        p.abstract = self.head.abstract
-        p.body = self.head.body
-      end
-      
-      p.user = user
-      p.save
-      p
+      create_new_draft user
     end
+  end
+  
+  def create_new_draft user
+    p = self.pages.create!
+    
+    p.tag_list = self.head.tag_list.join(", ")
+    
+    I18n.available_locales.each do |l|
+      next if l == :root
+      I18n.locale = l 
+      
+      p.title = self.head.title
+      p.abstract = self.head.abstract
+      p.body = self.head.body
+    end
+    
+    p.user = user
+    p.save
+    p
   end
   
   def publish_draft!
