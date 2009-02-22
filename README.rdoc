@@ -2,16 +2,16 @@
 
 ==Setup
 
-• git clone git://github.com/hukl/cccms.git
-• git submodule init
-• git submodule update
-• create a database.yml in /db
-• rake db:migrate
-• untar db/updates.tbz
-• rake cccms:create_admin_user (admin:foobar)
-• rake cccms:import_updates
-• rake cccms:create_homepage
-• ./script/server to start the webserver
+* git clone git://github.com/hukl/cccms.git
+* git submodule init
+* git submodule update
+* create a database.yml in /db
+* rake db:migrate
+* untar db/updates.tbz
+* rake cccms:create_admin_user (admin:foobar)
+* rake cccms:import_updates
+* rake cccms:create_homepage
+* ./script/server to start the webserver
 
 ==Documentation
 
