@@ -1,4 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
+  map.root( 
+    :locale => 'de',
+    :controller => 'content', 
+    :action => 'render_page',
+    :page_path => ['home']
+  )
+  
   map.filter :locale
   
   map.resources :pages

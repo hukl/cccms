@@ -39,4 +39,18 @@ namespace :cccms do
     i = UpdateImporter.new("#{RAILS_ROOT}/db/updates")
     i.import_xml
   end
+  
+  desc "Create Home Page"
+  task :create_home_page  => :environment do |t|
+    n = Node.create :slug => 'home'
+    n.move_to_child_of Node.root
+    
+    d = n.draft
+    d.title = "Startseite"
+    d.abstract = "Wilkommen auf der Seite des CCC"
+    d.body = "Hier gibts content"
+    d.save
+    
+    n.publish_draft!
+  end
 end

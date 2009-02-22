@@ -24,7 +24,7 @@ class Node < ActiveRecord::Base
     unless revision.class == Fixnum
       raise ArgumentError, "revision must be a Fixnum" 
     end
-    
+
     node = Node.find_by_unique_name(path)
         
     if node
