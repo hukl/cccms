@@ -1,6 +1,12 @@
 module Globalize
   module Model
     class AttributeStash < Hash
+      def contains?(locale, attr_name)
+        locale = locale.to_sym
+        self[locale] ||= {}
+        self[locale].has_key? attr_name        
+      end
+      
       def read(locale, attr_name)
         locale = locale.to_sym
         self[locale] ||= {}
@@ -17,13 +23,16 @@ module Globalize
     class Adapter
       def initialize(record)
         @record = record
+        
+        # TODO what exactly are the roles of cache and stash
         @cache = AttributeStash.new
         @stash = AttributeStash.new
       end
       
       def fetch(locale, attr_name)
         # locale = I18n.locale
-        @cache.read(locale, attr_name) || begin
+        is_cached = @cache.contains?(locale, attr_name)
+        is_cached ? @cache.read(locale, attr_name) : begin
           value = fetch_attribute locale, attr_name
           @cache.write locale, attr_name, value if value && value.locale == locale
           value
@@ -47,6 +56,7 @@ module Globalize
       # Clears the cache
       def clear
         @cache.clear
+        @stash.clear
       end
       
       private
@@ -61,6 +71,7 @@ module Globalize
         # Check the @globalize_set_translations cache first to see if we've just changed the 
         # attribute and not saved yet.
         fallbacks.each do |fallback|
+          # TODO should we be checking stash or just cache?
           result = @stash.read(fallback, attr_name) || begin
             translation = translations.detect {|tr| tr.locale == fallback }
             translation && translation.send(attr_name)
