@@ -38,5 +38,12 @@ class Page < ActiveRecord::Base
       :order => "#{options[:order_by]} #{options[:order_direction]}")
   end
   
+  def self.with_locale l, &block
+    old_locale = self.locale
+    self.locale = l
+    yield
+    self.locale = old_locale
+  end
+  
   # Instance Methods
 end
