@@ -69,6 +69,8 @@ class Node < ActiveRecord::Base
     
     p.tag_list = self.head.tag_list.join(", ")
     
+    locale_before = I18n.locale
+    
     I18n.available_locales.each do |l|
       next if l == :root
       I18n.locale = l 
@@ -77,6 +79,8 @@ class Node < ActiveRecord::Base
       p.abstract = self.head.abstract
       p.body = self.head.body
     end
+    
+    I18n.locale = locale_before
     
     p.user = user
     p.save
