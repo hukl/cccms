@@ -84,6 +84,7 @@ class Node < ActiveRecord::Base
 
     p.user = user
     p.save
+    p.reload
     p
   end
   
