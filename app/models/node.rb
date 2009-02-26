@@ -73,14 +73,13 @@ class Node < ActiveRecord::Base
     
     I18n.available_locales.each do |l|
       next if l == :root
-      Page.with_locale l do 
-        p.title = self.head.title
-        p.abstract = self.head.abstract
-        p.body = self.head.body
-      end
+      I18n.locale = l
+      p.title = self.head.title
+      p.abstract = self.head.abstract
+      p.body = self.head.body
     end
     
-    Page.locale = locale_before
+    I18n.locale = locale_before
 
     p.user = user
     p.save
