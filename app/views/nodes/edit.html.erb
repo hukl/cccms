@@ -12,8 +12,7 @@
   <% form_for(@node) do |f| %>
     <%= f.error_messages %>
     
-    <% draft = @node.find_or_create_draft( current_user ) %>
-    <% fields_for draft do |d| %>
+    <% fields_for @draft do |d| %>
     <p></p>
     <p>
       <%= d.label :title %><br />
@@ -21,7 +20,7 @@
     </p>
     <p>
        <%= d.label 'Tags, comma sperated' %><br />
-       <%= text_field_tag :tag_list, draft.tag_list.join(", ") %>
+       <%= text_field_tag :tag_list, @draft.tag_list.join(", ") %>
     </p>
     <p>
       <%= d.label :abstract %><br />

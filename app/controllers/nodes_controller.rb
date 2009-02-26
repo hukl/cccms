@@ -42,7 +42,7 @@ class NodesController < ApplicationController
   end
 
   def edit
-    
+    @draft = @node.find_or_create_draft( current_user )
   end
 
   def update
