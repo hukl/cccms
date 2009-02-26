@@ -20,6 +20,5 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id.:format'
   
   map.connect   '/*page_path',
-                :controller => 'content', :action => 'render_page', 
-                :requirements => {:language => /\w{2}/}
+                :controller => 'content', :action => 'render_page'
 end
