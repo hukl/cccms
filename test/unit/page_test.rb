@@ -2,4 +2,48 @@ require 'test_helper'
 
 class PageTest < ActiveSupport::TestCase
   
+  def setup
+    @user1 = User.create :login => 'demo', :email => "f@b.com", :password => 'foobar', :password_confirmation => 'foobar'
+    @user2 = User.create :login => 'show', :email => "f@b.com", :password => 'foobar', :password_confirmation => 'foobar'
+  end
+  
+  def test_aggregation
+    # Create two nodes and move them beneath the root node
+    n1 = Node.create! :slug => "one"
+    n2 = Node.create! :slug => "two"
+    n1.move_to_child_of Node.root
+    n2.move_to_child_of Node.root
+    
+    # get the drafts created_with 
+    assert_not_nil d1 = n1.find_or_create_draft( @user1 )
+    assert_not_nil d3 = n2.find_or_create_draft( @user1 )
+    
+    d1.tag_list = "update"
+    d1.save
+    n1.publish_draft!
+
+    d2 = n1.find_or_create_draft @user1
+    n1.publish_draft!
+    
+    
+    d3.tag_list = "update, pressemitteilung"
+    d3.save
+    n2.publish_draft!
+
+    d4 = n2.find_or_create_draft @user1
+    n2.publish_draft!
+    
+    options1 = {
+      :tags => "update"
+    }
+    
+    options2 = {
+      :tags => "update, pressemitteilung"
+    }
+    
+    assert_equal 2, Page.aggregate( options1 ).length
+    assert_equal 1, Page.aggregate( options2 ).length
+    assert_equal 4, Page.find_tagged_with( "update" ).count
+    assert_equal [d2.id, d4.id], Page.aggregate( options1 ).map {|x| x.id}
+  end
 end
