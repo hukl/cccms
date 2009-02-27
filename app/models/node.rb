@@ -65,26 +65,34 @@ class Node < ActiveRecord::Base
   end
   
   def create_new_draft user
-    p = self.pages.create!
+    page = self.pages.create!
     
-    p.tag_list = self.head.tag_list.join(", ")
+    if self.head
+      clone_attributes_to page
+    end
+    
+    page.user = user
+    page.save
+    page.reload
+    page
+  end
+  
+  def clone_attributes_to page
+    page.tag_list = self.head.tag_list.join(", ")
     
     locale_before = I18n.locale
     
     I18n.available_locales.each do |l|
       next if l == :root
       I18n.locale = l
-      p.title = self.head.title
-      p.abstract = self.head.abstract
-      p.body = self.head.body
+      page.title = self.head.title
+      page.abstract = self.head.abstract
+      page.body = self.head.body
     end
     
     I18n.locale = locale_before
-
-    p.user = user
-    p.save
-    p.reload
-    p
+    
+    page
   end
   
   def publish_draft!

@@ -14,10 +14,11 @@ class PageTest < ActiveSupport::TestCase
     n1.move_to_child_of Node.root
     n2.move_to_child_of Node.root
     
-    # get the drafts created_with 
+    # get the drafts and assign a user to it
     assert_not_nil d1 = n1.find_or_create_draft( @user1 )
     assert_not_nil d3 = n2.find_or_create_draft( @user1 )
     
+    # tag and double publish so we have 4 pages tagged with "update"
     d1.tag_list = "update"
     d1.save
     n1.publish_draft!
@@ -33,6 +34,7 @@ class PageTest < ActiveSupport::TestCase
     d4 = n2.find_or_create_draft @user1
     n2.publish_draft!
     
+    # Set up two options hashes for the assertions
     options1 = {
       :tags => "update"
     }
