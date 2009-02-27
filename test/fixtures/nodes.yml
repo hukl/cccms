@@ -3,7 +3,7 @@
 root:
   id: 1
   lft: 1
-  rgt: 6
+  rgt: 8
   parent_id:
   slug:
   unique_name:
@@ -24,3 +24,11 @@ second_child:
   parent_id: 1
   slug: second_child
   unique_name: second_child
+  
+third_child:
+  id: 4
+  lft: 6
+  rgt: 7
+  parent_id: 1
+  slug: third_child
+  unique_name: third_child
