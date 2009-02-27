@@ -11,6 +11,33 @@ class NodeTest < ActiveSupport::TestCase
     @user2 = User.create :login => 'show', :email => "f@b.com", :password => 'foobar', :password_confirmation => 'foobar'
   end
   
+  def test_user_gets_assigned_to_unlocked_draft
+    assert_not_nil @first_child.draft
+    assert_nil @first_child.draft.user
+    @first_child.find_or_create_draft @user1
+    assert_equal @user1, @first_child.draft.user
+  end
+  
+  def test_unique_path_returns_an_array
+    assert_equal ["first_child"], @first_child.unique_path
+    
+    new_node = Node.create! :slug => "third_child"
+    new_node.move_to_child_of @first_child
+    
+    assert_equal ["first_child", "third_child"], new_node.unique_path
+  end
+  
+  def test_specifying_a_revision_other_than_with_a_fixnum_raises_exception
+    assert_raise(ArgumentError) { Node.find_page "first_child", 1.9 }
+    assert_raise(ArgumentError) { Node.find_page "first_child", "1" }
+    assert_raise(ArgumentError) { Node.find_page "first_child", :head }
+  end
+  
+  def test_publish_draft_on_a_node_without_a_draft_returns_nil
+    assert @first_child.publish_draft!
+    assert_nil @first_child.publish_draft!
+  end
+  
   def test_cloning_a_head_page_to_a_new_draft_with_translations
     assert_not_nil draft = @first_child.draft
     I18n.locale = :de
