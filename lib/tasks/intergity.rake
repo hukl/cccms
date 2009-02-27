@@ -5,6 +5,7 @@ namespace :ci do
     FileUtils.cp db_config, File.join(%w{config database.yml})
   end
   
+  desc "run all task necessary to build with integrity"
   task :run_ci do
     
     system "git submodule init"
