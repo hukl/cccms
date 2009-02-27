@@ -117,9 +117,10 @@ class Node < ActiveRecord::Base
   
   protected
   
-    # Creates an empty page, associates it to the given node and sets its
-    # published_at date so it isn't considered a draft. Look up the draft
-    # method!
+    # Creates an empty page and associates it to the given node. This means
+    # freshly created node has an empty draft. A user can create nodes as he
+    # wants to which will not appear on the public page until the author edits
+    # that draft and publishes it.
     def initialize_empty_page
       if self.pages.empty?
         self.pages.create!
