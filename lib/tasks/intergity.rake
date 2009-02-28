@@ -13,7 +13,7 @@ namespace :ci do
     :fetch_database_config
     system "rake db:migrate"
     system "rake db:test:clone"
-    system "rake test"
+    system "rake test:coverage"
   
   end
 end
