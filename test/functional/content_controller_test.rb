@@ -51,6 +51,22 @@ class ContentControllerTest < ActionController::TestCase
     assert_select("h2", "two")
   end
   
+  def test_page_containing_aggregator_with_custom_template
+    fill_pages_with_content
+    
+    new_node = create_node_under_root "fnord"
+    draft = new_node.find_or_create_draft @user1
+    draft.body = '<aggregate tags="update" limit="20" partial="sidebar_title_only" />'
+    draft.save
+    new_node.publish_draft!
+    
+    get :render_page, :locale => 'de', :page_path => ["fnord"]
+    assert_response :success
+    
+    assert_select(".sidebar_headline", "one")
+    assert_select(".sidebar_headline", "two")
+  end
+  
   
   
   protected

@@ -33,6 +33,8 @@ module ContentHelper
           options[splitted_data[0].to_sym] = splitted_data[1].gsub(/\"/, "")
         end
         
+        options[:partial] = select_partial( options[:partial] )
+        
         content.sub(tag, render_collection(options))
       else
         content
@@ -47,8 +49,31 @@ module ContentHelper
   # from Page.aggregate(options) with a given partial
   def render_collection options
     render(
-      :partial => 'content/article', 
-      :collection => Page.aggregate(options)
+      :partial => options[:partial], 
+      :collection => Page.aggregate(options),
+      :as => :page
     )
   end
+  
+  private
+  
+  # Either return a custom partial path if it exsits or default to the standard
+  # partial
+  def select_partial partial
+    if partial && partial_exists?( partial )
+      return "custom_templates/partials/#{partial}"
+    else
+      return 'content/article'
+    end
+  end
+
+  # Check if a custom partial exists in the proper location
+  def partial_exists? partial
+    File.exist?(
+      File.join( 
+        RAILS_ROOT, 'app', 'views', 'custom_templates', 'partials', "_#{partial}.html.erb"
+      )
+    )
+  end
+  
 end
