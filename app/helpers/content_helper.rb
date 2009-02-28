@@ -6,6 +6,10 @@ module ContentHelper
     page.published_at.to_s(:db) rescue page.created_at.to_s(:db)
   end
   
+  def author_for_page page
+    page.user ? page.user.login : "Unknown author"
+  end
+  
   # This method is an output filter for templates. It accepts any kind of text
   # and checks for an <aggregate /> tag within it. If such a tag is found, its 
   # attributes are parsed and converted into parameters for the 
@@ -34,7 +38,7 @@ module ContentHelper
         end
         
         options[:partial] = select_partial( options[:partial] )
-        
+
         content.sub(tag, render_collection(options))
       else
         content
