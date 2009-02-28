@@ -38,7 +38,8 @@ class Page < ActiveRecord::Base
       :match_all => true,
       :order => "#{options[:order_by]} #{options[:order_direction]}",
       :include => :node, 
-      :conditions => ["nodes.head_id = pages.id"]
+      :conditions => ["nodes.head_id = pages.id"],
+      :limit => options[:limit]
     )
     
   end
