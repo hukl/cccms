@@ -36,20 +36,15 @@ class ContentControllerTest < ActionController::TestCase
   def test_page_containing_aggregator
     assert_not_nil Node.root
     
-    d1 = @first_child.find_or_create_draft @user1
-    d1.title = "one"
-    d1.tag_list = "update"
-    d1.body = '<aggregate tags="update" limit="20" />'
-    d1.save
-    @first_child.publish_draft!
+    fill_pages_with_content
     
-    d2 = @second_child.find_or_create_draft @user1
-    d2.title = "two"
-    d2.tag_list = "update"
-    d2.save
-    @second_child.publish_draft!
+    new_node = create_node_under_root "fnord"
+    draft = new_node.find_or_create_draft @user1
+    draft.body = '<aggregate tags="update" limit="20" />'
+    draft.save
+    new_node.publish_draft!
     
-    get :render_page, :locale => 'de', :page_path => ["first_child"]
+    get :render_page, :locale => 'de', :page_path => ["fnord"]
     assert_response :success
     
     assert_select("h2", "one")
@@ -60,7 +55,23 @@ class ContentControllerTest < ActionController::TestCase
   
   protected
   
-    def create_update 
-      
+    def create_node_under_root slug
+      node = Node.create! :slug => slug
+      node.move_to_child_of Node.root
+      node
+    end
+  
+    def fill_pages_with_content 
+      d1 = @first_child.find_or_create_draft @user1
+      d1.title = "one"
+      d1.tag_list = "update"
+      d1.save
+      @first_child.publish_draft!
+
+      d2 = @second_child.find_or_create_draft @user1
+      d2.title = "two"
+      d2.tag_list = "update"
+      d2.save
+      @second_child.publish_draft!
     end
 end
