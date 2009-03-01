@@ -5,6 +5,7 @@ class Node < ActiveRecord::Base
   # Associations
   has_many    :pages, :order => "revision ASC"
   belongs_to  :head,  :class_name => "Page",  :foreign_key => :head_id
+  belongs_to  :draft, :class_name => "Page",  :foreign_key => :draft_id
   has_many    :permissions
   
   # Callbacks
@@ -41,22 +42,14 @@ class Node < ActiveRecord::Base
   
   # Instance Methods
   
-  # check if there is a page which has a nil :published_at column
-  # if there is one - it is considered a draft 
-  def draft
-    if draft = pages.find_by_published_at(nil)
-      draft
-    end
-  end
-  
+
   def find_or_create_draft user
     if draft && draft.user == user
       draft
     elsif draft && draft.user.nil?
-      tmp_draft = draft
-      tmp_draft.user = user
-      tmp_draft.save
-      tmp_draft
+      draft.user = user
+      save
+      draft
     elsif draft && draft.user != user
       raise "Page is locked"
     else
@@ -65,16 +58,18 @@ class Node < ActiveRecord::Base
   end
   
   def create_new_draft user
-    page = self.pages.create!
+    empty_page = self.pages.new
+    empty_page.user = user
+    empty_page.save!
+    
+    self.draft = empty_page
     
     if self.head
-      clone_attributes_to page
+      clone_attributes_to draft
     end
     
-    page.user = user
-    page.save
-    page.reload
-    page
+    self.save
+    draft
   end
   
   def clone_attributes_to page
@@ -98,6 +93,7 @@ class Node < ActiveRecord::Base
   def publish_draft!
     if self.draft
       self.head = self.draft
+      self.draft = nil
       self.save!
       
       self.head.published_at = Time.now
@@ -131,7 +127,8 @@ class Node < ActiveRecord::Base
     # that draft and publishes it.
     def initialize_empty_page
       if self.pages.empty?
-        self.pages.create!
+        self.draft = self.pages.create!
+        self.save
       end
     end
 end

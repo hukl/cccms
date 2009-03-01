@@ -9,3 +9,18 @@ two:
   id: 2
   revision: 1
   node_id: 4
+  
+draft1:
+  id: 100
+  revision: 1
+  node_id: 2
+  
+draft2:
+  id: 101
+  revision: 1
+  node_id: 3
+  
+draft3:
+  id: 102
+  revision: 1
+  node_id: 4

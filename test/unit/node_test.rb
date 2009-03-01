@@ -11,6 +11,21 @@ class NodeTest < ActiveSupport::TestCase
     @user2 = User.create :login => 'show', :email => "f@b.com", :password => 'foobar', :password_confirmation => 'foobar'
   end
   
+  def test_returning_existing_drafts
+    test_node = Node.create! :slug => "test_node"
+    test_node.move_to_child_of Node.root
+    
+    assert_not_nil test_node.draft
+    assert_equal 1, test_node.pages.length
+    assert_nil test_node.draft.user
+    
+    3.times do 
+      test_node.find_or_create_draft @user1
+    end
+    
+    assert_equal 1, test_node.pages.length
+  end
+  
   def test_user_gets_assigned_to_unlocked_draft
     assert_not_nil @first_child.draft
     assert_nil @first_child.draft.user
@@ -34,6 +49,7 @@ class NodeTest < ActiveSupport::TestCase
   end
   
   def test_publish_draft_on_a_node_without_a_draft_returns_nil
+    
     assert @first_child.publish_draft!
     assert_nil @first_child.publish_draft!
   end
@@ -127,34 +143,34 @@ class NodeTest < ActiveSupport::TestCase
   
   def test_order_of_pages_by_revision
     # This test should make sure the order is the same on different db's
-
-    one   = @second_child.pages.create :title => "one"
+    # Remember, there is already an empty draft
     two   = @second_child.pages.create :title => "two"
     three = @second_child.pages.create :title => "three"
+    four  = @second_child.pages.create :title => "four"
 
     @second_child.pages.reload
 
-    assert_equal [1,2,3], @second_child.pages.map { |x| x.revision }
+    assert_equal [1,2,3,4], @second_child.pages.map { |x| x.revision }
   end
   
   def test_behavior_of_acts_as_list
-    one   = @second_child.pages.create :title => "one"
     two   = @second_child.pages.create :title => "two"
     three = @second_child.pages.create :title => "three"
+    four  = @second_child.pages.create :title => "four"
 
-    assert_equal 1, one.revision
     assert_equal 2, two.revision
     assert_equal 3, three.revision
+    assert_equal 4, four.revision
 
-    assert_equal three, @second_child.pages.last
+    assert_equal four, @second_child.pages.last
 
-    assert one.move_to_bottom
+    assert two.move_to_bottom
 
-    one.reload; two.reload; three.reload;
+    two.reload; three.reload; four.reload;
 
-    assert_equal 3, one.revision
-    assert_equal 1, two.revision
+    assert_equal 4, two.revision
     assert_equal 2, three.revision
+    assert_equal 3, four.revision
   end
   
   def test_retrieving_page_current
@@ -200,5 +216,24 @@ class NodeTest < ActiveSupport::TestCase
 
     page = Node.find_page("updates/2008/foo", 2)
     assert_equal "Version 2", page.title
+  end
+  
+  # Thats a lengthy test to make sure everything works as it should, it was 
+  # created during a bug hunt
+  def test_creating_new_draft
+    test_node = Node.create! :slug => "test_node"
+    test_node.move_to_child_of Node.root
+    test_node.draft.user = @user1
+    test_node.save
+    assert test_node.publish_draft!
+    test_node.reload
+    assert_equal 1, test_node.pages.length
+    assert_not_nil test_node.head
+    assert_nil test_node.draft
+    test_node.find_or_create_draft @user1
+    test_node.reload
+    assert_equal 2, test_node.pages.length
+    assert_not_nil test_node.draft
+    assert test_node.head != test_node.draft
   end
 end
