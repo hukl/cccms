@@ -2,6 +2,11 @@ require 'csv'
 
 namespace :cccms do 
 
+  desc "Setup everythin"
+  task :setup_environment => [:create_admin_user, :import_updates, :create_home_page] do |t| 
+
+  end
+
   desc "Create admin:foobar user:password"
   task :create_admin_user  => :environment do |t| 
     User.create!(

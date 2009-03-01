@@ -102,6 +102,8 @@ class UpdateImporter
     if xhtml.elements['author']
       user = User.find_by_login(xhtml.elements['author'].get_text.to_s)
       page.user = user
+    else
+      page.user = User.first
     end
     
     page.published_at = date.to_time
@@ -120,6 +122,7 @@ class UpdateImporter
     
     if node.head.nil? && page
       node.head = page
+      node.draft = nil
       node.save!
     end
   end
