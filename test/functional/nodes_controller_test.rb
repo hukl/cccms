@@ -15,7 +15,9 @@ class NodesControllerTest < ActionController::TestCase
     test_node.move_to_child_of Node.root
     
     login_as :quentin
+    put :update, :id => test_node.id, :page => {:title => "Hello", :body => "There"}
     
-    
+    assert_equal "Hello", test_node.draft.title
+    assert_equal "There", test_node.draft.body
   end
 end
