@@ -1,0 +1,6 @@
+<div class="article">
+  <h2><%= @page.title %></h2>
+  <hr class="subtitle" />
+  <p><em><%= @page.abstract %></em></p>
+  <%= aggregate?(@page.body) %>
+</div>

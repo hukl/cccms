@@ -73,7 +73,7 @@ module ContentHelper
   # partial
   def select_partial partial
     if partial && partial_exists?( partial )
-      return "custom_templates/partials/#{partial}"
+      return "custom/partials/#{partial}"
     else
       return 'content/article'
     end
@@ -83,7 +83,7 @@ module ContentHelper
   def partial_exists? partial
     File.exist?(
       File.join( 
-        RAILS_ROOT, 'app', 'views', 'custom_templates', 'partials', "_#{partial}.html.erb"
+        RAILS_ROOT, 'app', 'views', 'custom', 'partials', "_#{partial}.html.erb"
       )
     )
   end

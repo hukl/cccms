@@ -1,5 +1,8 @@
 class Page < ActiveRecord::Base
   
+  PUBLIC_TEMPLATE_PATH = File.join(%w(custom page_templates public))
+  FULL_PUBLIC_TEMPLATE_PATH = File.join(RAILS_ROOT, 'app', 'views', PUBLIC_TEMPLATE_PATH)
+  
   # Mixins and Plugins
   acts_as_taggable  
   acts_as_list :column => :revision, :scope => :node_id
@@ -11,7 +14,7 @@ class Page < ActiveRecord::Base
   belongs_to :user
   
   # Security
-  attr_accessible :title, :abstract, :body
+  attr_accessible :title, :abstract, :body, :template_name
   
   # Class Methods
   
@@ -44,12 +47,58 @@ class Page < ActiveRecord::Base
     
   end
   
+  def self.custom_templates
+    files = Dir.entries(FULL_PUBLIC_TEMPLATE_PATH).select do |x| 
+      x if x.gsub!(".html.erb", "")
+    end
+  end
+  
   # Instance Methods
   
   def clone_attributes_from page
     return nil unless page
   
     self.tag_list = page.tag_list.join(", ")
+    
+    locale_before = I18n.locale
+    
+    I18n.available_locales.each do |l|
+      next if l == :root
+      I18n.locale = l
+      self.title    = page.title
+      self.abstract = page.abstract
+      self.body     = page.body
+    end
+  
+    I18n.locale = locale_before
+  end
+
+  def public_template_path
+    File.join(PUBLIC_TEMPLATE_PATH, template_name)
+  end
+  
+  def full_public_template_path
+    File.join(FULL_PUBLIC_TEMPLATE_PATH, template_name)
+  end
+  
+  def template_exists?
+    File.exists? "#{full_public_template_path}.html.erb"
+  end
+  
+  def valid_template
+    
+    if template_name && template_exists?
+      public_template_path
+    else
+      File.join(PUBLIC_TEMPLATE_PATH, 'render_page')
+    end    
+  end
+  
+  def clone_attributes_from page
+    return nil unless page
+  
+    self.tag_list = page.tag_list.join(", ")
+    self.template_name = page.template_name
     
     locale_before = I18n.locale
     

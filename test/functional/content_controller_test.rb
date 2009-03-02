@@ -67,7 +67,29 @@ class ContentControllerTest < ActionController::TestCase
     assert_select(".sidebar_headline", "two")
   end
   
+  def test_nonexistant_custom_template_defaults_to_standard_template
+    new_node = create_node_under_root "fnord"
+    draft = new_node.find_or_create_draft @user1
+    draft.template_name = "huchibu"
+    draft.save
+    new_node.publish_draft!
+    
+    get :render_page, :locale => 'de', :page_path => ["fnord"]
+    assert_response :success
+    assert_template "custom/page_templates/public/render_page.html.erb"
+  end
   
+  def test_custom_template_no_date_and_author
+    new_node = create_node_under_root "fnord"
+    draft = new_node.find_or_create_draft @user1
+    draft.template_name = "no_date_and_author"
+    draft.save
+    new_node.publish_draft!
+    
+    get :render_page, :locale => 'de', :page_path => ["fnord"]
+    assert_response :success
+    assert_template "custom/page_templates/public/no_date_and_author.html.erb"
+  end
   
   protected
   
