@@ -10,6 +10,7 @@
       <th class="title">Title</th>
       <th class="path">Path</th>
       <th class="actions">Actions</th>
+      <th class="editor">Locked by</th>
     </tr>
     <% @nodes.each do |node| %>
     <tr class="<%= cycle("even", "odd") %>">
@@ -23,6 +24,9 @@
         <%= link_to 'Show',     node_path(node) %>
         <%= link_to 'Edit',     edit_node_path(node) %>
         <%= link_to 'Destroy',  node, :method => :delete %>
+      </td>
+      <td>
+        <%= "#{node.draft.user.login}" if node.draft && node.draft.user %>
       </td>
     </tr>
     <% end %>
