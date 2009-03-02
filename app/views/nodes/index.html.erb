@@ -16,7 +16,7 @@
     <tr class="<%= cycle("even", "odd") %>">
       <td>
         <strong>
-          <%= truncate(node.head.title, :length => 50) if node.head %>
+          <%= title_for_node node %>
         </strong>
       </td>
       <td><%= node.unique_name %></td>
