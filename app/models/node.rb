@@ -59,35 +59,12 @@ class Node < ActiveRecord::Base
   def create_new_draft user
     empty_page = self.pages.new
     empty_page.user = user
-    empty_page.save!
+    
+    empty_page.clone_attributes_from self.head
     
     self.draft = empty_page
-    
-    if self.head
-      clone_attributes_to draft
-    end
-    
     self.save
-    draft
-  end
-  
-  def clone_attributes_to page
-    page.tag_list = self.head.tag_list.join(", ")
-    
-    locale_before = I18n.locale
-    
-    I18n.available_locales.each do |l|
-      next if l == :root
-      I18n.locale = l
-      page.title = self.head.title
-      page.abstract = self.head.abstract
-      page.body = self.head.body
-    end
-    
-    I18n.locale = locale_before
-    
-    page.save
-    page
+    self.draft.reload
   end
   
   def publish_draft!
@@ -113,7 +90,7 @@ class Node < ActiveRecord::Base
     parent.nil? && [slug] || parent.path_to_root.push(slug)
   end
   
-  def update_unique_name
+  def update_unique_name  
     path = self.path_to_root[1..-1]
     self.unique_name = path.join("/")
     self.save

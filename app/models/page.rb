@@ -45,4 +45,22 @@ class Page < ActiveRecord::Base
   end
   
   # Instance Methods
+  
+  def clone_attributes_from page
+    return nil unless page
+  
+    self.tag_list = page.tag_list.join(", ")
+    
+    locale_before = I18n.locale
+    
+    I18n.available_locales.each do |l|
+      next if l == :root
+      I18n.locale = l
+      self.title    = page.title
+      self.abstract = page.abstract
+      self.body     = page.body
+    end
+  
+    I18n.locale = locale_before
+  end
 end

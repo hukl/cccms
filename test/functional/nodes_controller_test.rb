@@ -37,6 +37,8 @@ class NodesControllerTest < ActionController::TestCase
     
     get :edit, :id => node.id
     assert_response :success
+    assert_select("#page_title[value=Hello]")
+    assert_select("#page_body", "World")
     
     node.reload
     assert_equal 2, node.pages.length
