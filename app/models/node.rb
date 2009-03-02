@@ -42,13 +42,12 @@ class Node < ActiveRecord::Base
   
   # Instance Methods
   
-
   def find_or_create_draft user
     if draft && draft.user == user
       draft
     elsif draft && draft.user.nil?
       draft.user = user
-      save
+      draft.save
       draft
     elsif draft && draft.user != user
       raise "Page is locked"
@@ -87,6 +86,7 @@ class Node < ActiveRecord::Base
     
     I18n.locale = locale_before
     
+    page.save
     page
   end
   
