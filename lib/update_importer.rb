@@ -1,3 +1,4 @@
+require 'vpim/icalendar'
 require 'rexml/document'
 require 'iconv'
 
@@ -116,10 +117,65 @@ class UpdateImporter
     if (flags = xhtml.elements['flags']) && page
       page.tag_list.add("event")            if flags.attributes['calendar']
       page.tag_list.add("pressemitteilung") if flags.attributes['pm']
+
+      if flags.attributes['calendar']
+        cal = Vpim::Icalendar.create2
+
+        dtstart   = xhtml.elements['ical:DTSTART']
+        dtisdate  = dtstart.attributes['VALUE']
+        raise "DTSTART not present in event"  unless dtstart
+        if dtisdate && dtisdate == 'DATE'
+          dtstart = dtstart.text.to_date
+        else
+          dtstart = dtstart.text.to_time
+        end
+
+        dtend     = xhtml.elements['ical:DTEND']
+        dtisdate  = dtend.attributes['VALUE'] if dtend
+        duration  = xhtml.elements['ical:DURATION']
+        puts "WARNING: Neither DTEND nor DURATION present in event" unless dtend || duration
+#        raise "Both DTEND and DURATION present in event" if dtend && duration
+        if dtend
+          if dtisdate && dtisdate == 'DATE'
+            dtend = dtend.text.to_date
+          else
+            dtend = dtend.text.to_time
+          end
+        end
+        duration  = duration.text if duration
+
+        location  = xhtml.elements['ical:LOCATION']
+        localtrep = location.attributes['ALTREP'] if location
+        location  = location.text if location
+
+        geo       = xhtml.elements['ical:GEO']
+        geo       = geo.text if geo
+
+        if( rrule = xhtml.elements['ical:RRULE'] )
+          rrtxt   = ''
+          rrule.each_element( ) { |subrule|
+            rrtxt += subrule.name + '=' + subrule.text + ';'
+          }
+          rrtxt.chomp!(';')
+        end
+
+        hash = { 'CREATED' => page.published_at } 
+        hash[ 'DTEND'    ] = dtend     if dtend
+        hash[ 'DURATION' ] = duration  if duration
+        hash[ 'LOCATION' ] = location  if location
+        hash[ 'GEO'      ] = geo       if geo
+        hash[ 'URL'      ] = localtrep if localtrep
+        hash[ 'RRULE'    ] = rrtxt     if rrtxt
+
+        xevent = Vpim::Icalendar::Vevent.create( dtstart, hash )
+        cal.push( xevent )
+        puts cal.to_s
+
+      end
     end
     
     page.save!
-    
+
     if node.head.nil? && page
       node.head = page
       node.draft = nil
