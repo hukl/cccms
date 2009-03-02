@@ -10,7 +10,7 @@ a {
 table {}
 
 table#node_table {
-  width: 800px;
+  width: 1000px;
 }
 
 tr.odd {
@@ -22,7 +22,7 @@ th {
 }
 
 th.title {
-  width: 450px;
+  width: 400px;
 }
 
 th.path {
@@ -30,7 +30,11 @@ th.path {
 }
 
 th.actions {
-  width: 150px;
+  width: 180px;
+}
+
+th.editor {
+  width: 120px;
 }
 
 td {

@@ -22,6 +22,28 @@ class NodesControllerTest < ActionController::TestCase
     assert_redirected_to node_path(Node.last)
   end
   
+  def test_editing_a_node
+    login_as :quentin
+    
+    node = Node.find_by_unique_name("fourth_child")
+    
+    assert_equal 1, node.pages.length
+    
+    draft = node.find_or_create_draft( User.first )
+    draft.title = "Hello"
+    draft.body = "World"
+    draft.save
+    node.publish_draft!
+    
+    get :edit, :id => node.id
+    assert_response :success
+    
+    node.reload
+    assert_equal 2, node.pages.length
+    assert_equal "Hello", node.find_or_create_draft( User.first ).title
+    assert_equal "World", node.find_or_create_draft( User.first ).body
+  end
+  
   def test_update_a_draft
     test_node = Node.create! :slug => "test_node"
     test_node.move_to_child_of Node.root

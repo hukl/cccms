@@ -7,7 +7,8 @@ class NodesController < ApplicationController
                               :edit, 
                               :update, 
                               :destroy,
-                              :publish
+                              :publish,
+                              :unlock
                             ]
 
   def index
@@ -65,6 +66,20 @@ class NodesController < ApplicationController
     @node.publish_draft!
     flash[:notice] = "Draft has been published"
     redirect_to node_path
+  end
+  
+  def unlock
+    # TODO that actually has to be implemented in the model, once we have
+    # permissions
+    if draft = @node.draft
+      draft.user = nil 
+      draft.save
+      flash[:notice] = "Node unlocked"
+    else
+      flash[:notice] = "Cannot unlock"
+    end
+    
+    redirect_to nodes_path
   end
   
   def move_to

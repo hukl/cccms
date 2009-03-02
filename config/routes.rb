@@ -9,7 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   map.filter :locale
   
   map.resources :pages
-  map.resources :nodes, :member => {:publish => :put}
+  map.resources :nodes, :member => {:publish => :put, :unlock => :put}
   
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login',   :controller => 'sessions', :action => 'new'

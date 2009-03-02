@@ -23,7 +23,8 @@
       <td>
         <%= link_to 'Show',     node_path(node) %>
         <%= link_to 'Edit',     edit_node_path(node) %>
-        <%= link_to 'Destroy',  node, :method => :delete %>
+        <%= link_to 'Destroy',  node, :method => :delete, :confirm => "Are you sure you want to delete this node?" %>
+        <%= link_to 'Unlock', unlock_node_path(node), :method => :put, :confirm => "Are you sure you want to unlock?" %>
       </td>
       <td>
         <%= "#{node.draft.user.login}" if node.draft && node.draft.user %>
