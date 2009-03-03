@@ -10,6 +10,14 @@ module ContentHelper
     page.user ? page.user.login : "Unknown author"
   end
   
+  def page_title page
+    if @page.title && @page.title != ""
+      "CCC | #{@page.title}"
+    else
+      "CCC | Chaos Computer Club"
+    end
+  end
+  
   # This method is an output filter for templates. It accepts any kind of text
   # and checks for an <aggregate /> tag within it. If such a tag is found, its 
   # attributes are parsed and converted into parameters for the 
