@@ -10,7 +10,7 @@ module ContentHelper
     page.user ? page.user.login : "Unknown author"
   end
   
-  def page_title page
+  def page_title
     if @page.title && @page.title != ""
       "CCC | #{@page.title}"
     else
