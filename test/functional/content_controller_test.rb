@@ -76,7 +76,7 @@ class ContentControllerTest < ActionController::TestCase
     
     get :render_page, :locale => 'de', :page_path => ["fnord"]
     assert_response :success
-    assert_template "custom/page_templates/public/render_page.html.erb"
+    assert_template "custom/page_templates/public/standard_template.html.erb"
   end
   
   def test_custom_template_no_date_and_author

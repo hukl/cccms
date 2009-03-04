@@ -90,7 +90,7 @@ class Page < ActiveRecord::Base
     if template_name && template_exists?
       public_template_path
     else
-      File.join(PUBLIC_TEMPLATE_PATH, 'render_page')
+      File.join(PUBLIC_TEMPLATE_PATH, 'standard_template')
     end    
   end
   
