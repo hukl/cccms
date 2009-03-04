@@ -25,19 +25,19 @@
             <div id="topnav">
                 <ul id="navlist">
                     <li>
-                        <a href="/club">Kennenlernen</a>
+                        <a href="<%= params[:locale] %>/club">Kennenlernen</a>
                     </li>
                     <li>
                         &bull;
                     </li>
                     <li>
-                        <a href="/support">Unterstützen</a>
+                        <a href="<%= params[:locale] %>/support">Unterstützen</a>
                     </li>
                     <li>
                         &bull;
                     </li>
                     <li>
-                        <a href="/contact">Erreichen</a>
+                        <a href="<%= params[:locale] %>/contact">Erreichen</a>
                     </li>
                     <% if current_user %>
                     <li>

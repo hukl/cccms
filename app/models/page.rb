@@ -94,6 +94,10 @@ class Page < ActiveRecord::Base
     end    
   end
   
+  def public_link
+    "#{I18n.locale}/#{node.unique_name}"
+  end
+  
   def clone_attributes_from page
     return nil unless page
   
