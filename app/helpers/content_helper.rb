@@ -75,7 +75,7 @@ module ContentHelper
     if partial && partial_exists?( partial )
       return "custom/partials/#{partial}"
     else
-      return 'content/article'
+      return 'custom/partials/article'
     end
   end
 
