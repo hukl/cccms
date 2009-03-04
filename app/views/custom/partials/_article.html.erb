@@ -2,6 +2,6 @@
   <hr/>
 </div>
 
-<h2><%= link_to page.title, "/#{page.node.unique_name}" %></h2>
+<h2><%= link_to page.title, page.public_link %></h2>
 <h3><%= date_for_page page %>, <%= author_for_page page %></h3>
 <p><%= page.abstract %></p>
