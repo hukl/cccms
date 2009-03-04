@@ -194,14 +194,15 @@ hr.subtitle {
 #content a {
 	padding: 1em;
 	margin: -1em;
-	color: #eab407;
+	color: #4d4d4d;
 	font-family: Verdana;
-	text-decoration: none;
+	text-decoration: underline;
 }
 
 #content a:hover {
 	padding: 1em;
 	text-decoration: underline;
+	color: #eab407;
 }
 
 div.teaserruler {
@@ -473,7 +474,7 @@ img {
 
 h2 {
 	font-family: Georgia;
-	font-size: 1.64em;
+	font-size: 1.84em;
 	font-weight: normal;
 }
 

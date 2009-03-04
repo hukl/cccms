@@ -20,31 +20,33 @@
             <div id="yellow">
             </div>
             <div id="title">
-                <h1>Chaos Computer Club</h1>
+                <h1><a href="/">Chaos Computer Club</a></h1>
             </div>
             <div id="topnav">
                 <ul id="navlist">
                     <li>
-                        <a href="#">CCC</a>
+                        <a href="/club">Kennenlernen</a>
                     </li>
                     <li>
                         &bull;
                     </li>
                     <li>
-                        <a href="#">Themen</a>
+                        <a href="/support">Unterstützen</a>
                     </li>
                     <li>
                         &bull;
                     </li>
                     <li>
-                        <a href="#">Termine</a>
+                        <a href="/contact">Erreichen</a>
                     </li>
+                    <% if current_user %>
                     <li>
                         &bull;
                     </li>
                     <li>
-                        <a href="#">Projekte</a>
+                      <%= link_to 'Edit', edit_node_path(@page.node) %>
                     </li>
+                    <% end %>
                 </ul>
             </div>
         </div>
