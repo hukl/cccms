@@ -48,4 +48,61 @@ class PageTest < ActiveSupport::TestCase
     assert_equal 4, Page.find_tagged_with( "update" ).count
     assert_equal [d2.id, d4.id], Page.aggregate( options1 ).map {|x| x.id}
   end
+  
+  def test_before_save_rewrite_links_in_body
+    n = Node.create :slug => "link_test"
+    n.move_to_child_of Node.root
+    d = n.find_or_create_draft @user1
+    
+    before = "<h1>Hello World</h1>\n" \
+             "<a href=\"/club\" target=\"_blank\">Linkme</a>"
+    
+    after  = "<h1>Hello World</h1>\n" \
+             "<a href=\"/de/club\" target=\"_blank\">Linkme</a>"
+    
+    I18n.locale = :de
+    
+    d.body = before
+    d.save
+    
+    assert_equal after, d.body
+  end
+  
+  def test_before_save_rewrite_links_in_body_if_no_locale_prefix_present
+    n = Node.create :slug => "link_test"
+    n.move_to_child_of Node.root
+    d = n.find_or_create_draft @user1
+    
+    before = "<h1>Hello World</h1>\n" \
+             "<a href=\"/de/club\" target=\"_blank\">Linkme</a>"
+    
+    after  = "<h1>Hello World</h1>\n" \
+             "<a href=\"/de/club\" target=\"_blank\">Linkme</a>"
+    
+    I18n.locale = :de
+    
+    d.body = before
+    d.save
+    
+    assert_equal after, d.body
+  end
+  
+  def test_before_save_rewrite_links_skips_on_external_links
+    n = Node.create :slug => "link_test"
+    n.move_to_child_of Node.root
+    d = n.find_or_create_draft @user1
+    
+    before = "<h1>Hello World</h1>\n" \
+             "<a href=\"http://www.ccc.de/club\" target=\"_blank\">Linkme</a>"
+    
+    after  = "<h1>Hello World</h1>\n" \
+             "<a href=\"http://www.ccc.de/club\" target=\"_blank\">Linkme</a>"
+    
+    I18n.locale = :de
+    
+    d.body = before
+    d.save
+    
+    assert_equal after, d.body
+  end
 end

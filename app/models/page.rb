@@ -13,6 +13,9 @@ class Page < ActiveRecord::Base
   belongs_to :node
   belongs_to :user
   
+  # Filter
+  before_save :rewrite_links_in_body
+  
   # Security
   attr_accessible :title, :abstract, :body, :template_name
   
@@ -116,4 +119,29 @@ class Page < ActiveRecord::Base
   
     I18n.locale = locale_before
   end
+  
+  private
+    
+    def rewrite_links_in_body
+      if self.body
+        tmp_body = "<div>#{self.body}</div>"
+        xml_string = XML::Parser.string( tmp_body )
+        xml_doc = xml_string.parse
+        links = xml_doc.find("a[not(starts-with(@href, 'http://'))]")
+        
+        locales = I18n.available_locales.reject {|l| l == :root}
+        
+        links.each do |link|
+          unless locales.include? link[:href].slice(1,2).to_sym
+            link[:href] = link[:href].sub(/^\//, "/#{I18n.locale}/")
+          end
+        end
+        
+        tmp_body = xml_doc.to_s.gsub(/(\n\<div\>|\<\/div\>\n)/, "")
+        tmp_body.gsub!("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "")
+        
+        self.body = tmp_body
+      end
+    end
+  
 end
