@@ -128,7 +128,7 @@ class Page < ActiveRecord::Base
           tmp_body = "<div>#{self.body}</div>"
           xml_string = XML::Parser.string( tmp_body )
           xml_doc = xml_string.parse
-          links = xml_doc.find("a[not(starts-with(@href, 'http://'))]")
+          links = xml_doc.find("//a[not(starts-with(@href, 'http://'))]")
           
           locales = I18n.available_locales.reject {|l| l == :root}
           
