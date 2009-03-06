@@ -1,3 +1,5 @@
+require 'xml'
+
 class Page < ActiveRecord::Base
   
   PUBLIC_TEMPLATE_PATH = File.join(%w(custom page_templates public))
