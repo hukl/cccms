@@ -32,7 +32,7 @@ class NodesController < ApplicationController
     
     if parent and @node.save
       @node.move_to_child_of parent
-      redirect_to(@node)
+      redirect_to(edit_node_path(@node))
     else
       @node.errors.add("Parent node")
       render :action => :new
