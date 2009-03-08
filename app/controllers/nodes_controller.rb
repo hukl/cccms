@@ -40,7 +40,15 @@ class NodesController < ApplicationController
   end
 
   def show
-    @nodes = Node.find(params[:id]).children
+    @page = Node.find(params[:id]).draft
+    
+    if @page
+     template = @page.valid_template
+     render(
+       :file => template,
+       :layout => "application"
+     )
+    end
   end
 
   def edit

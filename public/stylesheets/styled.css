@@ -13,6 +13,19 @@
  * #eab407 = Content Headers
  * #fbb03b = Orange, Teaserbar Subheaders
  */
+ 
+body div#preview_disclaimer {
+  font-size: 16px;
+  background-color: #ff0000;
+  color: #ffffff;
+  padding-left: 20px;
+  padding-bottom: 5px;
+}
+
+body div#preview_disclaimer a {
+  color: #ffffff;
+  text-decoration: underline;
+}
 
 #wrapper {
 	margin:0;

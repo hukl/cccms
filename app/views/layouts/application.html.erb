@@ -12,10 +12,11 @@
         <![endif]-->
     </head>
     <body>
+        <%= render :partial => 'nodes/preview' if params[:action] == "show" %>
         <div id="logo">
             <a href="index.html" title="Startseite"><img src="/images/chaosknot.gif" alt="Chaosknoten" /></a>
         </div>
-        <!-- HEAD -->
+        <!-- HEAD -->        
         <div id="header">
             <div id="yellow">
             </div>
