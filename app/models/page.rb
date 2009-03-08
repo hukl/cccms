@@ -19,7 +19,7 @@ class Page < ActiveRecord::Base
   before_save :rewrite_links_in_body
   
   # Security
-  attr_accessible :title, :abstract, :body, :template_name
+  attr_accessible :title, :abstract, :body, :template_name, :published_at
   
   # Class Methods
   
@@ -59,24 +59,6 @@ class Page < ActiveRecord::Base
   end
   
   # Instance Methods
-  
-  def clone_attributes_from page
-    return nil unless page
-  
-    self.tag_list = page.tag_list.join(", ")
-    
-    locale_before = I18n.locale
-    
-    I18n.available_locales.each do |l|
-      next if l == :root
-      I18n.locale = l
-      self.title    = page.title
-      self.abstract = page.abstract
-      self.body     = page.body
-    end
-  
-    I18n.locale = locale_before
-  end
 
   def public_template_path
     File.join(PUBLIC_TEMPLATE_PATH, template_name)
@@ -106,8 +88,13 @@ class Page < ActiveRecord::Base
   def clone_attributes_from page
     return nil unless page
   
+    # Clone untranslated attributes
+  
     self.tag_list = page.tag_list.join(", ")
     self.template_name = page.template_name
+    self.published_at = page.published_at
+    
+    # Clone translated attributes
     
     locale_before = I18n.locale
     
