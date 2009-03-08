@@ -20,7 +20,7 @@
     </p>
     <p>
       <%= d.label :template_name %>
-      <%= d.select :template_name, custom_page_templates %>
+      <%= d.select :template_name, custom_page_templates, {:prompt => 'Select Template'} %>
     </p>
     <p>
       <%= d.label :title %><br />
