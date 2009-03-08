@@ -11,6 +11,7 @@
       <th class="path">Path</th>
       <th class="actions">Actions</th>
       <th class="editor">Locked by</th>
+      <th class="revision">Rev.</th>
     </tr>
     <% @nodes.each do |node| %>
     <tr class="<%= cycle("even", "odd") %>">
@@ -28,6 +29,9 @@
       </td>
       <td>
         <%= "#{node.draft.user.login}" if node.draft && node.draft.user %>
+      </td>
+      <td>
+        <%= node.head.revision if node.head %>
       </td>
     </tr>
     <% end %>
