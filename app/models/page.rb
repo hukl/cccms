@@ -109,6 +109,10 @@ class Page < ActiveRecord::Base
     I18n.locale = locale_before
   end
   
+  def public?
+    published_at.nil? ? true : published_at < Time.now 
+  end
+  
   private
     
     def rewrite_links_in_body

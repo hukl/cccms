@@ -10,7 +10,7 @@ class ContentController < ApplicationController
     
     @page = Node.find_page(path)
     
-    if @page
+    if @page and @page.public?
      template = @page.valid_template
 
       render(
@@ -25,4 +25,5 @@ class ContentController < ApplicationController
     end
     
   end
+
 end
