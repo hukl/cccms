@@ -1,0 +1,20 @@
+<div id="draft_list">
+  <h2>Drafts</h2>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Title</th>
+      <th>Path</th>
+      <th>Locked by</th>
+    </tr>
+    <% @drafts.each do |draft| %>
+    <tr>
+      <td><%= draft.id %></td>
+      <td><%= draft.title %></td>
+      <td><%= draft.node.unique_name %></td>
+      <td><%= draft.user.login rescue "" %></td>
+      <td><%= link_to 'Show', node_path(draft.node) %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
