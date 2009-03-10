@@ -13,9 +13,14 @@
     <%= f.error_messages %>
     
     <% fields_for @draft do |d| %>
+    
+    <p>
+      <%= d.label :published_at %><br />
+      <%= d.datetime_select :published_at %>
+    </p>
     <p>
       <%= d.label :template_name %>
-      <%= d.select :template_name, custom_page_templates %>
+      <%= d.select :template_name, custom_page_templates, {:prompt => 'Select Template'} %>
     </p>
     <p>
       <%= d.label :title %><br />

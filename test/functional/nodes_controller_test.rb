@@ -19,7 +19,7 @@ class NodesControllerTest < ActionController::TestCase
   def test_create
     login_as :quentin
     post :create, :node => {:slug => 'foobar'}, :parent_id => Node.root.id
-    assert_redirected_to node_path(Node.last)
+    assert_redirected_to edit_node_path(Node.last)
   end
   
   def test_editing_a_node

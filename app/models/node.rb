@@ -59,7 +59,6 @@ class Node < ActiveRecord::Base
   def create_new_draft user
     empty_page = self.pages.new
     empty_page.user = user
-    
     empty_page.clone_attributes_from self.head
     
     self.draft = empty_page
@@ -70,11 +69,9 @@ class Node < ActiveRecord::Base
   def publish_draft!
     if self.draft
       self.head = self.draft
+      self.head.save!
       self.draft = nil
       self.save!
-      
-      self.head.published_at = Time.now
-      self.head.save!
     else
       nil
     end

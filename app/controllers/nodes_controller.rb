@@ -32,7 +32,7 @@ class NodesController < ApplicationController
     
     if parent and @node.save
       @node.move_to_child_of parent
-      redirect_to(@node)
+      redirect_to(edit_node_path(@node))
     else
       @node.errors.add("Parent node")
       render :action => :new
@@ -40,7 +40,15 @@ class NodesController < ApplicationController
   end
 
   def show
-    @nodes = Node.find(params[:id]).children
+    @page = Node.find(params[:id]).draft
+    
+    if @page
+     template = @page.valid_template
+     render(
+       :file => template,
+       :layout => "application"
+     )
+    end
   end
 
   def edit

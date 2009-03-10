@@ -58,4 +58,32 @@ namespace :cccms do
     
     n.publish_draft!
   end
+  
+  desc "Convert Entities to real charactes"
+  task :convert_entities  => :environment do |t|
+    Page.all.each do |page|
+      if page.body && page.body != ""
+        puts ">> #{page.id} -- #{page.node.unique_name if page.node}"
+        tmp_body = page.body.dup
+        tmp_body.gsub!(/&auml;/, "ä")
+        tmp_body.gsub!(/&ouml;/, "ö")
+        tmp_body.gsub!(/&uuml;/, "ü")
+        tmp_body.gsub!(/&Auml;/, "ä")
+        tmp_body.gsub!(/&Ouml;/, "ö")
+        tmp_body.gsub!(/&Uuml;/, "ü")
+        tmp_body.gsub!(/&szlig;/, "ß")
+        tmp_body.gsub!(/&nbsp;/, " ")
+        tmp_body.gsub!(/&ndash;/, "–")
+        tmp_body.gsub!(/&micro;/, "µ")
+        tmp_body.gsub!(/&sup3;/, "³")
+        tmp_body.gsub!(/&eacute;/, "é")
+        tmp_body.gsub!(/&sect;/, "§")
+        tmp_body.gsub!(/&ldquo;/, "“")
+        tmp_body.gsub!(/&rdquo;/, "”")
+        tmp_body.gsub!(/&bdquo;/, "„")
+        page.body = tmp_body
+        page.save
+      end
+    end
+  end
 end

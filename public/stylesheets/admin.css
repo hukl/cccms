@@ -22,7 +22,7 @@ th {
 }
 
 th.title {
-  width: 400px;
+  width: 370px;
 }
 
 th.path {
@@ -35,6 +35,10 @@ th.actions {
 
 th.editor {
   width: 120px;
+}
+
+th.revision {
+  width: 30px;
 }
 
 td {
