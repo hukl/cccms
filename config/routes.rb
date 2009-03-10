@@ -10,6 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :pages
   map.resources :nodes, :member => {:publish => :put, :unlock => :put}
+  map.resources :events
   
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login',   :controller => 'sessions', :action => 'new'

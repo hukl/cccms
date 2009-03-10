@@ -10,6 +10,7 @@ class Occurrence
 end
 
 class ChaosCalendar
+  attr_reader :calendar
   def initialize
     @calendar = {}
   end
