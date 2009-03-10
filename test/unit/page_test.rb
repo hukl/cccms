@@ -45,7 +45,7 @@ class PageTest < ActiveSupport::TestCase
     
     assert_equal 2, Page.aggregate( options1 ).length
     assert_equal 1, Page.aggregate( options2 ).length
-    assert_equal 4, Page.find_tagged_with( "update" ).count
+    assert_equal 4, Page.find_tagged_with( "update" ).length
     assert_equal [d2.id, d4.id], Page.aggregate( options1 ).map {|x| x.id}
   end
   
