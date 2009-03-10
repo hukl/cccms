@@ -1,4 +1,4 @@
-require 'vpim/repo'
+require 'vpim'
 
 class Occurrence
   def initialize start, event, node
