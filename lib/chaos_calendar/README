@@ -1,3 +1,9 @@
 install libical (/usr/ports/devel/libical)
 run gen.sh in this directory
 find ical_occurrences ruby extension in ./
+
+irb
+>> require 'ical_occurrences'
+occ_array = Ical_occurrences::occurrences( "20000101T230000", "20091231T230000", "FREQ=DAILY;COUNT=1200" )
+
+Be aware that the array is in UTC and will be converted to your local timezone before it is used.
