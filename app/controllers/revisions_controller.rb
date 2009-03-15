@@ -8,8 +8,12 @@ class RevisionsController < ApplicationController
   def diff
     @node = Node.find(params[:id])
     
-    params[:start]  ||= @node.pages.all[-1].revision
-    params[:end]    ||= @node.pages.all[-2].revision
+    if @node.pages.length > 1
+      params[:start]  ||= @node.pages.all[-1].revision
+      params[:end]    ||= @node.pages.all[-2].revision
+    else
+      params[:start], params[:end] = 1, 1
+    end
     
     @start = Page.find( :first, :conditions => {
       :node_id => params[:id],
@@ -24,6 +28,7 @@ class RevisionsController < ApplicationController
   end
 
   def show
+    @node = Node.find(params[:id])
   end
 
 end

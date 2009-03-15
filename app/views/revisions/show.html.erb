@@ -1,2 +1,17 @@
-<h1>Revisions#show</h1>
-<p>Find me in app/views/revisions/show.html.erb</p>
+<div id="subnavigation">
+  <%= link_to 'Diff revisions', :action => :diff, :id => params[:id] %>
+</div>
+
+<h2>Revisions for Node: <%= @node.unique_name %></h2>
+
+<h3>Current title: <%= @node.head.title %></h3>
+<table>
+<% @node.pages.reverse.each do |page| %>
+  <tr>
+    <td><%= page.revision %></td>
+    <td><%= page.title %></td>
+    <td><%= page.user.try(:login)  %></td>
+    <td><%= page.updated_at %></td>
+  </tr>
+<% end %>
+</table>
