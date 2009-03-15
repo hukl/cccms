@@ -1,5 +1,6 @@
 <div id="subnavigation">
   <%= link_to 'Diff revisions', :action => :diff, :id => params[:id] %>
+  <%= link_to 'Edit',     edit_node_path(@node) %>
 </div>
 
 <h2>Revisions for Node: <%= @node.unique_name %></h2>
