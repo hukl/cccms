@@ -1,0 +1,27 @@
+<h1>Revisions#diff</h1>
+
+<% form_tag url_for(:action => :diff), :method => :get do %>
+  <%= select_tag :start, options_for_select(@node.pages.map{|x| x.revision}, params[:start].to_i) %>
+  <%= select_tag :end, options_for_select(@node.pages.map{|x| x.revision}, params[:end].to_i) %>
+  <%= submit_tag 'Diff' %>
+<% end %>
+
+<div id="start_text" style="display: none;">
+  <%= (@start.body) %>
+</div>
+
+<div id="end_text" style="display: none;">
+  <%= (@end.body) %>
+</div>
+
+
+<%= javascript_include_tag 'cacycle_diff' %>
+<script type="text/javascript" charset="utf-8">
+  window.onload = function() {
+    text1 = document.getElementById('start_text').innerHTML;
+    text2 = document.getElementById('end_text').innerHTML;
+    document.getElementById('diffview').innerHTML = WDiffString(text1, text2);
+  }
+</script>
+
+<div id="diffview"></div>
