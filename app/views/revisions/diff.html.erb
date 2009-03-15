@@ -6,11 +6,28 @@
   <%= submit_tag 'Diff' %>
 <% end %>
 
-<div id="start_text" style="display: none;">
+
+<div id="start_title" style="display: none;">
+  <%= (@start.title) %>
+</div>
+
+<div id="end_title" style="display: none;">
+  <%= (@end.title) %>
+</div>
+
+<div id="start_abstract" style="display: none;">
+  <%= (@start.abstract) %>
+</div>
+
+<div id="end_abstract" style="display: none;">
+  <%= (@end.abstract) %>
+</div>
+
+<div id="start_body" style="display: none;">
   <%= (@start.body) %>
 </div>
 
-<div id="end_text" style="display: none;">
+<div id="end_body" style="display: none;">
   <%= (@end.body) %>
 </div>
 
@@ -18,10 +35,25 @@
 <%= javascript_include_tag 'cacycle_diff' %>
 <script type="text/javascript" charset="utf-8">
   window.onload = function() {
-    text1 = document.getElementById('start_text').innerHTML;
-    text2 = document.getElementById('end_text').innerHTML;
-    document.getElementById('diffview').innerHTML = WDiffString(text1, text2);
+    title1    = document.getElementById('start_title').innerHTML;
+    title2    = document.getElementById('end_title').innerHTML;
+    abstract1 = document.getElementById('start_abstract').innerHTML;
+    abstract2 = document.getElementById('end_abstract').innerHTML;
+    body1     = document.getElementById('start_body').innerHTML;
+    body2     = document.getElementById('end_body').innerHTML;
+    document.getElementById('diffview_title').innerHTML = WDiffString(title1, title2);
+    document.getElementById('diffview_abstract').innerHTML = WDiffString(abstract1, abstract2);
+    document.getElementById('diffview_body').innerHTML = WDiffString(body1, body2);
   }
 </script>
 
-<div id="diffview"></div>
+<div id="diffview">
+  <h3>Title</h3>
+  <p id="diffview_title"></p>
+  
+  <h3>Abstract</h3>
+  <p id="diffview_abstract"></p>
+  
+  <h3>Body</h3>
+  <p id="diffview_body"></p>
+</div>
