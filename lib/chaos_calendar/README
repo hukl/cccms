@@ -1,0 +1,3 @@
+install libical (/usr/ports/devel/libical)
+run gen.sh in this directory
+find ical_occurrences ruby extension in ./
