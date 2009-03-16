@@ -1,0 +1,48 @@
+<p>
+  <b>Start time:</b>
+  <%=h @event.start_time %>
+</p>
+
+<p>
+  <b>End time:</b>
+  <%=h @event.end_time %>
+</p>
+
+<p>
+  <b>Rrule:</b>
+  <%=h @event.rrule %>
+</p>
+
+<p>
+  <b>Custom rrule:</b>
+  <%=h @event.custom_rrule %>
+</p>
+
+<p>
+  <b>Allday:</b>
+  <%=h @event.allday %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%=h @event.url %>
+</p>
+
+<p>
+  <b>Latitude:</b>
+  <%=h @event.latitude %>
+</p>
+
+<p>
+  <b>Longitude:</b>
+  <%=h @event.longitude %>
+</p>
+
+<p>
+  <b>Node:</b>
+  <%=h @event.node_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>

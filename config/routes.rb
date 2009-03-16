@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :occurrences
+
+  map.resources :events
+
   map.root( 
     :locale => 'de',
     :controller => 'content', 

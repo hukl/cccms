@@ -1,0 +1,28 @@
+<h1>Listing occurrences</h1>
+
+<table>
+  <tr>
+    <th>Summary</th>
+    <th>Start time</th>
+    <th>End time</th>
+    <th>Node</th>
+    <th>Event</th>
+  </tr>
+
+<% @occurrences.each do |occurrence| %>
+  <tr>
+    <td><%=h occurrence.summary %></td>
+    <td><%=h occurrence.start_time %></td>
+    <td><%=h occurrence.end_time %></td>
+    <td><%=h occurrence.node_id %></td>
+    <td><%=h occurrence.event_id %></td>
+    <td><%= link_to 'Show', occurrence %></td>
+    <td><%= link_to 'Edit', edit_occurrence_path(occurrence) %></td>
+    <td><%= link_to 'Destroy', occurrence, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New occurrence', new_occurrence_path %>
