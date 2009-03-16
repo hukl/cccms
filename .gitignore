@@ -7,3 +7,8 @@ coverage
 coverage.data
 .project
 db/updates/
+lib/chaos_calendar/Makefile
+lib/chaos_calendar/ical_occurrences.bundle
+lib/chaos_calendar/ical_occurrences.o
+lib/chaos_calendar/ical_occurrences_wrap.c
+lib/chaos_calendar/ical_occurrences_wrap.o
