@@ -1,0 +1,28 @@
+<p>
+  <b>Summary:</b>
+  <%=h @occurrence.summary %>
+</p>
+
+<p>
+  <b>Start time:</b>
+  <%=h @occurrence.start_time %>
+</p>
+
+<p>
+  <b>End time:</b>
+  <%=h @occurrence.end_time %>
+</p>
+
+<p>
+  <b>Node:</b>
+  <%=h @occurrence.node_id %>
+</p>
+
+<p>
+  <b>Event:</b>
+  <%=h @occurrence.event_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_occurrence_path(@occurrence) %> |
+<%= link_to 'Back', occurrences_path %>

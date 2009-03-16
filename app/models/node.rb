@@ -7,6 +7,7 @@ class Node < ActiveRecord::Base
   belongs_to  :head,  :class_name => "Page",  :foreign_key => :head_id
   belongs_to  :draft, :class_name => "Page",  :foreign_key => :draft_id
   has_many    :permissions
+  has_one     :event
   
   # Callbacks
   after_create :initialize_empty_page

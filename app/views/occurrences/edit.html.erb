@@ -1,0 +1,32 @@
+<h1>Editing occurrence</h1>
+
+<% form_for(@occurrence) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :summary %><br />
+    <%= f.text_field :summary %>
+  </p>
+  <p>
+    <%= f.label :start_time %><br />
+    <%= f.datetime_select :start_time %>
+  </p>
+  <p>
+    <%= f.label :end_time %><br />
+    <%= f.datetime_select :end_time %>
+  </p>
+  <p>
+    <%= f.label :node_id %><br />
+    <%= f.text_field :node_id %>
+  </p>
+  <p>
+    <%= f.label :event_id %><br />
+    <%= f.text_field :event_id %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @occurrence %> |
+<%= link_to 'Back', occurrences_path %>
