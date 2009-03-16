@@ -1,23 +1,3 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  start_time: 2009-03-16 20:41:52
-  end_time: 2009-03-16 20:41:52
-  rrule: MyString
-  custom_rrule: false
-  allday: false
-  url: MyString
-  latitude: 1.5
-  longitude: 1.5
-  node_id: 1
 
-two:
-  start_time: 2009-03-16 20:41:52
-  end_time: 2009-03-16 20:41:52
-  rrule: MyString
-  custom_rrule: false
-  allday: false
-  url: MyString
-  latitude: 1.5
-  longitude: 1.5
-  node_id: 1
