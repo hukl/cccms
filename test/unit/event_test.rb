@@ -95,7 +95,7 @@ class EventTest < ActiveSupport::TestCase
   
   test 'create chaosradio event with custom rrule and interval' do
     assert_not_nil event = Event.create!(
-      :start_time   => "2009-01-28T21:00:00",
+      :start_time   => "2009-01-28T21:00:00".to_time,
       :end_time     => "2009-01-28T23:00:00".to_time,
       :url          => "http://chaosradio.ccc.de",
       :latitude     => 52.525308,
