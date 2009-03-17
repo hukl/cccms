@@ -10,6 +10,9 @@ class Occurrence < ActiveRecord::Base
   
   # Class Methods
   
+  # Deletes all Occurrences which belong to the given event. Afterwards a few
+  # variables are set to save repetitive queries. The occurrences of the given
+  # event are then calculated and created.
   def self.generate event
     self.delete_all(:event_id => event.id)
     
@@ -29,8 +32,12 @@ class Occurrence < ActiveRecord::Base
     end
   end
   
+  # Calculates the start_time of all occurrences for a given event if a proper
+  # RRule is provided. An ArgumentError is thrown from within the libical
+  # wrapper if the RRule is malformed. If the rrule attribute of an event is
+  # nil, it simply returns the event start_time as only occurrence.
+  # Return value is always an array of Time objects.
   def self.generate_dates event
-    
     if event.rrule
       Ical_occurrences::occurrences( 
         event.start_time.utc.iso8601, 
