@@ -20,6 +20,22 @@ class EventTest < ActiveSupport::TestCase
     assert_not_nil @cal_node.head
   end
   
+  test 'creating an event with malformed rrule raises exception' do
+    assert_raise(ArgumentError) do
+      Event.create!(
+        :start_time   => "2009-01-01T15:23:42".to_time,
+        :end_time     => "2009-01-01T20:05:23".to_time,
+        :url          => "http://events.ccc.de/congress/2082",
+        :latitude     => 52.525308,
+        :longitude    => 13.378944,
+        :rrule        => "FOOBAR",
+        :allday       => false,
+        :custom_rrule => false,
+        :node_id      => @cal_node.id
+      )
+    end
+  end
+  
   test 'create day event for node with one occurrence' do
     assert_not_nil event = Event.create!(
       :start_time   => "2009-01-01T15:23:42".to_time,
@@ -38,4 +54,47 @@ class EventTest < ActiveSupport::TestCase
     assert_equal event.end_time, Occurrence.first.end_time
     assert_equal @cal_node.head.title, Occurrence.first.summary
   end
+  
+  test 'create day event with weekly reoccurrence and checking data' do
+    assert_not_nil event = Event.create!(
+      :start_time   => "2009-01-01T15:23:42".to_time,
+      :end_time     => "2009-01-01T20:05:23".to_time,
+      :url          => "http://events.ccc.de/congress/2082",
+      :latitude     => 52.525308,
+      :longitude    => 13.378944,
+      :rrule        => "FREQ=WEEKLY;INTERVAL=1",
+      :allday       => false,
+      :custom_rrule => false,
+      :node_id      => @cal_node.id
+    )
+    
+    assert_not_nil scoped_occurrences = Occurrence.find(
+      :all, :conditions => [
+        "start_time > ? AND end_time < ?", 
+        "2009-01-01".to_time, "2009-12-31".to_time 
+      ]
+    )
+    
+    assert_equal 52, scoped_occurrences.length
+    
+    assert_equal "2009-12-24T15:23:42".to_time, scoped_occurrences[51].start_time
+    assert_equal "2009-12-24T20:05:23".to_time, scoped_occurrences[51].end_time
+    assert_equal "99C3", scoped_occurrences[51].summary
+    assert_equal @cal_node.event, scoped_occurrences[51].event
+    assert_equal @cal_node, scoped_occurrences[51].node
+    
+    assert_equal "2009-03-19T15:23:42".to_time, scoped_occurrences[11].start_time
+    assert_equal "2009-03-19T20:05:23".to_time, scoped_occurrences[11].end_time
+    assert_equal "99C3", scoped_occurrences[11].summary
+    assert_equal @cal_node.event, scoped_occurrences[11].event
+    assert_equal @cal_node, scoped_occurrences[11].node
+    
+    assert_equal "2009-01-01T15:23:42".to_time, scoped_occurrences[0].start_time
+    assert_equal "2009-01-01T20:05:23".to_time, scoped_occurrences[0].end_time
+    assert_equal "99C3", scoped_occurrences[0].summary
+    assert_equal @cal_node.event, scoped_occurrences[11].event
+    assert_equal @cal_node, scoped_occurrences[11].node
+    
+  end
+  
 end
