@@ -1,5 +1,5 @@
 #include <ruby.h>
-#include <ical.h>
+#include <libical/ical.h>
 
 //#define RRULE   "FREQ=MONTHLY;BYMONTH=1,2,3,4,5,6,7,8,9,10,11;BYDAY=-1WE;UNTIL=20091105T220000"
 //#define RRULE   "FREQ=DAILY;UNTIL=20991111T220000;VFOO"
@@ -13,8 +13,8 @@ VALUE occurrences( char *dtstart, char *dtend, char *rrule ) {
 
   struct icalrecurrencetype recur = icalrecurrencetype_from_string( rrule );
   if( icalerrno != ICAL_NO_ERROR ) {
-    printf( "libical error: %i. -- 1\n", icalerrno );
-    return occurr;
+    rb_raise(rb_eArgError, "Malformed RRule");
+    return 0;
   }
   struct icaltimetype start = icaltime_from_string( dtstart );
   if( icalerrno != ICAL_NO_ERROR ) {
