@@ -10,6 +10,14 @@ class Occurrence < ActiveRecord::Base
   
   # Class Methods
   
+  def self.find_in_range start_time, end_time
+    find(
+      :all, :conditions => [
+        "start_time > ? AND end_time < ?", start_time, end_time 
+      ]
+    )
+  end
+  
   # Deletes all Occurrences which belong to the given event. Afterwards a few
   # variables are set to save repetitive queries. The occurrences of the given
   # event are then calculated and created.

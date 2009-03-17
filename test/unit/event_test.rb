@@ -68,11 +68,8 @@ class EventTest < ActiveSupport::TestCase
       :node_id      => @cal_node.id
     )
     
-    assert_not_nil scoped_occurrences = Occurrence.find(
-      :all, :conditions => [
-        "start_time > ? AND end_time < ?", 
-        "2009-01-01".to_time, "2009-12-31".to_time 
-      ]
+    assert_not_nil scoped_occurrences = event.occurrences_in_range(
+      "2009-01-01".to_time, "2009-12-31".to_time
     )
     
     assert_equal 52, scoped_occurrences.length
@@ -94,7 +91,29 @@ class EventTest < ActiveSupport::TestCase
     assert_equal "99C3", scoped_occurrences[0].summary
     assert_equal @cal_node.event, scoped_occurrences[11].event
     assert_equal @cal_node, scoped_occurrences[11].node
-    
   end
   
+  test 'create chaosradio event with custom rrule and interval' do
+    assert_not_nil event = Event.create!(
+      :start_time   => "2009-01-28T21:00:00",
+      :end_time     => "2009-01-28T23:00:00".to_time,
+      :url          => "http://chaosradio.ccc.de",
+      :latitude     => 52.525308,
+      :longitude    => 13.378944,
+      :rrule        => "FREQ=MONTHLY;INTERVAL=1;BYDAY=-1WE",
+      :allday       => false,
+      :custom_rrule => true,
+      :node_id      => @cal_node.id
+    )
+    
+    assert_not_nil scoped_occurrences = event.occurrences_in_range(
+      "2009-01-01".to_time, "2009-12-31".to_time 
+    )
+    
+    assert_equal 12, scoped_occurrences.length
+    
+    expected_days = [28, 25, 25, 29, 27, 24, 29, 26, 30, 28, 25, 30]
+    chaosradio_days = scoped_occurrences.map {|x| x.start_time.day}
+    assert_equal expected_days, chaosradio_days
+  end
 end
