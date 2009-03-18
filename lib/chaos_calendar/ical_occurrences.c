@@ -1,5 +1,5 @@
 #include <ruby.h>
-#include <ical.h>
+#include <libical/ical.h>
 #include <time.h>
 
 //#define RRULE   "FREQ=MONTHLY;BYMONTH=1,2,3,4,5,6,7,8,9,10,11;BYDAY=-1WE;UNTIL=20091105T220000"
