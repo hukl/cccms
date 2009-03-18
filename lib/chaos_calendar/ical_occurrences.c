@@ -62,3 +62,15 @@ VALUE occurrences( VALUE dtstart, VALUE dtend, char *rrule ) {
   icalrecur_iterator_free(ritr);
   return occurr;
 }
+
+VALUE duration_to_fixnum( char * duration ) {
+  icalerror_clear_errno();
+  icalerror_set_error_state( ICAL_MALFORMEDDATA_ERROR, ICAL_ERROR_NONFATAL);
+
+  struct icaldurationtype dur_struct = icaldurationtype_from_string( duration );
+
+  if( icaldurationtype_is_bad_duration( dur_struct ) )
+    rb_raise(rb_eArgError, "Malformed Duration");
+
+  return LONG2FIX(icaldurationtype_as_int( dur_struct ));
+}
