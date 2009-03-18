@@ -25,13 +25,11 @@ class Occurrence < ActiveRecord::Base
     self.delete_all(:event_id => event.id)
     
     node        = event.node
-    summary     = node.head.title
     duration    = (event.end_time - event.start_time)
     occurrences = self.generate_dates(event)
     
     occurrences.each do |occurrence|
       self.create(
-        :summary    => summary,
         :start_time => occurrence,
         :end_time   => (occurrence + duration),
         :node_id    => node.id,
@@ -48,8 +46,8 @@ class Occurrence < ActiveRecord::Base
   def self.generate_dates event
     if event.rrule
       Ical_occurrences::occurrences( 
-        event.start_time.utc.iso8601, 
-        (Time.now + 5.years).utc.iso8601, 
+        event.start_time, 
+        (Time.now + 5.years), 
         event.rrule
       )
     else
@@ -57,4 +55,12 @@ class Occurrence < ActiveRecord::Base
     end
       
   end
+  
+  
+  # Instance Methods
+  
+  def summary
+    node.head.title
+  end
+  
 end

@@ -52,7 +52,6 @@ class EventTest < ActiveSupport::TestCase
     assert_equal 1, Occurrence.count
     assert_equal event.start_time, Occurrence.first.start_time
     assert_equal event.end_time, Occurrence.first.end_time
-    assert_equal @cal_node.head.title, Occurrence.first.summary
   end
   
   test 'create day event with weekly reoccurrence and checking data' do
@@ -76,19 +75,16 @@ class EventTest < ActiveSupport::TestCase
     
     assert_equal "2009-12-24T15:23:42".to_time, scoped_occurrences[51].start_time
     assert_equal "2009-12-24T20:05:23".to_time, scoped_occurrences[51].end_time
-    assert_equal "99C3", scoped_occurrences[51].summary
     assert_equal @cal_node.event, scoped_occurrences[51].event
     assert_equal @cal_node, scoped_occurrences[51].node
     
     assert_equal "2009-03-19T15:23:42".to_time, scoped_occurrences[11].start_time
     assert_equal "2009-03-19T20:05:23".to_time, scoped_occurrences[11].end_time
-    assert_equal "99C3", scoped_occurrences[11].summary
     assert_equal @cal_node.event, scoped_occurrences[11].event
     assert_equal @cal_node, scoped_occurrences[11].node
     
     assert_equal "2009-01-01T15:23:42".to_time, scoped_occurrences[0].start_time
     assert_equal "2009-01-01T20:05:23".to_time, scoped_occurrences[0].end_time
-    assert_equal "99C3", scoped_occurrences[0].summary
     assert_equal @cal_node.event, scoped_occurrences[11].event
     assert_equal @cal_node, scoped_occurrences[11].node
   end
