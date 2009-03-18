@@ -42,7 +42,7 @@ VALUE occurrences( VALUE dtstart, VALUE dtend, char *rrule ) {
 
   struct icalrecurrencetype recur = icalrecurrencetype_from_string( rrule );
   if( icalerrno != ICAL_NO_ERROR ) {
-    printf( "libical error: %i. -- 1\n", icalerrno );
+    rb_raise(rb_eArgError, "Malformed RRule");
     return Qnil;
   }
 
