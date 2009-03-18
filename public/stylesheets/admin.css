@@ -72,3 +72,7 @@ input[type=text] {
 #navigation a {
   text-decoration: none;
 }
+
+#diffview {
+  width: 1024px;
+}

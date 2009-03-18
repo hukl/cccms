@@ -23,15 +23,16 @@
       <td><%= node.unique_name %></td>
       <td>
         <%= link_to 'Show',     node_path(node) %>
-        <%= link_to 'Edit',     edit_node_path(node) %>
-        <%= link_to 'Destroy',  node, :method => :delete, :confirm => "Are you sure you want to delete this node?" %>
+          <%= link_to 'Edit',     edit_node_path(node) %>
+        <%= link_to 'Revision', :controller => :revisions, :action => :show, :id => node.id %>
+        <%# link_to 'Destroy',  node, :method => :delete, :confirm => "Are you sure you want to delete this node?" %>
         <%= link_to 'Unlock', unlock_node_path(node), :method => :put, :confirm => "Are you sure you want to unlock?" %>
       </td>
       <td>
         <%= "#{node.draft.user.login}" if node.draft && node.draft.user %>
       </td>
       <td>
-        <%= node.head.revision if node.head %>
+        <%= node.pages.length %>
       </td>
     </tr>
     <% end %>
