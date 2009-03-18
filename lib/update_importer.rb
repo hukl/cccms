@@ -5,9 +5,6 @@ require 'iconv'
 class UpdateImporter
   
   def initialize path
-    Node.delete_all
-    Page.delete_all
-    
     @path = path
     
     unless Node.root
@@ -42,7 +39,7 @@ class UpdateImporter
       
       tmp_dir = dir.sub(@path, "").split(/\//).last
       chaos_id = tmp_dir.split(/\./)[0]
-       
+      
       create_node_and_page( chaospage.root, lang, chaos_id )
     end
   end
@@ -62,6 +59,8 @@ class UpdateImporter
       node.move_to_child_of parent_node
     end
     
+    
+    
     create_node_for_page chaospage, node, date, lang
   end
   
@@ -78,108 +77,118 @@ class UpdateImporter
       element = element.next_sibling
     end
     
-    if node.pages.empty?
-      
-      I18n.locale = lang
-      
-      page = node.pages.create!(
-        :title => xhtml.elements['title'].get_text.to_s,
-        :abstract => xhtml.elements['abstract'].get_text.to_s,
-        :body => body
-      )
-    else
-      page = node.pages.first
-      
-      I18n.locale = lang
-      
+    page = node.pages.first
+    
+    I18n.locale = lang
+    
+    unless node.head
       page.update_attributes(
         :title => xhtml.elements['title'].get_text.to_s,
         :abstract => xhtml.elements['abstract'].get_text.to_s,
         :body => body
       )
       
+      
+      if xhtml.elements['author']
+        user = User.find_by_login(xhtml.elements['author'].get_text.to_s)
+        page.user = user
+      else
+        page.user = User.first
+      end
+      
+      page.published_at = date.to_time
+      page.save!
+      
+      puts page.published_at
+      
+      page.tag_list.add("update") if page
     end
-    
-    if xhtml.elements['author']
-      user = User.find_by_login(xhtml.elements['author'].get_text.to_s)
-      page.user = user
-    else
-      page.user = User.first
-    end
-    
-    page.published_at = date.to_time
-    page.save!
-    
-    puts page.published_at
-    
-    page.tag_list.add("update") if page
     
     if (flags = xhtml.elements['flags']) && page
-      page.tag_list.add("event")            if flags.attributes['calendar']
-      page.tag_list.add("pressemitteilung") if flags.attributes['pm']
+      page.tag_list.add("event")            if (flags.attributes['calendar'] && !node.head)
+      page.tag_list.add("pressemitteilung") if (flags.attributes['pm'] && !node.head)
 
       if flags.attributes['calendar']
-        cal = Vpim::Icalendar.create2
-
+        event_options = { }
+        
+        # Figuring out dtstart
         dtstart   = xhtml.elements['ical:DTSTART']
         dtisdate  = dtstart.attributes['VALUE']
         raise "DTSTART not present in event"  unless dtstart
         if dtisdate && dtisdate == 'DATE'
-          dtstart = dtstart.text.to_date
+          # dtstart = dtstart.text.to_date
+          event_options[:allday] = true
         else
-          dtstart = dtstart.text.to_time
+          # dtstart = dtstart.text.to_time
+          event_options[:allday] = false
         end
-
-        dtend     = xhtml.elements['ical:DTEND']
-        dtisdate  = dtend.attributes['VALUE'] if dtend
+        
+        event_options[:start_time] = dtstart.text
+        
+        #Figuring out dtend
         duration  = xhtml.elements['ical:DURATION']
-        puts "WARNING: Neither DTEND nor DURATION present in event" unless dtend || duration
-#        raise "Both DTEND and DURATION present in event" if dtend && duration
-        if dtend
-          if dtisdate && dtisdate == 'DATE'
-            dtend = dtend.text.to_date
-          else
-            dtend = dtend.text.to_time
-          end
+        
+        
+        unless dtend = xhtml.elements['ical:DTEND']
+          parsed_duration = Ical_occurrences.duration_to_fixnum(duration.text)
+          event_options[:end_time] = dtstart.text.to_time + parsed_duration
+        else
+          event_options[:end_time] = dtend.text
         end
-        duration  = duration.text if duration
-
+          
+        
+        raise "WARNING: Neither DTEND nor DURATION present in event" unless dtend || duration
+        
+        # Figuring out location data
         location  = xhtml.elements['ical:LOCATION']
-        localtrep = location.attributes['ALTREP'] if location
-        location  = location.text if location
+        event_options[:location] = location.text if location
 
-        geo       = xhtml.elements['ical:GEO']
-        geo       = geo.text if geo
+        # Figuring out url        
+        if location
+          localtrep = location.attributes['ALTREP'] 
+          event_options[:url] = localtrep if localtrep
+        end
 
+        # Figuring out geo data latitude / longitude
+        geo = xhtml.elements['ical:GEO']
+        event_options[:latitude], event_options[:longitude] = geo.text.split(";") if geo
+
+        # Figuring out RRule
         if( rrule = xhtml.elements['ical:RRULE'] )
           rrtxt   = ''
           rrule.each_element( ) { |subrule|
             rrtxt += subrule.name + '=' + subrule.text + ';'
           }
           rrtxt.chomp!(';')
+          
+          event_options[:rrule] = rrtxt
+
+          default_rrules = ["FREQ=WEEKLY;INTERVAL=1", "FREQ=MONTHLY;INTERVAL=1", "FREQ=YEARLY;INTERVAL=1"]
+          
+          unless default_rrules.include? event_options[:rrule]
+            event_options[:custom_rrule] = true
+          end
         end
-
-        hash = { 'CREATED' => page.published_at } 
-        hash[ 'DTEND'    ] = dtend     if dtend
-        hash[ 'DURATION' ] = duration  if duration
-        hash[ 'LOCATION' ] = location  if location
-        hash[ 'GEO'      ] = geo       if geo
-        hash[ 'URL'      ] = localtrep if localtrep
-        hash[ 'RRULE'    ] = rrtxt     if rrtxt
-
-        xevent = Vpim::Icalendar::Vevent.create( dtstart, hash )
-        cal.push( xevent )
-        puts cal.to_s
-
+        
+        puts event_options.inspect
+        
+        # Creating or updating event data for node
+        unless tmp_event = node.event
+          tmp_event = Event.create! event_options.merge({:node_id => node.id})
+        else
+          tmp_event.update_attributes event_options
+        end
       end
     end
     
-    page.save!
-
-    if node.head.nil? && page
-      node.head = page
-      node.draft = nil
-      node.save!
+    unless node.head
+      page.save! 
+      
+      if node.head.nil? && page
+        node.head = page
+        node.draft = nil
+        node.save!
+      end
     end
   end
   
