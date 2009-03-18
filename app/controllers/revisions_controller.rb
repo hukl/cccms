@@ -8,9 +8,10 @@ class RevisionsController < ApplicationController
   def diff
     @node = Node.find(params[:id])
     
+    puts @node.pages.length
     if @node.pages.length > 1
-      params[:start]  ||= @node.pages.all[-1].revision
-      params[:end]    ||= @node.pages.all[-2].revision
+      params[:start]  ||= @node.pages.all[-2].revision
+      params[:end]    ||= @node.pages.all[-1].revision
     else
       params[:start], params[:end] = 1, 1
     end
