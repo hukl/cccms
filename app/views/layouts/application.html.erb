@@ -77,21 +77,12 @@
                 <div class="teasertext">
                     <h2>Termine / News</h2>
                     <ul class="teasertext">
+                      <% Occurrence.find_in_range(Time.now, (Time.now+14.days)).each do |occurrence| %>
                         <li>
-                            <a href="#">Chaosdock 2008</a>
+                            <div><%= l occurrence.start_time.to_date, :format => :default %></div>
+                            <a href="#"><%= occurrence.node.head.title %></a>
                         </li>
-                        <li>
-                            <a href="#">Metarheinmain Chaosdays
-                                <br/>
-                                <span class="black">mrmcd111b</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#"><span class="black">Kˆln: <span class="orange">OpenChaos</span> zu Dynamisches Routing</span></a>
-                        </li>
-                        <li>
-                            <a href="#">CCCS <span class="black">- Braucht Freiheit (‹berwachungs-) Sicherheit?</span></a>
-                        </li>
+                      <% end %>
                     </ul>
                 </div>
                 <hr/>
