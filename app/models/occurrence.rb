@@ -12,7 +12,9 @@ class Occurrence < ActiveRecord::Base
   
   def self.find_in_range start_time, end_time
     find(
-      :all, :conditions => [
+      :all,
+      :include => :node, 
+      :conditions => [
         "start_time > ? AND end_time < ?", start_time, end_time 
       ]
     )

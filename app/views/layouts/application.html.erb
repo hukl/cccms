@@ -80,7 +80,7 @@
                       <% Occurrence.find_in_range(Time.now, (Time.now+14.days)).each do |occurrence| %>
                         <li>
                             <div><%= l occurrence.start_time.to_date, :format => :default %></div>
-                            <a href="#"><%= occurrence.node.head.title %></a>
+                            <%= link_to occurrence.node.head.title, occurrence.node.unique_name %></a>
                         </li>
                       <% end %>
                     </ul>
