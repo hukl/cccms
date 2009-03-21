@@ -8,6 +8,7 @@ class Node < ActiveRecord::Base
   belongs_to  :draft, :class_name => "Page",  :foreign_key => :draft_id
   has_many    :permissions
   has_one     :event
+  belongs_to  :user,                          :foreign_key => :locking_user_id
   
   # Callbacks
   after_create :initialize_empty_page
@@ -43,17 +44,17 @@ class Node < ActiveRecord::Base
   
   # Instance Methods
   
-  def find_or_create_draft user
-    if draft && draft.user == user
+  def find_or_create_draft current_user
+    if draft && self.user == current_user
       draft
-    elsif draft && draft.user.nil?
-      draft.user = user
-      draft.save
+    elsif draft && self.user.nil?
+      lock_for! current_user
       draft
-    elsif draft && draft.user != user
+    elsif draft && self.user != current_user
       raise "Page is locked"
     else
-      create_new_draft user
+      lock_for! current_user
+      create_new_draft current_user
     end
   end
   
@@ -73,6 +74,7 @@ class Node < ActiveRecord::Base
       self.head.save!
       self.draft = nil
       self.save!
+      self.unlock!
     else
       nil
     end
@@ -95,6 +97,15 @@ class Node < ActiveRecord::Base
   end
   
   protected
+    def lock_for! current_user
+      self.user = current_user
+      self.save
+    end
+  
+    def unlock!
+      self.user = nil
+      self.save
+    end
   
     # Creates an empty page and associates it to the given node. This means
     # freshly created node has an empty draft. A user can create nodes as he
