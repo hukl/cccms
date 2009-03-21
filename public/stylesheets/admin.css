@@ -1,6 +1,6 @@
 body {
-  font-family: Arial, sans-serif;
-  font-size: 10pt;
+  font-family: 'Lucida Grande', Arial, sans-serif;
+  font-size: 11px;
 }
 
 a {
@@ -10,31 +10,75 @@ a {
 table {}
 
 table#node_table {
-  width: 1000px;
+  border-collapse: collapse;
+  width: 880px;
+}
+
+table#node_table tr.table_headers {
+  height: 20px;
+}
+
+table#node_table th {
+  padding-left: 15px;
+}
+
+table#node_table tr {
+  height: 65px;
+}
+
+table#node_table tr.odd:hover, table#node_table tr.even:hover {
+  background-color: #E4F2FD;
+}
+
+table#node_table td h4 {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+table#node_table td p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+table#node_table td a {
+  text-decoration: none;
+}
+
+table#node_table td a:hover {
+  text-decoration: underline;
+}
+
+tr.even {
+  border: 1px solid #808080;
 }
 
 tr.odd {
-  background-color: #f1f1f1;
+  border: 1px solid #808080;
+  background-color: #f5f5f5;
 }
 
 th {
   text-align: left;
 }
 
-th.title {
-  width: 370px;
+th.node_id {
+  width: 30px;
 }
 
+th.title {
+  width: 450px;
+}
+
+
 th.path {
-  width: 300px;
 }
 
 th.actions {
-  width: 180px;
+  width: 150px;
 }
 
 th.editor {
-  width: 120px;
+  width: 150px;
 }
 
 th.revision {
@@ -42,7 +86,25 @@ th.revision {
 }
 
 td {
-  padding: 3px;
+  padding-left: 15px;
+  padding-right: 0px;
+}
+
+td.title {
+  font-size: 11px;
+}
+
+td.path {
+  font-size: 11px;
+}
+
+td.actions {
+  font-size: 11px;
+}
+
+
+td div.actions {
+  padding-top: 5px;
 }
 
 input[type=text] {

@@ -6,33 +6,32 @@
 <%= will_paginate @nodes %>
 <p>
   <table id="node_table">
-    <tr>
+    <tr class="table_headers">
+      <th class="node_id">ID</th>
       <th class="title">Title</th>
-      <th class="path">Path</th>
       <th class="actions">Actions</th>
       <th class="editor">Locked by</th>
       <th class="revision">Rev.</th>
     </tr>
     <% @nodes.each do |node| %>
     <tr class="<%= cycle("even", "odd") %>">
-      <td>
-        <strong>
-          <%= title_for_node node %>
-        </strong>
+      <td><%= node.id %></td>
+      <td class="title">
+        <h4><%= title_for_node node %></h4>
+        <p><%= node.unique_name %></p>
       </td>
-      <td><%= node.unique_name %></td>
-      <td>
-        <%= link_to 'Show',     node_path(node) %>
-          <%= link_to 'Edit',     edit_node_path(node) %>
-        <%= link_to 'Revision', :controller => :revisions, :action => :show, :id => node.id %>
-        <%# link_to 'Destroy',  node, :method => :delete, :confirm => "Are you sure you want to delete this node?" %>
-        <%= link_to 'Unlock', unlock_node_path(node), :method => :put, :confirm => "Are you sure you want to unlock?" %>
+      <td class="actions">
+          <%= link_to 'Show',     node_path(node) %>
+            <%= link_to 'Edit',     edit_node_path(node) %>
+          <%= link_to 'Revisions', :controller => :revisions, :action => :show, :id => node.id %>
+          <%# link_to 'Destroy',  node, :method => :delete, :confirm => "Are you sure you want to delete this node?" %>
+          <%= link_to 'Unlock', unlock_node_path(node), :method => :put, :confirm => "Are you sure you want to unlock?" %>
       </td>
       <td>
         <%= "#{node.draft.user.login}" if node.draft && node.draft.user %>
       </td>
       <td>
-        <%= node.pages.length %>
+        <%= node.draft ? node.draft.revision : node.head.revision %>
       </td>
     </tr>
     <% end %>
