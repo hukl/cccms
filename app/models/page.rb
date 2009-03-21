@@ -101,9 +101,10 @@ class Page < ActiveRecord::Base
     I18n.available_locales.each do |l|
       next if l == :root
       I18n.locale = l
-      self.title    = page.title
-      self.abstract = page.abstract
-      self.body     = page.body
+      page.reload
+      self.title    = page.title    unless page.title.try(:fallback?)
+      self.abstract = page.abstract unless page.abstract.try(:fallback?)
+      self.body     = page.body     unless page.body.try(:fallback?)
     end
   
     I18n.locale = locale_before
