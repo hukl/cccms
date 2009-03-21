@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   
-    <title>untitled</title>
+    <title><%= "#{params[:controller]} | #{params[:action]}" %></title>
     <%= stylesheet_link_tag 'admin' %>
     <%= javascript_include_tag 'tiny_mce/tiny_mce.js' %>
     
