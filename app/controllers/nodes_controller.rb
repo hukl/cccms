@@ -13,8 +13,7 @@ class NodesController < ApplicationController
 
   def index
     @nodes = Node.root.descendants.paginate( 
-      :include => :head,
-      :include => :draft,
+      :include => [:head, :draft],
       :page => params[:page], 
       :per_page => 25,
       :order => 'id DESC'
