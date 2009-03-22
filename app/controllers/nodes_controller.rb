@@ -78,9 +78,8 @@ class NodesController < ApplicationController
   def unlock
     # TODO that actually has to be implemented in the model, once we have
     # permissions
-    if draft = @node.draft
-      draft.user = nil 
-      draft.save
+    if @node.user
+      @node.unlock!
       flash[:notice] = "Node unlocked"
     else
       flash[:notice] = "Cannot unlock"

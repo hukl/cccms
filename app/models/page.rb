@@ -87,27 +87,23 @@ class Page < ActiveRecord::Base
   
   def clone_attributes_from page
     return nil unless page
-  
+    
+    self.reload
+    
     # Clone untranslated attributes
-  
     self.tag_list = page.tag_list.join(", ")
     self.template_name = page.template_name
     self.published_at = page.published_at
     
+    # Getting rid of the auto-generated empty translations
+    self.globalize_translations.delete_all
+    
     # Clone translated attributes
-    
-    locale_before = I18n.locale
-    
-    I18n.available_locales.each do |l|
-      next if l == :root
-      I18n.locale = l
-      page.reload
-      self.title    = page.title    unless page.title.try(:fallback?)
-      self.abstract = page.abstract unless page.abstract.try(:fallback?)
-      self.body     = page.body     unless page.body.try(:fallback?)
+    page.globalize_translations.each do |translation|
+      self.globalize_translations.create!(translation.attributes)
     end
-  
-    I18n.locale = locale_before
+    
+    self.save
   end
   
   def public?

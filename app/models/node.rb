@@ -11,7 +11,8 @@ class Node < ActiveRecord::Base
   belongs_to  :user,                          :foreign_key => :locking_user_id
   
   # Callbacks
-  after_create :initialize_empty_page
+  after_create  :initialize_empty_page
+  before_save   :check_for_changed_slug
   
   # Validations
   # validates_length_of :slug, :within => 3..40
@@ -59,7 +60,7 @@ class Node < ActiveRecord::Base
   end
   
   def create_new_draft user
-    empty_page = self.pages.new
+    empty_page = self.pages.create
     empty_page.user = user
     empty_page.clone_attributes_from self.head
     
@@ -96,14 +97,14 @@ class Node < ActiveRecord::Base
     self.save
   end
   
+  def unlock!
+    self.user = nil
+    self.save
+  end
+  
   protected
     def lock_for! current_user
       self.user = current_user
-      self.save
-    end
-  
-    def unlock!
-      self.user = nil
       self.save
     end
   
@@ -115,6 +116,16 @@ class Node < ActiveRecord::Base
       if self.pages.empty?
         self.draft = self.pages.create!
         self.save
+      end
+    end
+    
+    def check_for_changed_slug
+      if parent and changed.include? "slug"
+        self.update_unique_name
+        
+        if tmp_descendants = descendants
+          tmp_descendants.each { |descendant| descendant.update_unique_name }
+        end
       end
     end
 end
