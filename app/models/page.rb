@@ -5,6 +5,14 @@ class Page < ActiveRecord::Base
   PUBLIC_TEMPLATE_PATH = File.join(%w(custom page_templates public))
   FULL_PUBLIC_TEMPLATE_PATH = File.join(RAILS_ROOT, 'app', 'views', PUBLIC_TEMPLATE_PATH)
   
+  # named scopes
+  
+  named_scope( 
+    :drafts, 
+    :include => [:node, :user, :globalize_translations], 
+    :conditions => ["nodes.draft_id = pages.id"]
+  )
+  
   # Mixins and Plugins
   acts_as_taggable  
   acts_as_list :column => :revision, :scope => :node_id
