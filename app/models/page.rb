@@ -72,7 +72,7 @@ class Page < ActiveRecord::Base
     end
   end
   
-  def self.find_outdated_translations options = {}
+  def self.find_with_outdated_translations options = {}
     defaults_options = {
       :include => :globalize_translations
     }
@@ -145,8 +145,8 @@ class Page < ActiveRecord::Base
     
     if translations.size > 1 && default && custom
       time = default.updated_at - custom.updated_at
-      difference = (time/24/3600).to_i.abs
-      if 1 < difference 
+      difference = (time/3600).to_i.abs
+      if 23 < difference 
         return true
       else
         return false

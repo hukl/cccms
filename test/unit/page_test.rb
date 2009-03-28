@@ -105,4 +105,28 @@ class PageTest < ActiveSupport::TestCase
     
     assert_equal after, d.body
   end
+  
+  def test_find_with_outdated_translations
+    Node.delete_all
+    Page.delete_all
+    I18n.locale = :de
+    
+    assert_not_nil page = Page.create!( :title => "Hallo" )
+    page.reload
+    assert_equal 2, page.globalize_translations.size
+    assert_equal [], Page.find_with_outdated_translations
+    
+    I18n.locale = :en
+    page.title = "Hello"
+    page.save
+    
+    assert_equal 3, page.globalize_translations.size
+    assert_equal 0, Page.find_with_outdated_translations.count
+    
+    english = *page.globalize_translations.select {|x| x.locale == :en}
+    PageTranslation.record_timestamps = false
+    english.update_attributes(:updated_at => (Time.now+25.hours))    
+    PageTranslation.record_timestamps = true
+    assert_equal 1, Page.find_with_outdated_translations.count
+  end
 end
