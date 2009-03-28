@@ -45,7 +45,7 @@ class Page < ActiveRecord::Base
       options[:tags].gsub(/\s/, ", "), 
       :match_all => true,
       :order => "#{options[:order_by]} #{options[:order_direction]}",
-      :include => :node, 
+      :include => [:node, :globalize_translations], 
       :conditions => ["nodes.head_id = pages.id"],
       :limit => options[:limit]
     )
