@@ -66,6 +66,24 @@ class Page < ActiveRecord::Base
     end
   end
   
+  def self.untranslated(options = {:locale => :de})
+    PageTranslation.all.group_by(&:page_id).select do |k,v| 
+      v.size == 1 && v.map{|x| x.locale}.include?(options[:locale])
+    end
+  end
+  
+  def self.find_outdated_translations options = {}
+    defaults_options = {
+      :include => :globalize_translations
+    }
+    
+    options.merge! defaults_options
+    
+    Page.all(options).select do |page|
+      page.outdated_translations?
+    end
+  end
+  
   # Instance Methods
 
   def public_template_path
@@ -116,6 +134,26 @@ class Page < ActiveRecord::Base
   
   def public?
     published_at.nil? ? true : published_at < Time.now 
+  end
+  
+  def outdated_translations? options = {:locale => :en}
+    translations = self.globalize_translations
+    locales = translations.map {|l| l.locale}
+    
+    default = *(translations.select {|x| x.locale == I18n.default_locale})
+    custom  = *(translations.select {|x| x.locale == options[:locale]})
+    
+    if translations.size > 1 && default && custom
+      time = default.updated_at - custom.updated_at
+      difference = (time/24/3600).to_i.abs
+      if 1 < difference 
+        return true
+      else
+        return false
+      end
+    else
+      return false
+    end
   end
   
   private
