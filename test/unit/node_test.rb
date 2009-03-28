@@ -30,7 +30,7 @@ class NodeTest < ActiveSupport::TestCase
     assert_not_nil @first_child.draft
     assert_nil @first_child.draft.user
     @first_child.find_or_create_draft @user1
-    assert_equal @user1, @first_child.user
+    assert_equal @user1, @first_child.lock_owner
   end
   
   def test_unique_path_returns_an_array
@@ -122,7 +122,7 @@ class NodeTest < ActiveSupport::TestCase
     node.move_to_child_of @root
     node.publish_draft!
     node.find_or_create_draft @user1
-    assert_equal @user1, node.user
+    assert_equal @user1, node.lock_owner
     assert_raise(RuntimeError) do
       node.find_or_create_draft @user2
     end

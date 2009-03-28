@@ -28,7 +28,7 @@
           <%= link_to 'Unlock', unlock_node_path(node), :method => :put, :confirm => "Are you sure you want to unlock?" %>
       </td>
       <td>
-        <%= node.user.login if node.user %>
+        <%= node.lock_owner.login if node.lock_owner %>
       </td>
       <td>
         <%= node.draft ? node.draft.revision : node.head.revision %>

@@ -8,7 +8,7 @@ class Node < ActiveRecord::Base
   belongs_to  :draft, :class_name => "Page",  :foreign_key => :draft_id
   has_many    :permissions
   has_one     :event
-  belongs_to  :user,                          :foreign_key => :locking_user_id
+  belongs_to  :lock_owner, :class_name => "User", :foreign_key => :locking_user_id
   
   # Callbacks
   after_create  :initialize_empty_page
@@ -46,12 +46,12 @@ class Node < ActiveRecord::Base
   # Instance Methods
   
   def find_or_create_draft current_user
-    if draft && self.user == current_user
+    if draft && self.lock_owner == current_user
       draft
-    elsif draft && self.user.nil?
+    elsif draft && self.lock_owner.nil?
       lock_for! current_user
       draft
-    elsif draft && self.user != current_user
+    elsif draft && self.lock_owner != current_user
       raise "Page is locked"
     else
       lock_for! current_user
@@ -98,13 +98,13 @@ class Node < ActiveRecord::Base
   end
   
   def unlock!
-    self.user = nil
+    self.lock_owner = nil
     self.save
   end
   
   protected
     def lock_for! current_user
-      self.user = current_user
+      self.lock_owner = current_user
       self.save
     end
   
