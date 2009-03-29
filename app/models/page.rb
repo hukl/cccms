@@ -148,14 +148,12 @@ class Page < ActiveRecord::Base
     options = default_options.merge options
     
     translations = self.globalize_translations
-    locales = translations.map {|l| l.locale}
     
     default = *(translations.select {|x| x.locale == I18n.default_locale})
     custom  = *(translations.select {|x| x.locale == options[:locale]})
     
     if translations.size > 1 && default && custom
-      time = default.updated_at - custom.updated_at
-      difference = time.to_i.abs
+      difference = (default.updated_at - custom.updated_at).to_i.abs
       return (options[:delta_time].to_i.abs < difference)
     else
       return false
