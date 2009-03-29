@@ -134,7 +134,7 @@ class Page < ActiveRecord::Base
   end
   
   # Returns true if a page has translations where one of them is significantly
-  # older than the other
+  # older than the other.
   # Takes the I18n.default locale and a second :locale to test if the
   # translations for the given locales exist and if their updated_at attributes
   # have a delta time that is greater than the specified :delta_time
@@ -156,8 +156,7 @@ class Page < ActiveRecord::Base
     if translations.size > 1 && default && custom
       time = default.updated_at - custom.updated_at
       difference = time.to_i.abs
-      
-      return (options[:delta_time].abs < difference)
+      return (options[:delta_time].to_i.abs < difference)
     else
       return false
     end

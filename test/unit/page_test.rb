@@ -128,5 +128,15 @@ class PageTest < ActiveSupport::TestCase
     english.update_attributes(:updated_at => (Time.now+25.hours))    
     PageTranslation.record_timestamps = true
     assert_equal 1, Page.find_with_outdated_translations.count
+    
+    I18n.locale = :de
+    page2 = Page.create!( :title => "Hallo2" )
+    I18n.locale = :en
+    page2.title = "Hello2"
+    page2.save!
+    
+    assert_equal 0, Page.find_with_outdated_translations(:delta_time => 23.days).count
+    assert_equal 1, Page.find_with_outdated_translations(:delta_time => 23.minutes).count
+    assert_equal 2, Page.count
   end
 end
