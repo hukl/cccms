@@ -72,15 +72,12 @@ class Page < ActiveRecord::Base
     end
   end
   
+  # Returns only those pages that have outdated translations. See
+  # outdated_translations? for more information.
+  # Takes :locale => <locale> and :delta_time => 12.hours as options
   def self.find_with_outdated_translations options = {}
-    defaults_options = {
-      :include => :globalize_translations
-    }
-    
-    options.merge! defaults_options
-    
-    Page.all(options).select do |page|
-      page.outdated_translations?
+    Page.all(:include => :globalize_translations).select do |page|
+      page.outdated_translations? options
     end
   end
   
@@ -133,10 +130,23 @@ class Page < ActiveRecord::Base
   end
   
   def public?
-    published_at.nil? ? true : published_at < Time.now 
+    published_at.nil? ? true : published_at < Time.now
   end
   
-  def outdated_translations? options = {:locale => :en}
+  # Returns true if a page has translations where one of them is significantly
+  # older than the other
+  # Takes the I18n.default locale and a second :locale to test if the
+  # translations for the given locales exist and if their updated_at attributes
+  # have a delta time that is greater than the specified :delta_time
+  def outdated_translations? options = {}
+    
+    default_options = {
+      :locale => :en,
+      :delta_time => 23.hours
+    }
+    
+    options = default_options.merge options
+    
     translations = self.globalize_translations
     locales = translations.map {|l| l.locale}
     
@@ -145,12 +155,9 @@ class Page < ActiveRecord::Base
     
     if translations.size > 1 && default && custom
       time = default.updated_at - custom.updated_at
-      difference = (time/3600).to_i.abs
-      if 23 < difference 
-        return true
-      else
-        return false
-      end
+      difference = time.to_i.abs
+      
+      return (options[:delta_time].abs < difference)
     else
       return false
     end
