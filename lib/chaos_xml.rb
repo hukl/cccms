@@ -13,7 +13,7 @@ class ChaosXml
     @years = {}
   end
   
-  def import_xml
+  def import_updates
     unless @updates = Node.find_by_unique_name('updates')
       @updates = Node.create!( :slug => 'updates' )
       @updates.move_to_child_of Node.root
@@ -23,6 +23,11 @@ class ChaosXml
       node = find_or_create_node( chaospage, chaos_id )
       html = convert_to_html( chaospage )
       page = fill_draft_with_content(node.draft, html, lang)
+      
+      add_tags_to_page    page, chaospage, "update"
+      add_events_to_page  page, chaospage
+      
+      puts node.unique_name
     end
   end
   
@@ -73,29 +78,62 @@ class ChaosXml
     node
   end
   
-  def fill_draft_with_content draft, chaospage, lang
+  def fill_draft_with_content draft, html, lang
     I18n.locale = lang
     
     options = {
-      :title    => chaospage.xpath("//title")[0].content,
-      :abstract => chaospage.xpath("//abstract")[0].content,
-      :body     => extract_body(chaospage)
+      :title    => html.xpath("//title")[0].content,
+      :abstract => html.xpath("//abstract")[0].content,
+      :body     => extract_body(html)
     }
     
-    puts options.inspect
-    #draft.update_attributes options
+    draft.update_attributes options
+    draft
   end
   
-  def extract_body chaospage
+  def extract_body html, excluded_tags=[]
+    default_excluded_tags = [
+      "DTSTART",
+      "DTEND",
+      "DURATION",
+      "LOCATION",
+      "GEO",
+      "SUMMARY",
+      "URL"
+    ]
+    
+    excluded_tags = (default_excluded_tags + excluded_tags).uniq
+    
     body = ""
-    element = chaospage.xpath("//abstract")[0].next_sibling
+    element = html.xpath("//abstract")[0].next_sibling
     
     while element do
-      body << element.to_s
+      body << element.to_s unless excluded_tags.include? element.name
       element = element.next_sibling
     end
+
+    body
+  end
+  
+  def add_tags_to_page page, xml, *custom_tags
+    tag_list = custom_tags
     
-    puts body
+    xml.xpath("//flags").each do |node|
+      node.each do |k,v|
+        case k
+        when "calendar"
+          tag_list << "event"
+        when "pm"
+          tag_list << "pressemitteilung"
+        end
+      end
+    end
+    
+    # Getting rid of duplicate flags
+    tag_list.uniq!
+    
+    page.tag_list = tag_list.join(",")
+    page.save    
   end
   
   def convert_to_html chaospage
