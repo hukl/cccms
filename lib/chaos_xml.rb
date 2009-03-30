@@ -1,5 +1,7 @@
 require 'iconv'
 require 'nokogiri'
+require 'lib/chaos_calendar/ical_occurrences'
+
 
 class ChaosXml
   include Enumerable
@@ -25,10 +27,12 @@ class ChaosXml
       page = fill_draft_with_content(node.draft, html, lang)
       
       add_tags_to_page    page, chaospage, "update"
-      add_events_to_page  page, chaospage
-      
+      add_event_to_node   node, chaospage if page.tag_list.include?("event")
+      page.save
       puts node.unique_name
     end
+    
+    Node.all.each {|node| node.publish_draft!}
   end
   
   def each
@@ -115,10 +119,10 @@ class ChaosXml
     body
   end
   
-  def add_tags_to_page page, xml, *custom_tags
+  def add_tags_to_page page, chaospage, *custom_tags
     tag_list = custom_tags
     
-    xml.xpath("//flags").each do |node|
+    chaospage.xpath("//flags").each do |node|
       node.each do |k,v|
         case k
         when "calendar"
@@ -134,6 +138,99 @@ class ChaosXml
     
     page.tag_list = tag_list.join(",")
     page.save    
+  end
+  
+  def add_event_to_node node, chaospage
+    rrule     = get_rrule(chaospage)
+    
+    event_options = {
+      :start_time   => get_start_time(chaospage),
+      :end_time     => get_end_time(chaospage),
+      :allday       => is_allday?(chaospage),
+      :rrule        => rrule,
+      :custom_rrule => is_custom_rrule?(rrule),
+      :location     => get_location(chaospage),
+      :url          => get_url(chaospage),
+      :latitude     => get_latitude(chaospage),
+      :longitude    => get_logitude(chaospage)
+    }
+    
+    unless tmp_event = node.event
+      tmp_event = Event.create! event_options.merge({:node_id => node.id})
+    else
+      tmp_event.update_attributes event_options
+    end
+  end
+  
+  def get_start_time chaospage
+    chaospage.at("//ical:DTSTART").content || raise("DTSTART not found")
+  end
+  
+  def get_end_time chaospage
+    dtstart   = chaospage.at("//ical:DTSTART")
+    dtend     = chaospage.at("//ical:DTEND")
+    duration  = chaospage.at("//ical:DURATION")
+    
+    if dtend
+      return dtend.content
+    elsif duration
+      parsed_duration = Ical_occurrences.duration_to_fixnum(duration.content)
+      return (dtstart.content.to_time + parsed_duration)
+    else
+      raise("Neiter DTEND nor DURATION found")
+    end
+  end
+
+  def is_allday? chaospage
+    !chaospage.at("//ical:DTSTART").[]("VALUE").nil?
+  end
+  
+  def get_rrule chaospage
+    if rrule = chaospage.at("//ical:RRULE")
+      rrtxt = ''
+      rrule.children.each do |subrule|
+        rule_name    = subrule.name
+        rule_content = subrule.content.sub(/\W/,'')
+        
+        next if rule_content.blank?
+        
+        rrtxt += "#{rule_name}=#{rule_content};"
+      end
+      rrtxt.chomp!(';')
+      rrtxt
+    else
+      nil
+    end
+  end
+  
+  def is_custom_rrule? rrule
+    default_rules = [
+      "FREQ=WEEKLY;INTERVAL=1", 
+      "FREQ=MONTHLY;INTERVAL=1", 
+      "FREQ=YEARLY;INTERVAL=1"
+    ]
+    
+    rrule && !default_rules.include?(rrule) ? true : false
+  end
+  
+  def get_location chaospage
+    location = chaospage.at("//ical:LOCATION")
+    location ? location.content : nil
+  end
+  
+  def get_url chaospage
+    location = chaospage.at("//ical:LOCATION")
+    location.[]("ALTREP") if location
+  end
+  
+  def get_latitude chaospage
+    geo = chaospage.at("//ical:GEO")
+    geo.text.split(";")[0] if geo
+  end
+  
+  def get_logitude chaospage
+    geo = chaospage.at("//ical:GEO")
+    geo.text.split(";")[1] if geo
   end
   
   def convert_to_html chaospage
