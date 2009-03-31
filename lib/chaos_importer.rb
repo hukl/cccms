@@ -1,9 +1,21 @@
 require 'iconv'
 require 'nokogiri'
 require 'lib/chaos_calendar/ical_occurrences'
+require 'digest/sha1'
 
 
 class ChaosXml
+  attr_reader :xml, :unique_name, :locale, :date, :slug
+  
+  def initialize options = {}
+    options.each_pair do |key,value|
+      instance_variable_set "@#{key}", value
+      instance_eval("def #{key}; @#{key};end")
+    end
+  end
+end
+
+class ChaosImporter
   include Enumerable
   
   def initialize path
@@ -11,41 +23,55 @@ class ChaosXml
       Node.create!
     end
     
-    @path = path
-    @years = {}
+    @directory  = path
+    @years      = {}
   end
   
+  # Iterates through all xml files within the @directory and yields ChaosXml
+  # objects with the parsed attributes. These attributes are the basic data
+  # needed for further processing / parsing.
+  def each
+    directories = Dir.glob("#{@directory}/*/*.xml{,.de,.en}")
+    
+    directories.each do |path|
+      next if path =~ /index\.xml/
+      
+      chaos_id              = chaos_id_from_path( path )
+      options               = {}
+      options[:xml]         = Nokogiri::XML( File.new(path).read )
+      options[:locale]      = lang_from_path( path )
+      options[:date]        = options[:xml].at("//date").content.to_date
+      options[:slug]        = chaos_id
+      options[:unique_name] = "updates/#{options[:date]}/#{options[:slug]}"
+      xml                   = ChaosXml.new options
+      
+      yield xml
+    end
+  end
+  
+  # Uses the each method to loop over the xml files and uses the attrubutes of 
+  # the returned ChaosXml objects to do some further processing which is needed
+  # to create proper ActiveRecord records 
   def import_updates
     unless @updates = Node.find_by_unique_name('updates')
       @updates = Node.create!( :slug => 'updates' )
       @updates.move_to_child_of Node.root
     end
     
-    self.each do |chaospage, chaos_id, lang|
-      node = find_or_create_node( chaospage, chaos_id )
-      html = convert_to_html( chaospage )
-      page = fill_draft_with_content(node.draft, html, lang)
+    self.each do |update|
+      author  = find_or_create_author( update )
+      node    = find_or_create_node( update )
+      html    = convert_to_html( update.xml )
+      page    = fill_draft_with_content(node.draft, html, update.locale)
       
-      add_tags_to_page    page, chaospage, "update"
-      add_event_to_node   node, chaospage if page.tag_list.include?("event")
+      add_tags_to_page    page, update.xml, "update"
+      add_event_to_node   node, update.xml if page.tag_list.include?("event")
+      page.user = author
       page.save
       puts node.unique_name
     end
     
     Node.all.each {|node| node.publish_draft!}
-  end
-  
-  def each
-    directories = Dir.glob("#{@path}/*/*.xml{,.de,.en}")
-    
-    directories.each do |path|
-      next if path =~ /index\.xml/
-      chaospage = Nokogiri::XML( File.new(path).read )
-      lang      = lang_from_path( path )
-      chaos_id  = chaos_id_from_path( path )
-      
-      yield chaospage, chaos_id, lang  
-    end
   end
   
   def lang_from_path path
@@ -58,24 +84,40 @@ class ChaosXml
   end
   
   def chaos_id_from_path path
-    path.sub(@path, "").split(/\//).last.split(/\./)[0]
+    path.sub(@directory, "").split(/\//).last.split(/\./)[0]
   end
   
-  def find_or_create_node chaospage, chaos_id
-      
-    date = chaospage.xpath("//date").first.content.to_date
-    unique_name = "updates/#{date.year}/#{chaos_id}"
-    year = date.year
+  def find_or_create_author update
+    login     = update.xml.at("//author").content rescue "webmaster"
+    puts login
     
-    unique_name_array = unique_name.split("/")
+    # password  = Digest::SHA1.hexdigest("#{Time.now+rand(100).days}")
+    # unless author = User.find_by_login(login)
+    #   author = User.create!(
+    #     :login => login,
+    #     :email => "#{login}@example.com",
+    #     :password => password,
+    #     :password_confirmation => password
+    #   )
+    # end
+    
+    # author
+    
+    
+  end
+  
+  def find_or_create_node update
+    year = update.date.year
+    
+    unique_name_array = update.unique_name.split("/")
     
     unless @years[year] || (@years[year] = Node.find_by_unique_name("updates/#{year}"))
       @years[year] = Node.create :slug => year
       @years[year].move_to_child_of @updates
     end
     
-    unless node = Node.find_by_unique_name(unique_name)
-      node = Node.create :slug => chaos_id
+    unless node = Node.find_by_unique_name(update.unique_name)
+      node = Node.create :slug => update.slug
       node.move_to_child_of @years[year]
     end
     
