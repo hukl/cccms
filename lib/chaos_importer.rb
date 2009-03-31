@@ -42,7 +42,7 @@ class ChaosImporter
       options[:locale]      = lang_from_path( path )
       options[:date]        = options[:xml].at("//date").content.to_date
       options[:slug]        = chaos_id
-      options[:unique_name] = "updates/#{options[:date]}/#{options[:slug]}"
+      options[:unique_name] = "updates/#{options[:date].year}/#{options[:slug]}"
       xml                   = ChaosXml.new options
       
       yield xml
@@ -68,7 +68,7 @@ class ChaosImporter
       add_event_to_node   node, update.xml if page.tag_list.include?("event")
       page.user = author
       page.save
-      puts node.unique_name
+      # puts node.unique_name
     end
     
     Node.all.each {|node| node.publish_draft!}
@@ -88,8 +88,8 @@ class ChaosImporter
   end
   
   def find_or_create_author update
-    login     = update.xml.at("//author").content rescue "webmaster"
-    puts login
+    # login     = update.xml.at("//author").content rescue "webmaster"
+    # puts login
     
     # password  = Digest::SHA1.hexdigest("#{Time.now+rand(100).days}")
     # unless author = User.find_by_login(login)
@@ -101,13 +101,12 @@ class ChaosImporter
     #   )
     # end
     
-    # author
-    
-    
+    # author  
   end
   
   def find_or_create_node update
     year = update.date.year
+
     
     unique_name_array = update.unique_name.split("/")
     
@@ -115,6 +114,8 @@ class ChaosImporter
       @years[year] = Node.create :slug => year
       @years[year].move_to_child_of @updates
     end
+    
+    puts update.unique_name
     
     unless node = Node.find_by_unique_name(update.unique_name)
       node = Node.create :slug => update.slug
@@ -127,11 +128,17 @@ class ChaosImporter
   def fill_draft_with_content draft, html, lang
     I18n.locale = lang
     
+    draft.reload
+    
     options = {
       :title    => html.xpath("//title")[0].content,
       :abstract => html.xpath("//abstract")[0].content,
       :body     => extract_body(html)
     }
+    
+    if draft.node.slug == "wahlcomputer-hessen"
+      puts "#{I18n.locale} >>> #{lang} >>> #{options[:title]}"
+    end
     
     draft.update_attributes options
     draft
@@ -278,7 +285,7 @@ class ChaosImporter
   def convert_to_html chaospage
     
     chaospage.xpath('//paragraph').each {|sub| sub.name   = "p"}
-    chaospage.xpath('//quote').each     {|sub| sub.name   = "blockquote"  }
+    chaospage.xpath('//quote').each     {|sub| sub.name   = "em"  }
     chaospage.xpath('//subtitle').each  {|sub| sub.name   = "h3" }
     chaospage.xpath('//strong').each    {|sub| sub.name   = "em" }
     chaospage.xpath('//stronger').each  {|sub| sub.name   = "strong" }
