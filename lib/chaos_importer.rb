@@ -59,6 +59,7 @@ class ChaosImporter
     end
     
     self.each do |update|
+      
       author  = find_or_create_author( update )
       node    = find_or_create_node( update )
       html    = convert_to_html( update.xml )
@@ -68,7 +69,8 @@ class ChaosImporter
       add_event_to_node   node, update.xml if page.tag_list.include?("event")
       page.user = author
       page.save
-      # puts node.unique_name
+      
+      puts node.unique_name
     end
     
     Node.all.each {|node| node.publish_draft!}
@@ -114,8 +116,6 @@ class ChaosImporter
       @years[year] = Node.create :slug => year
       @years[year].move_to_child_of @updates
     end
-    
-    puts update.unique_name
     
     unless node = Node.find_by_unique_name(update.unique_name)
       node = Node.create :slug => update.slug
