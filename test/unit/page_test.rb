@@ -121,7 +121,7 @@ class PageTest < ActiveSupport::TestCase
     page.save
     
     assert_equal 3, page.globalize_translations.size
-    assert_equal 0, Page.find_with_outdated_translations.count
+    assert_equal 0, Page.find_with_outdated_translations.size
     
     english = *page.globalize_translations.select {|x| x.locale == :en}
     PageTranslation.record_timestamps = false
