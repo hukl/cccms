@@ -73,7 +73,9 @@ class ChaosImporter
       puts node.unique_name
     end
     
+    puts ">> Publishing Drafts"
     Node.all.each {|node| node.publish_draft!}
+    puts ">> Finished"
   end
   
   def lang_from_path path
@@ -90,20 +92,13 @@ class ChaosImporter
   end
   
   def find_or_create_author update
-    # login     = update.xml.at("//author").content rescue "webmaster"
-    # puts login
+    login     = update.xml.at("//author").content rescue "webmaster"
+
+    unless author = User.find_by_login(login.downcase)
+      author = User.find_by_login("webmaster")
+    end
     
-    # password  = Digest::SHA1.hexdigest("#{Time.now+rand(100).days}")
-    # unless author = User.find_by_login(login)
-    #   author = User.create!(
-    #     :login => login,
-    #     :email => "#{login}@example.com",
-    #     :password => password,
-    #     :password_confirmation => password
-    #   )
-    # end
-    
-    # author  
+    author  
   end
   
   def find_or_create_node update
@@ -135,10 +130,6 @@ class ChaosImporter
       :abstract => html.xpath("//abstract")[0].content,
       :body     => extract_body(html)
     }
-    
-    if draft.node.slug == "wahlcomputer-hessen"
-      puts "#{I18n.locale} >>> #{lang} >>> #{options[:title]}"
-    end
     
     draft.update_attributes options
     draft
