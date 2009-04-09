@@ -13,6 +13,12 @@ class Page < ActiveRecord::Base
     :conditions => ["nodes.draft_id = pages.id"]
   )
   
+  named_scope(
+    :heads,
+    :include => [:node, :user, :globalize_translations],
+    :conditions => ["nodes.head_id = pages.id"]
+  )
+  
   # Mixins and Plugins
   acts_as_taggable  
   acts_as_list :column => :revision, :scope => :node_id

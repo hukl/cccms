@@ -88,7 +88,7 @@ class Node < ActiveRecord::Base
   
   # returns array with pages up to root excluding root
   def path_to_root
-    parent.nil? && [slug] || parent.path_to_root.push(slug)
+    parent.nil? ? [slug] : parent.path_to_root.push(slug)
   end
   
   def update_unique_name  
