@@ -1,3 +1,3 @@
 require 'mkmf'
 have_library('ical')
-create_makefile('ical_occurrences')
+create_makefile('chaos_calendar')
