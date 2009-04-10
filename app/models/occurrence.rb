@@ -1,5 +1,5 @@
 # TODO Make a gem out of the c wrapper
-require 'lib/chaos_calendar/ical_occurrences'
+require 'chaos_calendar'
 
 class Occurrence < ActiveRecord::Base
   
@@ -47,7 +47,7 @@ class Occurrence < ActiveRecord::Base
   # Return value is always an array of Time objects.
   def self.generate_dates event
     if event.rrule
-      Ical_occurrences::occurrences( 
+      ChaosCalendar::occurrences( 
         event.start_time, 
         (Time.now + 5.years), 
         event.rrule

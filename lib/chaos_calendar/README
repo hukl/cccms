@@ -1,9 +1,0 @@
-install libical (/usr/ports/devel/libical)
-run gen.sh in this directory
-find chaos_calendar ruby extension in ./
-
-irb
->> require 'chaos_calendar'
-occ_array = Chaos_calendar::occurrences( "20000101T230000", "20091231T230000", "FREQ=DAILY;COUNT=1200" )
-
-Be aware that the array is in UTC and will be converted to your local timezone before it is used.
