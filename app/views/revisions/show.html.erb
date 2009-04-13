@@ -1,18 +1,32 @@
-<div id="subnavigation">
-  <%= link_to 'Diff revisions', :action => :diff, :id => params[:id] %>
+<% content_for :subnavigation do %>
   <%= link_to 'Edit',     edit_node_path(@node) %>
-</div>
+<% end %>
 
 <h2>Revisions for Node: <%= @node.unique_name %></h2>
 
-<h3>Current title: <%= @node.head.title %></h3>
-<table>
+<% form_tag diff_revision_path do %>
+<table id="revisions">
+  <tr class="header">
+    <th>First</th>
+    <th>Last</th>
+    <th>Rev.</th>
+    <th>Title</th>
+    <th>User</th>
+    <th>Date</th>
+  </tr>
 <% @node.pages.reverse.each do |page| %>
   <tr>
-    <td><%= page.revision %></td>
-    <td><%= page.title %></td>
-    <td><%= page.user.try(:login)  %></td>
-    <td><%= page.updated_at %></td>
+    <td><%= radio_button_tag :start_revision, page.revision %></td>
+    <td><%= radio_button_tag :end_revision, page.revision %></td>
+    <td class="revision"><%= page.revision %></td>
+    <td class="title"><%= page.title %></td>
+    <td class="user"><%= page.user.try(:login)  %></td>
+    <td class="date"><%= page.updated_at %></td>
   </tr>
 <% end %>
+  <tr>
+    <td colspan="6" class="right"><%= submit_tag 'Diff revisions' %></td>
+  </tr>
 </table>
+
+<% end %>

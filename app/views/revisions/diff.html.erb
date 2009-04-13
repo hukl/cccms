@@ -1,8 +1,14 @@
+<% content_for :subnavigation do %>
+  <%= link_to 'Diff', :action => :diff, :id => params[:id] %>
+  <%= link_to 'Edit',     edit_node_path(@node) %>
+  <%= link_to 'Revisions', revision_path(params[:id]) %>
+<% end %>
+
 <h1>Revisions#diff</h1>
 
-<% form_tag url_for(:action => :diff), :method => :get do %>
-  <%= select_tag :start, options_for_select(@node.pages.map{|x| x.revision}, params[:start].to_i) %>
-  <%= select_tag :end, options_for_select(@node.pages.map{|x| x.revision}, params[:end].to_i) %>
+<% form_tag diff_revision_path do %>
+  <%= select_tag :start_revision, options_for_select(@node.pages.map{|x| x.revision}, params[:start_revision].to_i) %>
+  <%= select_tag :end_revision, options_for_select(@node.pages.map{|x| x.revision}, params[:end_revision].to_i) %>
   <%= submit_tag 'Diff' %>
 <% end %>
 

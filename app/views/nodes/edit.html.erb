@@ -2,7 +2,7 @@
   <%= link_to 'metadata', '#', :id => 'button', :class => "unselected" %>
   <%= link_to 'Preview', @node %>
   <%= link_to 'Publish', publish_node_path, :method => :put, :confirm => "Publish this draft?" %>
-  <%= link_to 'Revisions', :controller => :revisions, :action => :diff, :id => params[:id] %>  
+  <%= link_to 'Revisions', revision_path(params[:id]) %>  
 <% end %>
 
 <div id="page_editor">
@@ -30,7 +30,7 @@
     </tr>
   </table>
   
-  <table>
+  <table id="content">
     <tr>
       <td class="description">Title</td>
       <td><%= d.text_field :title %></td>

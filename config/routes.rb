@@ -1,8 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :occurrences
 
-  map.resources :events
 
+  map.filter :locale
+  
   map.root( 
     :locale => 'de',
     :controller => 'content', 
@@ -10,8 +10,9 @@ ActionController::Routing::Routes.draw do |map|
     :page_path => ['home']
   )
   
-  map.filter :locale
-  
+  map.resources :occurrences
+  map.resources :events
+  map.resources :revisions, :member => {:diff => :post}
   map.resources :pages
   map.resources :nodes, :member => {:publish => :put, :unlock => :put}  
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
