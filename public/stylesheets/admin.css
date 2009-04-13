@@ -26,7 +26,8 @@ th {
 /* Pagination */
 
 div.pagination {
-  letter-spacing: 1px;
+  padding-top: 5px;
+  padding-bottom: 15px;
 }
 
 div.pagination span.current, div.pagination a:hover {
