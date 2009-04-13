@@ -1,5 +1,5 @@
-<%= language_selector %> |
+<%= language_selector %>
 
-<%= link_to 'Overview', :controller => :admin, :action => 'index' %> |
-<%= link_to 'Nodes', nodes_path %> |
-<%= link_to 'User', users_path %>
+<%= link_to 'Overview', :controller => :admin, :action => 'index' %>
+<%= link_to 'Nodes', nodes_path, selected?('nodes') %>
+<%= link_to 'User', users_path %> &gt;

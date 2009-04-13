@@ -12,4 +12,9 @@ module LinkHelper
     )
   end
   
+  def selected? controller_name
+    if params[:controller] == controller_name
+      return :class => "selected"
+    end
+  end
 end

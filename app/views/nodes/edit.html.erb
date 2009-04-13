@@ -1,49 +1,53 @@
-<div id='subnavigation'>
-  <%= link_to 'Show', @node %>
-  <%= link_to 'Back', nodes_path %>
-  <%= link_to 'Publish', publish_node_path, :method => :put %>
-  <%= link_to 'Diff revisions', :controller => :revisions, :action => :diff, :id => params[:id] %>
+<% content_for :subnavigation do %>
+  <%= link_to 'metadata', '#', :id => 'button', :class => "unselected" %>
+  <%= link_to 'Preview', @node %>
+  <%= link_to 'Publish', publish_node_path, :method => :put, :confirm => "Publish this draft?" %>
+  <%= link_to 'Diff revisions', :controller => :revisions, :action => :diff, :id => params[:id] %>  
+<% end %>
+
+<div id="page_editor">
+<% form_for(@node) do |f| %>
+  <%= f.error_messages %>
   
-</div>
-
-<h1>Editing page</h1>
-
-<strong>Sprache:</strong> <%= I18n.locale %> <strong>Pfad:</strong> <%= @node.unique_name %>
-
-<div class="page_editor">
-  <% form_for(@node) do |f| %>
-    <%= f.error_messages %>
+  <table id="metadata">
+    <tr>
+      <td class="description">Slug</td>
+      <td><%= f.text_field :slug %></td>
+    </tr>
     
     <% fields_for @draft do |d| %>
-    
-    <p>
-      <%= d.label :published_at %><br />
-      <%= d.datetime_select :published_at %>
-    </p>
-    <p>
-      <%= d.label :template_name %>
-      <%= d.select :template_name, custom_page_templates, {:prompt => 'Select Template'} %>
-    </p>
-    <p>
-      <%= d.label :title %><br />
-      <%= d.text_field :title %>
-    </p>
-    <p>
-       <%= d.label 'Tags, comma sperated' %><br />
-       <%= text_field_tag :tag_list, @draft.tag_list.join(", ") %>
-    </p>
-    <p>
-      <%= d.label :abstract %><br />
-      <%= d.text_area :abstract %>
-    </p>
-    <p>
-      <%= d.label :body %><br />
-      <%= d.text_area :body, :class => 'with_editor' %>
-    </p>
-    <% end %>
-      
-    <p>
-      <%= f.submit "Update" %>
-    </p>
+    <tr>
+      <td class="description">Tags - comma seperated</td>
+      <td><%= text_field_tag :tag_list, @draft.tag_list.join(", ") %></td>
+    </tr>
+    <tr>
+      <td class="description">Publish at</td>
+      <td><%= d.datetime_select :published_at %></td>
+    </tr>
+    <tr>
+      <td class="description">Template</td>
+      <td><%= d.select :template_name, custom_page_templates, {:prompt => 'Select Template'} %></td>
+    </tr>
+  </table>
+  
+  <table>
+    <tr>
+      <td class="description">Title</td>
+      <td><%= d.text_field :title %></td>
+    </tr>
+    <tr>
+      <td class="description">Abstract</td>
+      <td><%= d.text_area :abstract %></td>
+    </tr>
+    <tr>
+      <td class="description">Body</td>
+      <td><%= d.text_area :body, :class => 'with_editor' %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="right"><%= d.submit 'save' %></td>
+    </tr>
+  </table>
   <% end %>
+<% end %>
 </div>
