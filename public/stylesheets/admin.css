@@ -1,3 +1,5 @@
+/* Layout */
+
 body {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 12px;
@@ -8,6 +10,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  color: #ff9600;
+}
+
 th {
   text-transform: lowercase;
 }
@@ -16,6 +22,14 @@ th {
   margin-left: 125px;
   width: 899px;
 }
+
+/* Pagination */
+
+div.pagination span.current, div.pagination a:hover {
+  color: #ff9600;
+}
+
+/* Styles */
 
 .right {
   text-align: right;
@@ -55,6 +69,45 @@ th {
 #navigation a.selected {
   color: #ffffff;
   background-color: #000000;
+}
+
+/* Nodes */
+
+table#node_table {
+  width: 899px;
+  border-collapse: collapse;
+}
+
+table#node_table tr {
+  height: 65px;
+}
+
+table#node_table th.title {
+  width: 450px;
+}
+
+table#node_table tr.header {
+  height: 20px;
+  text-align: left;
+}
+
+table#node_table td {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 25px;
+  padding-left: 0px;
+}
+
+table#node_table tr.header:hover {
+  background-color: #ffffff;
+}
+
+table#node_table tr:hover {
+  background-color: #f1f1f1;
+}
+
+table#node_table .actions {
+  text-transform: lowercase;
 }
 
 /* Revisions */

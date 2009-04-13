@@ -1,12 +1,12 @@
-<div id="subnavigation">
+<% content_for :subnavigation do %>
   <%= link_to 'Create', new_node_path %>
-</div>
+<% end %>
 <h1>Nodes</h1>
 
 <%= will_paginate @nodes %>
 <p>
   <table id="node_table">
-    <tr class="table_headers">
+    <tr class="header">
       <th class="node_id">ID</th>
       <th class="title">Title</th>
       <th class="actions">Actions</th>
@@ -17,12 +17,11 @@
     <tr class="<%= cycle("even", "odd") %>">
       <td><%= node.id %></td>
       <td class="title">
-        <h4><%= title_for_node node %></h4>
-        <p><%= node.unique_name %></p>
+        <h4><%= link_to title_for_node(node), edit_node_path(node) %></h4>
+        <p><%= link_to_path(node.unique_name, node.unique_path) %></p>
       </td>
       <td class="actions">
-          <%= link_to 'Show',     node_path(node) %>
-            <%= link_to 'Edit',     edit_node_path(node) %>
+          <%= link_to 'Preview',     node_path(node) %>
           <%= link_to 'Revisions', :controller => :revisions, :action => :show, :id => node.id %>
           <%# link_to 'Destroy',  node, :method => :delete, :confirm => "Are you sure you want to delete this node?" %>
           <%= link_to 'Unlock', unlock_node_path(node), :method => :put, :confirm => "Are you sure you want to unlock?" %>
@@ -39,6 +38,3 @@
 </p>
 <%= will_paginate @nodes %>
 
-<% content_for :menu do %>
-  <%= link_to 'Create', new_node_path %>
-<% end %>
