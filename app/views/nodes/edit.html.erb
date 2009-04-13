@@ -2,7 +2,7 @@
   <%= link_to 'metadata', '#', :id => 'button', :class => "unselected" %>
   <%= link_to 'Preview', @node %>
   <%= link_to 'Publish', publish_node_path, :method => :put, :confirm => "Publish this draft?" %>
-  <%= link_to 'Diff revisions', :controller => :revisions, :action => :diff, :id => params[:id] %>  
+  <%= link_to 'Revisions', :controller => :revisions, :action => :diff, :id => params[:id] %>  
 <% end %>
 
 <div id="page_editor">

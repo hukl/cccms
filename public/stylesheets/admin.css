@@ -49,7 +49,6 @@ a {
 }
 
 input[type=text], textarea {
-  width: 700px;
   font-size: 12px;
   font-family: Helvetica;
   border: 1px solid #989898;
@@ -61,11 +60,12 @@ select {
 }
 
 input[type=text]#page_title {
+  width: 690px;
   font-size: 14px;
   padding-top: 6px;
   padding-bottom: 4px;
-  padding-left: 3px;
-  padding-right: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
   font-weight: bold;
 }
 
@@ -77,11 +77,13 @@ input[type=submit] {
 
 textarea#page_abstract {
   height: 150px;
+  width: 690px;
   padding: 5px;
 }
 
 #page_editor textarea#page_body {
   height: 600px;
+  width: 700px;
 }
 
 select {
@@ -93,7 +95,7 @@ table {}
 tr {}
 
 td {
-  padding-top: 5px;
+  padding-top: 10px;
   padding-bottom: 5px;
   padding-right: 10px;
 }
