@@ -84,6 +84,7 @@ table#node_table {
 
 table#node_table tr {
   height: 65px;
+  border-bottom: 1px solid #000000;
 }
 
 table#node_table th.title {
