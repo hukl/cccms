@@ -25,6 +25,10 @@ th {
 
 /* Pagination */
 
+div.pagination {
+  letter-spacing: 1px;
+}
+
 div.pagination span.current, div.pagination a:hover {
   color: #ff9600;
 }
