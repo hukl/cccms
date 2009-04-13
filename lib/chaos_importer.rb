@@ -1,6 +1,6 @@
 require 'iconv'
 require 'nokogiri'
-require 'lib/chaos_calendar/ical_occurrences'
+require 'chaos_calendar'
 require 'digest/sha1'
 
 
@@ -214,7 +214,7 @@ class ChaosImporter
     if dtend
       return dtend.content
     elsif duration
-      parsed_duration = Ical_occurrences.duration_to_fixnum(duration.content)
+      parsed_duration = ChaosCalendar.duration_to_fixnum(duration.content)
       return (dtstart.content.to_time + parsed_duration)
     else
       raise("Neiter DTEND nor DURATION found")
