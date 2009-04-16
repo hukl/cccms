@@ -14,7 +14,7 @@
     </tr>
     <% @nodes.each do |node| %>
     <tr class="<%= cycle("even", "odd") %>">
-      <td><%= node.id %></td>
+      <td class="node_id"><%= node.id %></td>
       <td class="title">
         <h4><%= link_to title_for_node(node), edit_node_path(node) %></h4>
         <p><%= link_to_path(node.unique_name, node.unique_path) %></p>
