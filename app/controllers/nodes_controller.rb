@@ -58,8 +58,11 @@ class NodesController < ApplicationController
     @draft = @node.find_or_create_draft current_user
     @draft.tag_list = params[:tag_list]
     if @draft.update_attributes( params[:page] )
-      flash[:notice] = "Draft has been updated"
-      redirect_to edit_node_path(@node)
+      flash[:notice] = "Draft has been saved: #{Time.now}"
+      respond_to do |format|
+        format.html { redirect_to edit_node_path(@node) }
+        format.js
+      end
     else
       render :action => :edit
     end

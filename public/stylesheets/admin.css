@@ -23,6 +23,25 @@ th {
   width: 899px;
 }
 
+#flash {
+  height: 12px;
+  line-height: 20px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  margin-left: 5px;
+}
+
+#flash span {
+  letter-spacing: 1px;
+  margin-right: 10px;
+}
+
+
+#flash img {
+  height: 12px;
+  width: 12px;
+}
+
 /* Pagination */
 
 div.pagination {
@@ -41,7 +60,7 @@ div.pagination span.current, div.pagination a:hover {
 }
 
 #navigation {
-  margin-left: -5px;
+  margin-left: 0px;
   float: left;
 }
 
@@ -102,6 +121,11 @@ table#node_table td {
   padding-bottom: 0px;
   padding-right: 25px;
   padding-left: 0px;
+}
+
+table#node_table .node_id {
+  padding-left: 10px;
+  padding-right: 15px;
 }
 
 table#node_table tr.header:hover {
@@ -218,6 +242,6 @@ td.description {
 }
 
 div#page_editor {
-  margin-top: 40px;
+  margin-top: 0px;
   margin-left: 15px;
 }
