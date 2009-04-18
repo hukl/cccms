@@ -1,3 +1,8 @@
+<% content_for :subnavigation do %>
+  <%= link_to 'back to node', edit_node_path(@event.node) %>
+<% end %>
+
+
 <h1>Editing event</h1>
 
 <% form_for(@event) do |f| %>
@@ -36,13 +41,9 @@
     <%= f.text_field :longitude %>
   </p>
   <p>
-    <%= f.label :node_id %><br />
-    <%= f.text_field :node_id %>
+    <%= f.hidden_field :node_id %>
   </p>
   <p>
     <%= f.submit 'Update' %>
   </p>
 <% end %>
-
-<%= link_to 'Show', @event %> |
-<%= link_to 'Back', events_path %>
