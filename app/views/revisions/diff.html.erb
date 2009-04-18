@@ -1,5 +1,4 @@
 <% content_for :subnavigation do %>
-  <%= link_to 'Diff', :action => :diff, :id => params[:id] %>
   <%= link_to 'Edit',     edit_node_path(@node) %>
   <%= link_to 'Revisions', revision_path(params[:id]) %>
 <% end %>
