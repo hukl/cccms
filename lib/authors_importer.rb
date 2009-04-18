@@ -1,5 +1,5 @@
 require 'csv'
-
+require 'digest/sha1'
 
 class AuthorsImporter
   
