@@ -46,7 +46,7 @@ class Occurrence < ActiveRecord::Base
   # nil, it simply returns the event start_time as only occurrence.
   # Return value is always an array of Time objects.
   def self.generate_dates event
-    if event.rrule
+    if event.rrule && !event.rrule.empty?
       ChaosCalendar::occurrences( 
         event.start_time, 
         (Time.now + 5.years), 
