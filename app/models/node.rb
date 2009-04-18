@@ -81,6 +81,15 @@ class Node < ActiveRecord::Base
     end
   end
   
+  def restore_revision! revision
+    if page = self.pages.find_by_revision(revision)
+      self.head = page
+      self.save
+    else
+      nil
+    end
+  end
+  
   # returns an array with all parts of a unique_name rather than a string
   def unique_path
     unique_name.split("/") rescue unique_name

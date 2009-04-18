@@ -235,4 +235,26 @@ class NodeTest < ActiveSupport::TestCase
     assert_not_nil test_node.draft
     assert test_node.head != test_node.draft
   end
+  
+  test "restoring a revision" do
+    test_node = Node.create! :slug => "test_node"
+    test_node.move_to_child_of Node.root
+    create_revisions( test_node, 3 )
+    test_node.find_or_create_draft @user1
+    test_node.reload
+    
+    assert_equal 4, test_node.pages.count
+    assert_equal 3, test_node.head.revision
+    
+    test_node.restore_revision!(1)
+    assert_equal 1, test_node.head.revision
+    assert_equal 4, test_node.draft.revision
+  end
+  
+  def create_revisions node, count
+    count.times do
+      node.find_or_create_draft @user1
+      node.publish_draft!
+    end
+  end
 end
