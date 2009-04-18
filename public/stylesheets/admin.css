@@ -215,6 +215,10 @@ input[type=submit] {
   background-color: #ffffff;
 }
 
+input[type=radio] {
+  border: 1px solid #989898;
+}
+
 textarea#page_abstract {
   height: 150px;
   width: 690px;
