@@ -9,13 +9,13 @@ class Page < ActiveRecord::Base
   
   named_scope( 
     :drafts, 
-    :include => [:node, :user, :globalize_translations], 
+    :joins => :node, 
     :conditions => ["nodes.draft_id = pages.id"]
   )
   
   named_scope(
     :heads,
-    :include => [:node, :user, :globalize_translations],
+    :joins => :node,
     :conditions => ["nodes.head_id = pages.id"]
   )
   
