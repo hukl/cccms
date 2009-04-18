@@ -205,6 +205,10 @@ input[type=text]#node_slug {
   padding: 5px;
 }
 
+input[type=password] {
+  border: 1px solid #989898;
+}
+
 input[type=submit] {
   min-width: 65px;
   border: 1px solid #989898;
