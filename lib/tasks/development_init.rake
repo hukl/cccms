@@ -28,6 +28,12 @@ namespace :cccms do
     importer.import_authors
   end  
   
+  desc "Update authors on pages"
+  task :update_authors_on_pages => :environment do |t|
+    i = ChaosImporter.new("#{RAILS_ROOT}/db/updates")
+    i.update_authors_on_pages
+  end
+  
   desc "Import the old XML Files"
   task :import_updates  => :environment do |t|
     i = ChaosImporter.new("#{RAILS_ROOT}/db/updates")

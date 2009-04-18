@@ -8,7 +8,7 @@ class AuthorsImporter
   end
   
   def import_authors
-    parse_csv || find_or_create_user
+    parse_csv
   end
   
   def parse_csv
@@ -26,24 +26,10 @@ class AuthorsImporter
         
         find_or_create_user options
       end
-      
-      return true
     end
   end
   
   def find_or_create_user options = {}
-    password = generate_password
-    
-    # default_options = {
-    #   :login => "webmaster",
-    #   :full_name => "Webmaster",
-    #   :email => "webmaster@ccc.de",
-    #   :password => password,
-    #   :password_confirmation => password
-    # }
-    # default_options = {}
-    # 
-    # options = default_options.merge(options)
     puts options[:login]
     
     unless User.find_by_email(options[:email])

@@ -49,6 +49,23 @@ class ChaosImporter
     end
   end
   
+  def update_authors_on_pages
+    self.each do |update|
+      author = find_or_create_author( update )
+      node = Node.find_by_unique_name( update.unique_name ) || raise("no node")
+      pages = node.pages.all(:conditions => {:user_id => nil})
+      
+      pages.each do |page|
+        if page.revision == 1
+          page.user = author
+          page.save
+        end
+      end
+      
+      puts "#{author.try(:login)} >>> #{node.unique_name}"
+    end
+  end
+  
   # Uses the each method to loop over the xml files and uses the attrubutes of 
   # the returned ChaosXml objects to do some further processing which is needed
   # to create proper ActiveRecord records 
@@ -98,7 +115,7 @@ class ChaosImporter
       author = User.find_by_login("webmaster")
     end
     
-    author  
+    author 
   end
   
   def find_or_create_node update
