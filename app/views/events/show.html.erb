@@ -3,6 +3,8 @@
   <%= link_to 'edit', edit_event_path(@event) %>
 <% end %>
 
+<h2>Event for node <%= @event.node.unique_name %></h2>
+
 <p>
   <b>Start time:</b>
   <%=h @event.start_time %>
@@ -41,9 +43,4 @@
 <p>
   <b>Longitude:</b>
   <%=h @event.longitude %>
-</p>
-
-<p>
-  <b>Node:</b>
-  <%=h @event.node_id %>
 </p>
