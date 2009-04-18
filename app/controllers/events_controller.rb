@@ -24,7 +24,7 @@ class EventsController < ApplicationController
   # GET /events/new
   # GET /events/new.xml
   def new
-    @event = Event.new
+    @event = Event.new(:node_id => params[:node_id])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -45,7 +45,7 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.save
         flash[:notice] = 'Event was successfully created.'
-        format.html { redirect_to(@event) }
+        format.html { redirect_to(edit_node_path(@event.node)) }
         format.xml  { render :xml => @event, :status => :created, :location => @event }
       else
         format.html { render :action => "new" }
@@ -62,7 +62,7 @@ class EventsController < ApplicationController
     respond_to do |format|
       if @event.update_attributes(params[:event])
         flash[:notice] = 'Event was successfully updated.'
-        format.html { redirect_to(@event) }
+        format.html { redirect_to(edit_node_path(@event.node)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
