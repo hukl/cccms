@@ -18,6 +18,10 @@ th {
   text-transform: lowercase;
 }
 
+#content {
+  margin-left: 5px;
+}
+
 #wrapper {
   margin-left: 125px;
   width: 899px;
@@ -252,5 +256,5 @@ td.description {
 
 div#page_editor {
   margin-top: 0px;
-  margin-left: 15px;
+  margin-left: 10px;
 }
