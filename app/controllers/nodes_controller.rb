@@ -81,7 +81,7 @@ class NodesController < ApplicationController
   def unlock
     # TODO that actually has to be implemented in the model, once we have
     # permissions
-    if @node.user
+    if @node.lock_owner
       @node.unlock!
       flash[:notice] = "Node unlocked"
     else
