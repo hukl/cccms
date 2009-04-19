@@ -7,13 +7,14 @@ namespace :ci do
   
   desc "run all task necessary to build with integrity"
   task :run_ci do
-    
-    system "git submodule init"
-    system "git submodule update"
-    :fetch_database_config
-    system "rake db:migrate"
-    system "rake db:test:clone"
-    system "rake test:coverage"
-  
+    if :fetch_database_config && \
+       system( "rake db:migrate") && \
+       system( "rake db:test:clone") && \
+       system( "rake test:coverage")
+      puts "succeeded"
+    else
+      puts "failed"
+      exit 1
+    end  
   end
 end
