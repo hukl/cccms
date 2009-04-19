@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   layout 'admin'
   
   def index
+    @users = User.all
   end
 
   def new
