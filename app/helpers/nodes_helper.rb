@@ -19,7 +19,7 @@ module NodesHelper
       "#{link_to 'show', event_path(@node.event)} " \
       "#{link_to 'edit', edit_event_path(@node.event)}"
     else
-      "no event attached > #{link_to 'add', new_event_path(:event_node_id => @node.id)}"
+      "no event attached > #{link_to 'add', new_event_path(:node_id => @node.id)}"
     end
   end
 end
