@@ -1,0 +1,10 @@
+<% content_for :subnavigation do %>
+  <%= link_to 'Edit', edit_asset_path(@asset) %>
+  <%= link_to 'Back', assets_path %>
+<% end %>
+
+
+
+<%= image_tag @asset.upload.url(:medium) %><br />
+<%= @asset.upload.content_type %><br />
+<%= "#{@asset.upload.size/1024} KB" %><br />

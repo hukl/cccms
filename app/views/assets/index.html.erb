@@ -1,0 +1,20 @@
+<% content_for :subnavigation do %>
+  <%= link_to 'New asset', new_asset_path %>
+<% end %>
+
+
+<table>
+  <tr>
+  </tr>
+
+<% @assets.each do |asset| %>
+  <tr>
+    <td><%= image_tag asset.upload.url(:thumb) %></td>
+    <td><%= link_to asset.name, asset.upload.url %></td>
+    <td><%= asset.upload.content_type %></td>
+    <td><%= link_to 'Show', asset %></td>
+    <td><%= link_to 'Edit', edit_asset_path(asset) %></td>
+    <td><%= link_to 'Destroy', asset, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
