@@ -1,22 +1,3 @@
-<div id="draft_list">
-  <h2>Drafts</h2>
-  <table>
-    <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Path</th>
-      <th>Locked by</th>
-    </tr>
-    <% @drafts.each do |draft| %>
-    <tr>
-      <td><%= draft.id %></td>
-      <td><%= draft.title %></td>
-      <td><%= draft.node.unique_name %></td>
-      <td><%= draft.node.lock_owner.login rescue "" %></td>
-      <td><%= link_to 'Show', node_path(draft.node) %></td>
-      <td><%= link_to "Diff revisions", :controller => :revisions, :action => :diff, :id => draft.node.id %></td>
-      <td><%= link_to "Publish", publish_node_path(draft.node), :method => :put, :confirm => "Do you really want to publish?" %></td>
-    </tr>
-    <% end %>
-  </table>
-</div>
+<%= render :partial => 'drafts' %>
+
+<%= render :partial => 'recent_changes' %>

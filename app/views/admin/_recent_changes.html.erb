@@ -1,0 +1,24 @@
+<h2>Recent Changes</h2>
+<div id="draft_list">
+  <table>
+    <tr class="header">
+      <th>Title</th>
+      <th>path</th>
+      <th>user</th>
+      <th>date</th>
+      <th></th>
+    </tr>
+    <% @recent_changes.each do |node| %>
+    <tr>
+      <td><%= node.draft.try(:title) %></td>
+      <td><%= node.unique_name %></td>
+      <td><%= node.draft.user.login rescue "" %></td>
+      <td><%= node.updated_at.to_s(:db) %></td>
+      <td class="actions">
+        <%= link_to 'Show', node_path(node) %>
+        <%= link_to "Revisions", revision_path(:id => node.id) %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

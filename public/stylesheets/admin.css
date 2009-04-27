@@ -262,3 +262,38 @@ div#page_editor {
   margin-top: 0px;
   margin-left: 10px;
 }
+
+div#draft_list {
+  border: 1px solid #000000;
+  padding: 5px;
+  overflow: auto;
+  height: 300px;
+}
+
+div#draft_list table {
+  border-collapse: collapse;
+}
+
+div#draft_list table tr.header:hover {
+  background-color: #ffffff;
+}
+
+div#draft_list table td.actions {
+  text-transform: lowercase;
+  white-space: nowrap;
+}
+
+div#draft_list table td.actions a {
+  letter-spacing: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+div#draft_list table tr:hover {
+  background-color: #f1f1f1;
+}
+
+table tr.header {
+  height: 20px;
+  text-align: left;
+}
