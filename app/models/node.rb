@@ -17,6 +17,10 @@ class Node < ActiveRecord::Base
   # Validations
   # validates_length_of :slug, :within => 3..40
   
+  define_index do
+    indexes head.globalize_translations.title
+  end
+  
   # Class methods
   
   # Returns a page for a given node. If no revision is supplied, it returns
