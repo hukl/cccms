@@ -8,6 +8,15 @@ module NodesHelper
     end
   end
   
+  
+  def truncated_title_for_node node
+    if (title = title_for_node node) && title.size > 20
+      "<span title='#{title}'>#{truncate(title, 40)}</span>"
+    else
+      title
+    end
+  end
+  
   def custom_page_templates
     Page.custom_templates.map {|x| [x.gsub("_", " ").titlecase, x]}
   end

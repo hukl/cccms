@@ -10,7 +10,7 @@
     </tr>
     <% @recent_changes.each do |node| %>
     <tr>
-      <td><%= node.draft.try(:title) %></td>
+      <td><%= truncated_title_for_node node %></td>
       <td><%= node.unique_name %></td>
       <td><%= node.draft.user.login rescue "" %></td>
       <td><%= node.updated_at.to_s(:db) %></td>
