@@ -1,4 +1,4 @@
-*.log
+log/*
 database.yml
 schema.rb
 .DS_Store
@@ -15,3 +15,5 @@ lib/chaos_calendar/ical_occurrences_wrap.o
 db/authors.csv
 public/system
 vendor/plugins/paperclip/tmp
+db/sphinx
+config/*.sphinx.conf
