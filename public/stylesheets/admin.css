@@ -163,6 +163,10 @@ table#revisions tr.header:hover {
   background-color: #ffffff;
 }
 
+table#revisions tr.no_hover:hover {
+  background-color: #ffffff;
+}
+
 table#revisions tr:hover {
   background-color: #f1f1f1;
 }
