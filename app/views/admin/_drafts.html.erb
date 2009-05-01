@@ -16,7 +16,7 @@
       <td><%= draft.user.login rescue "" %></td>
       <td class="actions">
         <%= link_to 'Show', node_path(draft.node) %>
-        <%= link_to "Revisions", :controller => :revisions, :action => :diff, :id => draft.node.id %>
+        <%= link_to "Revisions", revision_path(draft.node.id) %>
         <%= link_to "Publish", publish_node_path(draft.node), :method => :put, :confirm => "Do you really want to publish?" %>
       </td>
     </tr>
