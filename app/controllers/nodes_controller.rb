@@ -39,7 +39,7 @@ class NodesController < ApplicationController
   end
 
   def show
-    @page = Node.find(params[:id]).draft
+    @page = Node.find(params[:id]).pages.last
     
     if @page
      template = @page.valid_template
