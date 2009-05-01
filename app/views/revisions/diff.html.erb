@@ -11,31 +11,32 @@
   <%= submit_tag 'Diff' %>
 <% end %>
 
-
 <div id="start_title" style="display: none;">
-  <%= (@start.title) %>
+  <%= h(@start.title) %>
 </div>
 
 <div id="end_title" style="display: none;">
-  <%= (@end.title) %>
+  <%= h(@end.title) %>
 </div>
 
 <div id="start_abstract" style="display: none;">
-  <%= (@start.abstract) %>
+  <%= h(@start.abstract) %>
 </div>
 
 <div id="end_abstract" style="display: none;">
-  <%= (@end.abstract) %>
+  <%= h(@end.abstract) %>
 </div>
 
-<div id="start_body" style="display: none;">
-  <%= (@start.body) %>
-</div>
-
-<div id="end_body" style="display: none;">
-  <%= (@end.body) %>
-</div>
-
+<pre>
+  <div id="start_body" style="display: none;">
+    <%= (@start.body) %>
+  </div>
+</pre>
+<pre>
+  <div id="end_body" style="display: none;">
+    <%= (@end.body) %>
+  </div>
+</pre>
 
 <%= javascript_include_tag 'cacycle_diff' %>
 <script type="text/javascript" charset="utf-8">
