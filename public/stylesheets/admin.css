@@ -159,6 +159,10 @@ table#revisions td.title {
   width: 450px;
 }
 
+table#revisions td.date {
+  width: 175px;
+}
+
 table#revisions tr.header:hover {
   background-color: #ffffff;
 }

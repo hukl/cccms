@@ -14,7 +14,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :occurrences
   map.resources :events
-  map.resources :revisions, :member => {:diff => :post}
+  map.resources :revisions, :member => {:diff => :post, :restore => :put}
   map.resources :pages
   map.resources :nodes, :member => {:publish => :put, :unlock => :put}  
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'

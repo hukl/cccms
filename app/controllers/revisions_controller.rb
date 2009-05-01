@@ -32,4 +32,10 @@ class RevisionsController < ApplicationController
     @node = Node.find(params[:id])
   end
 
+  def restore
+    page = Page.find(params[:id])
+    page.node.restore_revision! page.revision
+    flash[:notice] = "Revision #{page.revision} restored"
+    redirect_to :back
+  end
 end

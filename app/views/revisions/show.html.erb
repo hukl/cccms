@@ -23,11 +23,21 @@
     <td class="title"><%= page.title %></td>
     <td class="user"><%= page.user.try(:login)  %></td>
     <td class="date"><%= page.updated_at %></td>
-    <td class="actions"><%= link_to 'show', node_path(page.node) %></td>
+    <td>
+      <%= link_to 'show', node_path(page.node) %>
+    </td>
+    <td>
+      <%= link_to(
+            'restore', 
+            restore_revision_path(page), 
+            :method => :put, 
+            :confirm => "Restore this revision?"
+          ) %>
+    </td>
   </tr>
 <% end %>
   <tr class="no_hover">
-    <td colspan="7" class="right"><%= submit_tag 'Diff revisions' %></td>
+    <td colspan="8" class="right"><%= submit_tag 'Diff revisions' %></td>
   </tr>
 </table>
 
