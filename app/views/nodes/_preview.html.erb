@@ -1,5 +1,5 @@
 <div id="preview_disclaimer">
   <strong>Preview draft.</strong>
   Clicking on links will redirected you to the public site.
-  <%= link_to 'Back to admin interface', nodes_path %>
+  <%= link_to 'Back to admin interface', request.env['HTTP_REFERER'] %>
 </div
