@@ -13,6 +13,7 @@
     <th>Title</th>
     <th>User</th>
     <th>Date</th>
+    <th></th>
   </tr>
 <% @node.pages.reverse.each do |page| %>
   <tr>
@@ -22,10 +23,11 @@
     <td class="title"><%= page.title %></td>
     <td class="user"><%= page.user.try(:login)  %></td>
     <td class="date"><%= page.updated_at %></td>
+    <td class="actions"><%= link_to 'show', node_path(page.node) %></td>
   </tr>
 <% end %>
   <tr class="no_hover">
-    <td colspan="6" class="right"><%= submit_tag 'Diff revisions' %></td>
+    <td colspan="7" class="right"><%= submit_tag 'Diff revisions' %></td>
   </tr>
 </table>
 
