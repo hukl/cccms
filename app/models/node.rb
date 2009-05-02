@@ -41,7 +41,7 @@ class Node < ActiveRecord::Base
       when -1        
         return node.head
       else
-        return node.pages.find_by_revision revision
+        return node.pages.find_by_revision( revision )
       end
     end
     
