@@ -12,19 +12,61 @@
     <%= javascript_include_tag 'admin_interface.js' %>
     
     <script type="text/javascript">
-    tinyMCE.init({
-      theme: "advanced",
-      mode : "specific_textareas",
-      editor_selector : "with_editor",
-      theme_advanced_toolbar_location : "top",
-      theme_advanced_toolbar_align : "left",
-      theme_advanced_buttons1 : "bold, italic, underline, bullist, numlist, link, unlink, formatselect, code",
-      theme_advanced_buttons2 : "",
-      theme_advanced_buttons3 : "",
-      extended_valid_elements : "aggregate[tags|limit|order_by|order_direction|partial]",
-      relative_urls : false,
-      entity_encoding : "raw"
-    });
+      tinyMCE.init({
+        theme: "advanced",
+        mode : "specific_textareas",
+        editor_selector : "with_editor",
+        theme_advanced_toolbar_location : "top",
+        theme_advanced_toolbar_align : "left",
+        theme_advanced_buttons1 : "bold, italic, underline, bullist, numlist, link, unlink, formatselect, code",
+        theme_advanced_buttons2 : "",
+        theme_advanced_buttons3 : "",
+        extended_valid_elements : "aggregate[tags|limit|order_by|order_direction|partial]",
+        relative_urls : false,
+        entity_encoding : "raw",
+        oninit : "setup_autosave"
+      });
+      
+      var setup_autosave = function() {
+        
+        var elements = {
+          "title"    : $('#page_title'),
+          "abstract" : $('#page_abstract'),
+          "body"     : $('#page_body_ifr').contents().find('#tinymce'),
+        }
+        
+        
+        var page = {         
+          "cached_title_length"    : elements.title.val().length,
+          "cached_abstract_length" : elements.abstract.val().length,
+          "cached_body_length"     : elements.body.html().length,
+      
+          "title_has_changed" : function() {
+             return (elements.title.val().length != this.cached_title_length)
+           },
+           
+           "abstract_has_changed" : function() {
+             return (elements.abstract.val().length != this.cached_abstract_length)
+           },
+           
+           "body_has_changed" : function() {
+             return elements.body.html().length != this.cached_body_length
+           }
+        }
+        
+        
+        jQuery.fn.submitWithAjax = function(options) {
+          if (page.title_has_changed() || page.abstract_has_changed() || page.body_has_changed()) {
+            
+            page.cached_title_length      =  elements.title.val().length;
+            page.cached_abstract_length   = elements.abstract.val().length;
+            page.cached_body_length       = elements.body.html().length;
+            
+            $("#flash").append("<img src='/images/ajax-loader.gif' alt='' />");
+            $.post(this.attr("action"), $(this).serialize(), null, "script");
+          }
+        };
+      }
     </script>
   </head>
   
