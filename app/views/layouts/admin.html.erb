@@ -66,7 +66,10 @@
             $.post(this.attr("action"), $(this).serialize(), null, "script");
           }
         };
+        
+        setInterval('$("#edit_node_<%= @node.id %>").submitWithAjax()', 15000);
       }
+      
     </script>
   </head>
   
