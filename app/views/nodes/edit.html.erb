@@ -5,8 +5,6 @@
   <%= link_to 'Revisions', revision_path(params[:id]) %>  
 <% end %>
 
-<%= render :partial => 'autosave' %>
-
 <div id="page_editor">
 <% form_for(@node) do |f| %>
   <%= f.error_messages %>
