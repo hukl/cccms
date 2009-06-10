@@ -120,6 +120,10 @@ class Node < ActiveRecord::Base
     self.save
   end
   
+  def title
+    head ? head.title : draft.title
+  end
+  
   protected
     def lock_for! current_user
       self.lock_owner = current_user
