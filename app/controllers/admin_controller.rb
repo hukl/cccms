@@ -12,4 +12,19 @@ class AdminController < ApplicationController
     )
   end
   
+  def search
+    @results = Node.search params[:search_term]
+    
+    respond_to do |format|
+      format.html
+      format.js do 
+        render( :json => @results.map do |node| 
+          {:id => node.id, :title => node.title} 
+          end
+        )
+        
+      end 
+    end
+  end
+  
 end

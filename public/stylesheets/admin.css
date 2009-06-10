@@ -64,7 +64,7 @@ div.pagination span.current, div.pagination a:hover {
   text-align: right;
 }
 
-#navigation {
+#navigation, #subnavigation {
   margin-left: 0px;
   float: left;
 }
@@ -98,6 +98,9 @@ div.pagination span.current, div.pagination a:hover {
 #navigation a.selected {
   color: #ffffff;
   background-color: #000000;
+}
+
+#admin_search {
 }
 
 /* Nodes */

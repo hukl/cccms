@@ -1,4 +1,6 @@
 $(document).ready(function () {
+  admin_search.initialize();
+  
   $("#metadata").attr("style", "display: none;");
   
   $("#button").click(function () {
