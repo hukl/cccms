@@ -1,6 +1,7 @@
 <% content_for :subnavigation do %>
   <%= link_to 'metadata', '#', :id => 'button', :class => "unselected" %>
-  <%= link_to 'Preview', @node %>
+  <%= link_to 'Show', @node %>
+  <%= link_to 'Preview', preview_page_path(@draft) %>
   <%= link_to 'Publish', publish_node_path, :method => :put, :confirm => "Publish this draft?" %>
   <%= link_to 'Revisions', revision_path(params[:id]) %>  
 <% end %>
@@ -35,6 +36,10 @@
   </table>
   
   <table id="content">
+    <tr>
+      <th class="description"></th>
+      <th class="content"></th>
+    </tr>
     <tr>
       <td class="description">Title</td>
       <td><%= d.text_field :title %></td>

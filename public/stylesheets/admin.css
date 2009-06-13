@@ -3,6 +3,7 @@
 body {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 12px;
+  margin: 0px;
 }
 
 a {
@@ -64,33 +65,38 @@ div.pagination span.current, div.pagination a:hover {
   text-align: right;
 }
 
-#navigation, #subnavigation {
-  margin-left: 0px;
+#navigation {
+  position: relative;
+  margin-top: 10px;
+}
+
+#navigation div {
   float: left;
 }
+
 
 #navigation a:hover {
   color: #ffffff;
   background-color: #000000;
 }
 
-#navigation a, #subnavigation a {
+#main_navigation a, #sub_navigation a {
   letter-spacing: 1px;
   padding-left: 5px;
   padding-right: 5px;
   text-transform: lowercase;
 }
 
-#subnavigation a {
+#sub_navigation a {
   color: #969696;
 }
 
-#subnavigation a:hover {
+#sub_navigation a:hover {
   color: #ffffff;
   background-color: #ff9600;
 }
 
-#subnavigation a.selected {
+#sub_navigation a.selected {
   color: #ffffff;
   background-color: #ff9600;
 }
@@ -98,9 +104,6 @@ div.pagination span.current, div.pagination a:hover {
 #navigation a.selected {
   color: #ffffff;
   background-color: #000000;
-}
-
-#admin_search {
 }
 
 /* Nodes */
@@ -211,12 +214,10 @@ input[type=text]#page_title {
 }
 
 input[type=text]#tag_list {
-  width: 690px;
   padding: 5px;
 }
 
 input[type=text]#node_slug {
-  width: 690px;
   padding: 5px;
 }
 
@@ -235,14 +236,14 @@ input[type=radio] {
 }
 
 textarea#page_abstract {
-  height: 150px;
   width: 690px;
+  height: 150px;
   padding: 5px;
 }
 
 #page_editor textarea#page_body {
-  height: 600px;
   width: 700px;
+  height: 600px;
 }
 
 #page_editor #metadata, #page_editor #content {
@@ -303,4 +304,39 @@ div#draft_list table tr:hover {
 table tr.header {
   height: 20px;
   text-align: left;
+}
+
+#search_widget {
+  position: absolute;
+  top: 20px;
+  left: 400px;
+  width: 300px;
+  border: 1px solid #000000;
+  -webkit-box-shadow: 3px 3px 5px #b1b1b1;
+  -moz-box-shadow: 10px 10px 5px #888, 10px 10px 30px rgba(0,0,0,0.4);
+  background-color: #ffffff;
+  padding: 3px;
+  text-align: center;
+}
+
+#search_widget span {
+  font-size: 18px;
+}
+
+#search_widget input {
+  width: 210px;
+  font-size: 18px;
+}
+
+#search_widget #search_results {
+  padding: 4px;
+  text-align: left;
+}
+
+table#content th.description {
+  width: 100px;
+}
+
+table#content th.content {
+  width: 690px;
 }

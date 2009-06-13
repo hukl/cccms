@@ -40,14 +40,6 @@ class NodesController < ApplicationController
 
   def show
     @page = Node.find(params[:id]).pages.last
-    
-    if @page
-     template = @page.valid_template
-     render(
-       :file => template,
-       :layout => "application"
-     )
-    end
   end
 
   def edit

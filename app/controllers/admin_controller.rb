@@ -19,7 +19,7 @@ class AdminController < ApplicationController
       format.html
       format.js do 
         render( :json => @results.map do |node| 
-          {:id => node.id, :title => node.title} 
+          {:id => node.id, :title => node.title, :edit_path => node_path(node)} 
           end
         )
         

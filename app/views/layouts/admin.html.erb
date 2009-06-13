@@ -11,6 +11,7 @@
     <%= javascript_include_tag 'tiny_mce/tiny_mce.js' %>
     <%= javascript_include_tag 'admin_search.js' %>
     <%= javascript_include_tag 'admin_interface.js' %>
+    <%= javascript_include_tag 'jquery.hotkeys' %>
     
     <script type="text/javascript">
       tinyMCE.init({
@@ -34,17 +35,14 @@
   <body>
     <div id="wrapper">
       <div id="navigation">
-        <%= render :partial => 'admin/menu' if current_user %>
+        <div id="main_navigation">
+          <%= render :partial => 'admin/menu' if current_user %>
+        </div>
+        <div id="sub_navigation">
+          <%= yield :subnavigation %>
+        </div>
       </div>
-      <div id="subnavigation">
-        <%= yield :subnavigation %>
-      </div>
-      <div id="admin_search">
-        <% form_tag admin_search_path do %>
-          <%= text_field_tag :search_term %>
-        <% end %>
-      </div>
-      <div style="clear: both"></div>
+      <div style="clear: both;"></div>
       <div id="flash">
         <%= flash[:notice] %>
       </div>
@@ -53,6 +51,17 @@
       </div>
       
       <div id="results"></div>
+    </div>
+    
+    <div id="search_widget">
+      <div>
+        <% form_tag admin_search_path do %>
+          <span>Search: </span><%= text_field_tag :search_term %>
+        <% end %>
+      </div>
+      <div id="search_results" style="display: none">
+        
+      </div>
     </div>
   </body>
 </html>
