@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   
-    <title>untitled</title>
+    <title><%= page_title %></title>
     <%= stylesheet_link_tag "ccc" %>
   </head>
   
   <body>
     <div id="wrapper">
       <div id="header">
-        <%= image_tag "header.jpg" %>
+        <%= image_tag "header.png" %>
       </div>
       <div id="left_column">
-        
+        <%= main_menu %>
       </div>
       <div id="center_column">
         <%= yield :layout %>
