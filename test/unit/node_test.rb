@@ -5,7 +5,11 @@ class NodeTest < ActiveSupport::TestCase
   def setup
     @root = Node.find(1)
     @first_child = Node.find(2)
+    @first_child.pages.create! :title => "one"
+    @first_child.draft = @first_child.pages.last
+    @first_child.save
     @second_child = Node.find(3)
+    @second_child.pages.create! :title => "one"
     
     @user1 = User.create :login => 'demo', :email => "f@b.com", :password => 'foobar', :password_confirmation => 'foobar'
     @user2 = User.create :login => 'show', :email => "f@b.com", :password => 'foobar', :password_confirmation => 'foobar'

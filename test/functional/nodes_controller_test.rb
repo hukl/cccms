@@ -5,6 +5,7 @@ class NodesControllerTest < ActionController::TestCase
   include AuthenticatedTestHelper
 
   def test_get_index
+    Node.root.descendants.delete_all
     login_as :quentin
     get :index
     assert_response :success
@@ -26,6 +27,9 @@ class NodesControllerTest < ActionController::TestCase
     login_as :quentin
     
     node = Node.find_by_unique_name("fourth_child")
+    node.pages.create
+    node.draft = node.pages.last
+    node.save
     
     assert_equal 1, node.pages.length
     

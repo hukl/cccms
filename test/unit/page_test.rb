@@ -22,7 +22,7 @@ class PageTest < ActiveSupport::TestCase
     d1.tag_list = "update"
     d1.save
     n1.publish_draft!
-
+  
     d2 = n1.find_or_create_draft @user1
     n1.publish_draft!
     
@@ -30,7 +30,7 @@ class PageTest < ActiveSupport::TestCase
     d3.tag_list = "update, pressemitteilung"
     d3.save
     n2.publish_draft!
-
+  
     d4 = n2.find_or_create_draft @user1
     n2.publish_draft!
     
@@ -63,7 +63,7 @@ class PageTest < ActiveSupport::TestCase
     I18n.locale = :de
     
     d.body = before
-    d.save
+    d.save!
     
     assert_equal after, d.body
   end

@@ -67,7 +67,7 @@ class Node < ActiveRecord::Base
   end
   
   def create_new_draft user
-    empty_page = self.pages.create
+    empty_page = self.pages.create!
     empty_page.user = user
     empty_page.save
     

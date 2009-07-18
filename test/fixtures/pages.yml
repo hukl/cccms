@@ -1,31 +1,37 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  id: 1
-  revision: 1
-  node_id: 2
-  
-two:
-  id: 2
-  revision: 1
-  node_id: 4
-  
-draft1:
-  id: 100
-  revision: 1
-  node_id: 2
-  
-draft2:
-  id: 101
-  revision: 1
-  node_id: 3
-  
-draft3:
-  id: 102
-  revision: 1
-  node_id: 4
-  
-draft4:
-  id: 103
-  revision: 1
-  node_id: 5
+# one:
+#   id: 1
+#   revision: 1
+#   node_id: 2
+#   title: "first"
+#   
+# two:
+#   id: 2
+#   revision: 1
+#   node_id: 4
+#   title: "second"
+#   
+# draft1:
+#   id: 100
+#   revision: 1
+#   node_id: 2
+#   title: "third"
+#   
+# draft2:
+#   id: 101
+#   revision: 1
+#   node_id: 3
+#   title: "fourth"
+#   
+# draft3:
+#   id: 102
+#   revision: 1
+#   node_id: 4
+#   title: "fifth"
+#   
+# draft4:
+#   id: 103
+#   revision: 1
+#   node_id: 5
+#   title: "sixth"

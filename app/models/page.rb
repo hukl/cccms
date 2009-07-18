@@ -30,7 +30,8 @@ class Page < ActiveRecord::Base
   belongs_to :user
   
   # Filter
-  before_save :rewrite_links_in_body
+  before_create :set_page_title
+  before_save   :rewrite_links_in_body
   
   # Security
   attr_accessible :title, :abstract, :body, :template_name, :published_at
@@ -168,16 +169,21 @@ class Page < ActiveRecord::Base
   
   private
     
+    def set_page_title
+      if title.nil?
+        title = "Untitled"
+      end
+    end
+    
     def rewrite_links_in_body
       begin
         if self.body
-          tmp_body = "<div>#{self.body}</div>"
-          xml_string = XML::Parser.string( tmp_body )
-          xml_doc = xml_string.parse
-          links = xml_doc.find("//a[not(starts-with(@href, 'http://'))]")
-          
-          locales = I18n.available_locales.reject {|l| l == :root}
-          
+          tmp_body    = "<div>#{self.body}</div>"
+          xml_string  = XML::Parser.string( tmp_body )
+          xml_doc     = xml_string.parse
+          links       = xml_doc.find("//a[not(starts-with(@href, 'http://'))]")
+          locales     = I18n.available_locales.reject {|l| l == :root}
+
           links.each do |link|
             unless locales.include? link[:href].slice(1,2).to_sym
               link[:href] = link[:href].sub(/^\//, "/#{I18n.locale}/")
