@@ -18,6 +18,10 @@ a:hover {
   color: #ff9600;
 }
 
+pre {
+  overflow: auto;
+}
+
 div#wrapper {
   position: relative;
   width: 909px;
