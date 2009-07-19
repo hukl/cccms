@@ -1,0 +1,7 @@
+<div id="main_navigation">
+  <ul>
+    <% nodes.each do |node| %>
+    <li><%= link_to node.head.try(:title), node.unique_name %></li>
+    <% end %>
+  </ul>
+</div>

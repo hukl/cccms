@@ -1,5 +1,19 @@
 module ContentHelper
   
+  def main_menu
+    nodes = Node.find(:all, :conditions => {:parent_id => 1})
+    render :partial => 'content/main_navigation', :locals => {:nodes => nodes}
+  end
+  
+  def calendar
+    occurrences = Occurrence.find_in_range(Time.now, (Time.now+14.days))
+    render(
+      :partial  => 'content/front_page_calendar', 
+      :locals   => {:occurrences => occurrences}
+    )
+  end
+  
+  
   # Returns the published_at attribute of a page if it is not nil, otherwise
   # it returns the auto-filled value of the created_at attribute
   def date_for_page page

@@ -1,14 +1,18 @@
 module LinkHelper
   
-  def link_to_path title, path
+  def link_to_path title, path, html_options = {}
+    active = (params[:page_path].join("/") == path.sub(/^\//, ""))
+    
     params[:locale] ||= I18n.locale
     
     link_to( 
-      title,
-      :controller => :content,
-      :action => :render_page,
-      :locale => params[:locale],
-      :page_path => path
+      title, {
+        :controller => :content,
+        :action => :render_page,
+        :locale => params[:locale],
+        :page_path => path.sub(/^\//, "").split("/")
+      },
+      active ? {:class => 'active'} : {:class => 'inactive'}
     )
   end
   

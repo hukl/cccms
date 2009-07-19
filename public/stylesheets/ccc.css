@@ -29,6 +29,11 @@ div#header {
   height: 224px;
 }
 
+div#main_navigation ul {
+  margin-left: 0;
+  padding-left: 0;
+}
+
 div#main_navigation li {
   list-style-type: none;
 }
@@ -48,6 +53,17 @@ div#main_navigation a.active {
   font-size: 22px;
 }
 
+div#frontpage_calendar {
+}
+
+div#frontpage_calendar h2 {
+  border-top: 2px solid #000000;
+  border-bottom: 2px dashed #000000;
+  font-size: 18px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
 div.author_and_date {
   font-style: italic;
 }
@@ -58,9 +74,12 @@ div#left_column {
   background-position: top right;
   background-repeat: no-repeat;
   left: 0px;
-  width: 185px;
+  width: 145px;
   min-height: 100px;
+  text-align: right;
+  padding-right: 40px;
 }
+
 
 div#center_column {
   position: absolute;
