@@ -73,7 +73,7 @@ module Globalize
           translations = @record.globalize_translations
         end
         result, requested_locale = nil, locale
-         
+
         # Walk through the fallbacks, starting with the current locale itself, and moving
         # to the next best choice, until we find a match.
         # Check the @globalize_set_translations cache first to see if we've just changed the 
