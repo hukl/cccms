@@ -113,6 +113,10 @@ div.teaser_ruler {
   margin-top: 30px;
 }
 
+div.article_partial h2 a {
+  text-decoration: none;
+}
+
 div.article_partial p.excerpt {
   color: #404040;
 }
