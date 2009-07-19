@@ -1,7 +1,9 @@
 module LinkHelper
   
   def link_to_path title, path, html_options = {}
-    active = (params[:page_path].join("/") == path.sub(/^\//, ""))
+    if params[:page_path]
+      active = (params[:page_path].join("/") == path.sub(/^\//, ""))
+    end
     
     params[:locale] ||= I18n.locale
     

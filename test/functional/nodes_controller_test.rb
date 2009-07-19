@@ -6,6 +6,8 @@ class NodesControllerTest < ActionController::TestCase
 
   def test_get_index
     Node.root.descendants.delete_all
+    test_node = Node.create :slug => "foo"
+    test_node.move_to_child_of Node.root
     login_as :quentin
     get :index
     assert_response :success
