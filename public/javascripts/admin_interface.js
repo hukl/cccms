@@ -1,23 +1,6 @@
 $(document).ready(function () {
-  $("#search_widget").hide();
-  
-  $(document).bind("keydown", 'Alt+f', function(){
-    admin_search.display_toggle();
-    return false;
-  });
-  
-  $("#metadata").attr("style", "display: none;");
-  
-  $("#button").click(function () {
-    $("#metadata").slideToggle("slow");
-    
-    if ($("#button").attr("class") == "unselected") {
-      $("#button").attr("class", "selected");
-    }
-    else {
-      $("#button").attr("class", "unselected");
-    }
-  });
+  admin_search.initialize();
+  meta_data.initialize();
   
   jQuery.ajaxSetup({ 
     'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
@@ -25,6 +8,23 @@ $(document).ready(function () {
   
 });
 
+
+meta_data = {
+  initialize : function() {
+    $("#metadata").attr("style", "display: none;");
+
+    $("#button").click(function () {
+      $("#metadata").slideToggle("slow");
+
+      if ($("#button").attr("class") == "unselected") {
+        $("#button").attr("class", "selected");
+      }
+      else {
+        $("#button").attr("class", "unselected");
+      }
+    });
+  }
+};
 
 cccms = {
   setup_autosave : function() {
