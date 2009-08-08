@@ -19,6 +19,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login '/login',   :controller => 'sessions', :action => 'new'
   map.admin_search 'admin/search', :controller => 'admin', :action => 'search'
   map.resources :users
+  map.resources :menu_items
   map.resource  :session
   
   map.connect ':controller/:action/:id'
