@@ -1,7 +1,8 @@
+<%= Time.now %>
 <div id="main_navigation">
   <ul>
-    <% nodes.each do |node| %>
-    <li><%= link_to_path node.head.try(:title), node.unique_name %></li>
+    <% menu_items.each do |item| %>
+    <li><%= link_to_path item.title, item.path %></li>
     <% end %>
   </ul>
 </div>

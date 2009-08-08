@@ -1,8 +1,11 @@
 module ContentHelper
   
   def main_menu
-    nodes = Node.find(:all, :conditions => {:parent_id => 1})
-    render :partial => 'content/main_navigation', :locals => {:nodes => nodes}
+    menu_items = MenuItem.all
+    render(
+      :partial => 'content/main_navigation', 
+      :locals => {:menu_items => menu_items}
+    )
   end
   
   def calendar
