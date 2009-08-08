@@ -11,30 +11,29 @@ admin_search = {
     }
     
     $("#search_term").bind("keyup", function() {
-        if ($(this).attr("value")) {
-          $.ajax({
-            type: "GET",
-            url: "/admin/search",
-            data: "search_term=" + $(this).attr("value"),
-            dataType: "json",
-            success : function(results) {
-              admin_search.show_results(results);
-            }
-          });
-        }
-        else {
-          $('#search_results').slideUp();
-          $('#search_results').empty(); 
-        }
-      });
-    },
+      if ($(this).attr("value")) {
+        $.ajax({
+          type: "GET",
+          url: "/admin/search",
+          data: "search_term=" + $(this).attr("value"),
+          dataType: "json",
+          success : function(results) {
+            admin_search.show_results(results);
+          }
+        });
+      }
+      else {
+        $('#search_results').slideUp();
+        $('#search_results').empty(); 
+      }
+    });
+  },
     
-    show_results : function(results) {
-       $('#search_results').empty();
-       for (result in results) {
-         $('#search_results').append("<p><a href='"+ results[result].edit_path + "'>" + results[result].title + "</a></p>");
-       }
-       $('#search_results').slideDown();
+  show_results : function(results) {
+     $('#search_results').empty();
+     for (result in results) {
+       $('#search_results').append("<p><a href='"+ results[result].edit_path + "'>" + results[result].title + "</a></p>");
      }
-     
+     $('#search_results').slideDown();
   }
+}
