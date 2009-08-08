@@ -20,6 +20,8 @@ class Node < ActiveRecord::Base
   # Index for Fulltext Search
   define_index do
     indexes head.globalize_translations.title
+    indexes slug
+    indexes unique_name
   end
   
   # Class methods
