@@ -27,4 +27,23 @@ class AdminController < ApplicationController
     end
   end
   
+  def menu_search
+    @results = Node.search params[:search_term]
+    
+    respond_to do |format|
+      format.html do
+        render :partial => 'admin/menu_search_results'
+      end
+      
+      
+      format.js do 
+        render( :json => @results.map do |node| 
+          {:node_id => node.id, :title => node.title, :unique_name => node.unique_name} 
+          end
+        )
+        
+      end 
+    end
+  end
+  
 end

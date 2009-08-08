@@ -13,6 +13,17 @@ class MenuItemsController < ApplicationController
   end
 
   def create
+    respond_to do |format|
+      format.html {}
+      
+      format.js do
+        MenuItem.create params[:menu_item]
+      end
+      
+      
+    end
+    
+    
   end
 
   def edit

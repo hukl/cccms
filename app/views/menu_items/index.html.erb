@@ -5,3 +5,14 @@
   <li><%= menu_item.title %></li>
   <% end %>
 </ul>
+
+<div id="menu_item_search">
+  <div>
+    <% form_tag admin_search_path do %>
+      <span>Add menu item: </span><%= text_field_tag :search_term %>
+    <% end %>
+  </div>
+  <div id="search_results">
+    
+  </div>
+</div>
