@@ -24,7 +24,7 @@ module NodesHelper
   
   def event_information
     if @node.event
-      "#{@node.event.start_time} - #{@node.event.end_time} > " \
+      "#{@node.event.start_time.to_s(:db)} - #{@node.event.end_time.to_s(:db)} > " \
       "#{link_to 'show', event_path(@node.event)} " \
       "#{link_to 'edit', edit_event_path(@node.event)}"
     else
