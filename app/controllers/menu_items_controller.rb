@@ -22,9 +22,17 @@ class MenuItemsController < ApplicationController
   end
 
   def edit
+    @menu_item = MenuItem.find( params[:id] )
   end
 
   def update
+    @menu_item = MenuItem.find( params[:id] )
+    
+    if @menu_item.update_attributes( params[:menu_item] )
+      redirect_to menu_items_path
+    else
+      render :edit
+    end
   end
 
   def delete

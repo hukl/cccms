@@ -84,14 +84,14 @@ menu_items = {
       var wrapper = $("<div></div>");
       $(wrapper).append(link)
       
-      $("#search_results").append(bar);
+      $("#search_results").append(wrapper);
       
     }
   },
   
   add_item_to_form : function(node) {
-    $("#new_menu_item #menu_item_node_id").val(node.node_id);
-    $("#new_menu_item #menu_item_path").val("/" + node.unique_name);
-    $("#new_menu_item #menu_item_title").val(node.title);
+    $("#menu_item_node_id").val(node.node_id);
+    $("#menu_item_path").val("/" + node.unique_name);
+    $("#menu_item_title").val(node.title);
   } 
 };

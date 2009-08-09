@@ -5,8 +5,11 @@
 
 <h1>Menu Items</h1>
 
-<ul>
+<table>
   <% @menu_items.each do |menu_item| %>
-  <li><%= menu_item.title %></li>
+  <tr>
+    <td><%= menu_item.title %></td>
+    <td><%= link_to "Edit", edit_menu_item_path(menu_item) %></td>
+  </tr>
   <% end %>
-</ul>
+</table>
