@@ -3,7 +3,7 @@ class MenuItemsController < ApplicationController
   layout 'admin'
   
   def index
-    @menu_items = MenuItem.all
+    @menu_items = MenuItem.all(:order => "position ASC")
   end
 
   def show
@@ -35,7 +35,19 @@ class MenuItemsController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
+    menu_item = MenuItem.find( params[:id] )
+    menu_item.destroy
+    redirect_to menu_items_path
+  end
+  
+  def sort
+    params[:menu_items].each_with_index do |item_id, index|
+      menu_item = MenuItem.find(item_id)
+      menu_item.update_attributes(:position => index + 1)
+    end
+    
+    render :nothing => true
   end
 
 end

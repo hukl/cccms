@@ -2,6 +2,7 @@ $(document).ready(function () {
   admin_search.initialize();
   menu_items.initialize_search();
   meta_data.initialize();
+  menu_item_sorter.initialize();
   
   jQuery.ajaxSetup({ 
     'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
@@ -77,3 +78,27 @@ cccms = {
     setInterval('$("#page_editor > form").submitWithAjax()', 15000);
   }
 }
+
+menu_item_sorter = {
+  
+  initialize : function() {
+    $("#menu_item_list").sortable({
+      axis: 'y', 
+      items: 'tr',
+      handle: 'td',
+      stop : function(){
+        $.ajax({
+          type: "POST",
+          url: "/menu_items/0/sort",
+          data: $(this).sortable("serialize"),
+          dataType: "json",
+          success : function(results) {
+            alert(results);
+          }
+        });
+      }
+    });
+  }
+}
+      
+
