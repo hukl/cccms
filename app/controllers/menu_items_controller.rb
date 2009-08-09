@@ -10,20 +10,15 @@ class MenuItemsController < ApplicationController
   end
 
   def new
+    @menu_item = MenuItem.new params[:menu_item]
   end
 
   def create
-    respond_to do |format|
-      format.html {}
-      
-      format.js do
-        MenuItem.create params[:menu_item]
-      end
-      
-      
+    if MenuItem.create( params[:menu_item] )
+      redirect_to menu_items_path
+    else
+      render :new
     end
-    
-    
   end
 
   def edit

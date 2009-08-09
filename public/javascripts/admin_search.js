@@ -50,7 +50,7 @@ admin_search = {
 menu_items = {
   
   initialize_search : function() {
-    $("#search_term").bind("keyup", function() {
+    $("#menu_search_term").bind("keyup", function() {
       if ($(this).attr("value")) {
         $.ajax({
           type: "GET",
@@ -72,40 +72,26 @@ menu_items = {
   show_results : function(results) {
     $("#search_results").empty();
     for (result in results) {
-      var foo = $(("<a href='#'>"+ results[result].title + "</a>"));
-      $(foo).bind("click", function(){
-        menu_items.open_title_popup();
-        //menu_items.add_item_to_menu(results[result]);
+      var link = $(("<a href='#'>"+ results[result].title + "</a>"));
+      $(link).bind("click", function(){
+        menu_items.add_item_to_form(results[result]);
         return false;
       });
       
-      $("#search_results").append(foo);
+      
+      // Sometimes I don't get jquery; wrap() didn't work *sigh*
+      // Guess I'll need a book someday or another framework
+      var wrapper = $("<div></div>");
+      $(wrapper).append(link)
+      
+      $("#search_results").append(bar);
       
     }
   },
   
-  open_title_popup : function() {
-    popup = $("<div><form action='#'><input id='item_title' type='text' /><input id='foobar' type='submit' /></form></div>");
-    $("form", popup).submit(function(){
-      alert("hi");
-      return false;
-    });
-    $("body").append(popup);
-  },
-  
-  add_item_to_menu : function(node) {
-    $.ajax({
-      type: "post",
-      url: "/menu_items/create",
-      data: {
-        "menu_item[node_id]"      : node.node_id,
-        "menu_item[path]"         : "/" + node.unique_name,
-        "menu_item[title]"        : node.title
-      },
-      success : function() {
-        alert("s");
-      }
-    });
-  }
-  
+  add_item_to_form : function(node) {
+    $("#new_menu_item #menu_item_node_id").val(node.node_id);
+    $("#new_menu_item #menu_item_path").val("/" + node.unique_name);
+    $("#new_menu_item #menu_item_title").val(node.title);
+  } 
 };

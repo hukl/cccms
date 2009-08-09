@@ -1,2 +1,32 @@
-<h1>MenuItems#new</h1>
-<p>Find me in app/views/menu_items/new.html.erb</p>
+<h1>Add Menu Item</h1>
+
+<% form_for @menu_item do |f| %>
+  <table>
+    
+    <tr>
+      <td class="description">Search</td>
+      <td>
+        <%= text_field_tag :menu_search_term %>
+        <div id="search_results">
+
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="description">Node Id</td>
+      <td><%= f.text_field :node_id %></td>
+    </tr>
+    <tr>
+      <td class="description">Path</td>
+      <td><%= f.text_field :path %></td>
+    </tr>
+    <tr>
+      <td class="description">Title</td>
+      <td><%= f.text_field :title %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="right"><%= f.submit 'Create' %></td>
+    </tr>
+  </table>
+<% end %>
