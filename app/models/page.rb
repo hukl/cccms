@@ -121,7 +121,7 @@ class Page < ActiveRecord::Base
     self.reload
     
     # Clone untranslated attributes
-    self.tag_list = page.tag_list.join(", ")
+    self.tag_list = page.tag_list
     self.template_name = page.template_name
     self.published_at = page.published_at
     
