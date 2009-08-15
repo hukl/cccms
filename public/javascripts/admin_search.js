@@ -73,10 +73,7 @@ menu_items = {
     $("#search_results").empty();
     for (result in results) {
       var link = $(("<a href='#'>"+ results[result].title + "</a>"));
-      $(link).bind("click", function(){
-        menu_items.add_item_to_form(results[result]);
-        return false;
-      });
+      $(link).bind("click", menu_items.link_closure(results[result]));
       
       
       // Sometimes I don't get jquery; wrap() didn't work *sigh*
@@ -89,9 +86,14 @@ menu_items = {
     }
   },
   
-  add_item_to_form : function(node) {
-    $("#menu_item_node_id").val(node.node_id);
-    $("#menu_item_path").val("/" + node.unique_name);
-    $("#menu_item_title").val(node.title);
+  link_closure : function(node) {
+    var barf = function(){
+      $("#menu_item_node_id").val(node.node_id);
+      $("#menu_item_path").val("/" + node.unique_name);
+      $("#menu_item_title").val(node.title);
+      return false;
+    }
+    
+    return barf;
   } 
 };
