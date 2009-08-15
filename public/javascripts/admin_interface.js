@@ -83,9 +83,13 @@ menu_item_sorter = {
   
   initialize : function() {
     $("#menu_item_list").sortable({
-      axis: 'y', 
+      axis: 'y',
       items: 'tr',
       handle: 'td',
+      placeholder: 'ui-state-highlight',
+      start: function(e, ui) {
+        menu_item_sorter.placeholder_helper(e,ui);
+      },
       stop : function(){
         $.ajax({
           type: "POST",
@@ -98,6 +102,10 @@ menu_item_sorter = {
         });
       }
     });
+  },
+  
+  placeholder_helper : function(e,ui) {
+    $(".ui-state-highlight").html("<td colspan='100%'></td>");
   }
 }
       

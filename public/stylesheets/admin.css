@@ -340,3 +340,19 @@ table#content th.description {
 table#content th.content {
   width: 690px;
 }
+
+#menu_item_list {
+  border-collapse: collapse;
+}
+
+#menu_item_list tr:hover {
+  background-color: #f1f1f1;
+}
+
+#menu_item_list td {
+  height: 20px;
+}
+
+.ui-state-highlight td{
+  height: 20px;
+}
