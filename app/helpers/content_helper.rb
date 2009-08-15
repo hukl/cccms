@@ -77,9 +77,11 @@ module ContentHelper
   # Takes the parameters from the aggregate? method and renders the collection
   # from Page.aggregate(options) with a given partial
   def render_collection options
+    @content_collection = Page.aggregate(options, params[:page])
+
     render(
       :partial => options[:partial], 
-      :collection => Page.aggregate(options),
+      :collection => @content_collection,
       :as => :page
     )
   end

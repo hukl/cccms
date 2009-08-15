@@ -5,3 +5,5 @@
   <p><em><%= @page.abstract %></em></p>
   <%= aggregate?(@page.body) %>
 </div>
+
+<p><%= will_paginate(@content_collection) if @content_collection %></p>
