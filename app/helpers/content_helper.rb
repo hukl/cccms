@@ -1,7 +1,7 @@
 module ContentHelper
   
   def main_menu
-    menu_items = MenuItem.all
+    menu_items = MenuItem.all(:order => "position ASC")
     render(
       :partial => 'content/main_navigation', 
       :locals => {:menu_items => menu_items}
