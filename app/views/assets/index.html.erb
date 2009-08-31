@@ -3,10 +3,11 @@
 <% end %>
 
 
+<%= will_paginate @assets %>
+
 <table>
   <tr>
   </tr>
-
 <% @assets.each do |asset| %>
   <tr>
     <td><%= image_tag asset.upload.url(:thumb) %></td>
