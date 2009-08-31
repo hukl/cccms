@@ -68,6 +68,22 @@ div#frontpage_calendar h2 {
   padding-bottom: 2px;
 }
 
+div#frontpage_calendar li {
+  list-style-type: none;
+  margin-bottom: 20px;
+}
+
+div#frontpage_calendar li a {
+  text-decoration: none;
+  color: #535353;
+}
+
+div#frontpage_calendar li a:hover {
+  text-decoration: none;
+  color: #ff9600;
+}
+
+
 div.author_and_date {
   font-style: italic;
 }
