@@ -20,10 +20,10 @@ $(document).ready(function () {
 
 meta_data = {
   initialize : function() {
-    $("#metadata").attr("style", "display: none;");
+    $("#metadata").hide();
 
     $("#button").click(function () {
-      $("#metadata").slideToggle("slow");
+      $("#metadata").slideToggle(1200);
 
       if ($("#button").attr("class") == "unselected") {
         $("#button").attr("class", "selected");
@@ -31,6 +31,8 @@ meta_data = {
       else {
         $("#button").attr("class", "unselected");
       }
+      
+      return false;
     });
   }
 };

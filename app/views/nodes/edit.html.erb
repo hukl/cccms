@@ -10,30 +10,40 @@
 <% form_for(@node) do |f| %>
   <%= f.error_messages %>
   
-  <table id="metadata">
-    <tr>
-      <td class="description">Event</td>
-      <td><%= event_information %></td>
-    </tr>
-    <tr>
-      <td class="description">Slug</td>
-      <td><%= f.text_field :slug %></td>
-    </tr>
-    
-    <% fields_for @draft do |d| %>
-    <tr>
-      <td class="description">Tags - comma seperated</td>
-      <td><%= text_field_tag :tag_list, @draft.tag_list %></td>
-    </tr>
-    <tr>
-      <td class="description">Publish at</td>
-      <td><%= d.datetime_select :published_at %></td>
-    </tr>
-    <tr>
-      <td class="description">Template</td>
-      <td><%= d.select :template_name, custom_page_templates, {:prompt => 'Select Template'} %></td>
-    </tr>
-  </table>
+  <div id="metadata">
+    <table>
+      <tr>
+        <td class="description">Event</td>
+        <td><%= event_information %></td>
+      </tr>
+      <tr>
+        <td class="description">Slug</td>
+        <td><%= f.text_field :slug %></td>
+      </tr>
+      
+      <% fields_for @draft do |d| %>
+      <tr>
+        <td class="description">Tags - comma seperated</td>
+        <td><%= text_field_tag :tag_list, @draft.tag_list %></td>
+      </tr>
+      <tr>
+        <td class="description">Publish at</td>
+        <td><%= d.datetime_select :published_at %></td>
+      </tr>
+      <tr>
+        <td class="description">Template</td>
+        <td><%= d.select :template_name, custom_page_templates, {:prompt => 'Select Template'} %></td>
+      </tr>
+      <tr>
+        <td class="description">Images</td>
+        <td style="height: 200px">
+          <% @draft.assets.images.each do |image| %>
+            <%= image_tag(image.upload.url(:thumb)) %>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
   
   <table id="content">
     <tr>
