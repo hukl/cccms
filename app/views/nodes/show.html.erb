@@ -1,5 +1,5 @@
 <% content_for :subnavigation do %>
-  <%= link_to 'Edit', edit_node_path(@node), :id => 'button', :class => "unselected" %>
+  <%= link_to 'Edit', edit_node_path(@node), :class => "unselected" %>
   <%= link_to 'Preview', preview_page_path(@page) %>
   <%= link_to 'Revisions', revision_path(params[:id]) %>  
 <% end %>

@@ -356,3 +356,29 @@ table#content th.content {
 .ui-state-highlight td{
   height: 20px;
 }
+
+#metadata ul#image_box {
+  margin: 0;
+  padding-left: 0;
+  height: 100px;
+  width: 690px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 1px solid #989898;
+}
+
+#metadata ul#image_box li {
+  float: left;
+  list-style-type: none;
+  margin: 5px;
+}
+
+div#asset_toolbox {
+  position: absolute;
+  top: 40px;
+  left: 800px;
+}
+
+div#asset_toolbox ul li {
+  list-style-type: none;
+}

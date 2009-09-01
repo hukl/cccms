@@ -36,10 +36,15 @@
       </tr>
       <tr>
         <td class="description">Images</td>
-        <td style="height: 200px">
-          <% @draft.assets.images.each do |image| %>
-            <%= image_tag(image.upload.url(:thumb)) %>
-          <% end %>
+        <td> 
+          <ul id="image_box" rel="<%= @draft.id %>">
+            <% @draft.assets.images.each do |image| %>
+              <li rel="images_<%= image.id %>">
+                <%= image_tag(image.upload.url(:thumb)) %>
+              </li>
+            <% end %>
+          </ul>
+          add image
         </td>
       </tr>
     </table>
@@ -69,4 +74,14 @@
   </table>
   <% end %>
 <% end %>
+</div>
+
+
+
+<div id="asset_toolbox">
+  <ul>
+    <% Asset.images.each do |image| %>
+    <li rel="images_<%= image.id %>"><%= image_tag(image.upload.url(:thumb)) %></li>
+    <% end %>
+  </ul>
 </div>

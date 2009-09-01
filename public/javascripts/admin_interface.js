@@ -4,6 +4,7 @@ $(document).ready(function () {
   meta_data.initialize();
   menu_item_sorter.initialize();
   
+  
   jQuery.ajaxSetup({ 
     'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
   })
@@ -27,6 +28,7 @@ meta_data = {
 
       if ($("#button").attr("class") == "unselected") {
         $("#button").attr("class", "selected");
+        image_interface.initialize(); 
       }
       else {
         $("#button").attr("class", "unselected");
@@ -108,6 +110,40 @@ menu_item_sorter = {
   
   placeholder_helper : function(e,ui) {
     $(".ui-state-highlight").html("<td colspan='100%'></td>");
+  }
+}
+
+image_interface = {
+  initialize : function() {
+    $("ul#image_box").sortable({
+      revert  : true,
+      stop    : function(event, ui) {
+        $.ajax({
+          type : "POST",
+          url  : "/pages/" + $("ul#image_box").attr("rel") + "/sort_images",
+          dataType : "json",
+          data : $("ul#image_box").sortable("serialize", {attribute : "rel"}) + "&_method=put",
+          success : function() {}
+        });
+      }
+    });
+    
+    $("ul#image_box").droppable({
+      out : function(event, ui) {
+        $(ui.draggable).bind("mouseup", function() {$(this).remove()})
+      }
+    });
+    
+    $("div#asset_toolbox ul li").draggable({
+      connectToSortable : 'ul#image_box',
+      helper : 'clone',
+      revert : 'invalid',
+      stop   : function() {
+        
+      }
+    });
+    
+    $("ul, li").disableSelection();
   }
 }
       
