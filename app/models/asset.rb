@@ -1,5 +1,7 @@
 class Asset < ActiveRecord::Base
   
+  has_many :pages, :through => :related_assets
+  
   has_attached_file(
     :upload,
     :styles => {
