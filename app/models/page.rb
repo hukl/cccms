@@ -135,6 +135,9 @@ class Page < ActiveRecord::Base
       self.globalize_translations.create!(translation.attributes)
     end
     
+    # Clone asset references
+    self.assets = page.assets
+    
     self.save
   end
   
