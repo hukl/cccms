@@ -1,0 +1,5 @@
+<ul>
+  <% @images.each do |image| %>
+  <li><%= image_tag image.upload.url %></li>
+  <% end %>
+</ul>

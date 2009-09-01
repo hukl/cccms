@@ -31,7 +31,7 @@ class Page < ActiveRecord::Base
   belongs_to :node
   belongs_to :user
   has_many   :related_assets
-  has_many   :assets, :through => :related_assets, :order => "position DESC"
+  has_many   :assets, :through => :related_assets, :order => "position ASC"
   
   # Filter
   before_create :set_page_title
