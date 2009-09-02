@@ -117,9 +117,7 @@ menu_item_sorter = {
 }
 
 image_interface = {
-  
-  current_images : "",
-  
+    
   initialize : function() {
     
     $("#image_browser").hide();
@@ -127,7 +125,6 @@ image_interface = {
     image_interface.connect_browser_and_box();
     image_interface.set_droppable_behavior();
     image_interface.bind_image_browser_toggle();    
-    image_interface.update_current_images();
   },
   
   
@@ -187,13 +184,6 @@ image_interface = {
       
       return false;
     });
-  },
-  
-  update_current_images : function() {
-    image_interface.current_images = $("ul#image_box").sortable(
-      "serialize", 
-      {attribute : "rel"}
-    );
   }
 }
       
