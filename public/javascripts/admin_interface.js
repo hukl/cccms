@@ -159,20 +159,17 @@ image_interface = {
     
     $("ul#image_box").sortable({
       revert  : true,
-      stop    : function(event, ui) {
+      update    : function(event, ui) {
         images = $("ul#image_box").sortable("serialize", {attribute : "rel"});
 
-        if (images != image_interface.current_images) {
-          $.ajax({
-            type : "POST",
-            url  : "/pages/" + $("ul#image_box").attr("rel") + "/sort_images",
-            dataType : "json",
-            data : images + "&_method=put",
-            success : function() {
-              image_interface.update_current_images();
-            }
-          });
-        }
+        $.ajax({
+          type : "POST",
+          url  : "/pages/" + $("ul#image_box").attr("rel") + "/sort_images",
+          dataType : "json",
+          data : images + "&_method=put",
+          success : function() {
+          }
+        });
       }
     });    
   },
