@@ -47,6 +47,13 @@
           <div class="clear_left right">
             <a id="image_browser_toggle" class="unselected" href="#">image browser</a>
           </div>
+          <div id="image_browser">
+            <ul>
+              <% Asset.images.each do |image| %>
+              <li rel="images_<%= image.id %>"><%= image_tag(image.upload.url(:thumb)) %></li>
+              <% end %>
+            </ul>
+          </div>
         </td>
       </tr>
     </table>
@@ -76,14 +83,4 @@
   </table>
   <% end %>
 <% end %>
-</div>
-
-
-
-<div id="asset_toolbox">
-  <ul>
-    <% Asset.images.each do |image| %>
-    <li rel="images_<%= image.id %>"><%= image_tag(image.upload.url(:thumb)) %></li>
-    <% end %>
-  </ul>
 </div>
