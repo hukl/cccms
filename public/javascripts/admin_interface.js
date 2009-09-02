@@ -3,7 +3,6 @@ $(document).ready(function () {
   menu_items.initialize_search();
   meta_data.initialize();
   menu_item_sorter.initialize();
-  image_interface.initialize();
   
   jQuery.ajaxSetup({ 
     'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
@@ -24,13 +23,18 @@ meta_data = {
     $("#metadata").hide();
 
     $("#button").click(function () {
+      
       $("#metadata").slideToggle(1200);
+      image_interface.initialize();
 
       if ($("#button").attr("class") == "unselected") {
         $("#button").attr("class", "selected");        
+        
       }
       else {
         $("#button").attr("class", "unselected");
+        $("#image_browser").hide();
+        $("#image_browser_toggle").attr("class", "unselected");
       }
       
       return false;
@@ -119,10 +123,27 @@ image_interface = {
   initialize : function() {
     
     $("#image_browser").hide();
-    
-    image_interface.bind_image_browser_toggle();
     image_interface.initialize_sortable_image_box();
     image_interface.connect_browser_and_box();
+    image_interface.set_droppable_behavior();
+    image_interface.bind_image_browser_toggle();    
+  },
+  
+  
+  set_droppable_behavior : function() {
+    $("ul#image_box").droppable({
+      out : function(event, ui) {
+        $(ui.draggable).fadeTo("fast", 0.4);
+
+        $(ui.draggable).bind("mouseup", function() {
+          $(this).remove();
+        });
+      },
+      over : function(event, ui) {
+        $(ui.draggable).fadeTo("fast", 1.0);
+        $(ui.draggable).unbind("mouseup");
+      }
+    });
   },
   
   connect_browser_and_box : function() {
@@ -164,21 +185,7 @@ image_interface = {
           });
         }
       }
-    });
-    
-    $("ul#image_box").droppable({
-      out : function(event, ui) {
-        $(ui.draggable).fadeTo("fast", 0.4);
-
-        $(ui.draggable).bind("mouseup", function() {
-          $(this).remove();
-        });
-      },
-      over : function(event, ui) {
-        $(ui.draggable).fadeTo("fast", 1.0);
-        $(ui.draggable).unbind("mouseup");
-      }
-    });
+    });    
   },
   
   bind_image_browser_toggle : function() {
