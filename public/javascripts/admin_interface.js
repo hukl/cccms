@@ -122,7 +122,8 @@ image_interface = {
           type : "POST",
           url  : "/pages/" + $("ul#image_box").attr("rel") + "/sort_images",
           dataType : "json",
-          data : $("ul#image_box").sortable("serialize", {attribute : "rel"}) + "&_method=put",
+          data : $("ul#image_box").sortable("serialize", {attribute : "rel"}) + 
+                 "&_method=put",
           success : function() {}
         });
       }
@@ -130,7 +131,9 @@ image_interface = {
     
     $("ul#image_box").droppable({
       out : function(event, ui) {
-        $(ui.draggable).bind("mouseup", function() {$(this).remove()})
+        $(ui.draggable).bind("mouseup", function() {
+          $(this).remove()
+        });
       }
     });
     
