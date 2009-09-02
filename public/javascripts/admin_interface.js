@@ -134,6 +134,9 @@ image_interface = {
         $(ui.draggable).bind("mouseup", function() {
           $(this).remove()
         });
+      },
+      over : function(event, ui) {
+        $(ui.draggable).unbind("mouseup")
       }
     });
     
