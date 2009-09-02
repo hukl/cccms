@@ -114,29 +114,44 @@ menu_item_sorter = {
 }
 
 image_interface = {
+  
+  current_images : "",
+  
   initialize : function() {
     $("ul#image_box").sortable({
       revert  : true,
+      start   : function(event, ui) {
+        image_interface.current_images = $("ul#image_box").sortable(
+          "serialize", 
+          {attribute : "rel"}
+        )    
+      },
       stop    : function(event, ui) {
-        $.ajax({
-          type : "POST",
-          url  : "/pages/" + $("ul#image_box").attr("rel") + "/sort_images",
-          dataType : "json",
-          data : $("ul#image_box").sortable("serialize", {attribute : "rel"}) + 
-                 "&_method=put",
-          success : function() {}
-        });
+        images = $("ul#image_box").sortable("serialize", {attribute : "rel"});
+        
+        if (images != image_interface.current_images) {
+          $.ajax({
+            type : "POST",
+            url  : "/pages/" + $("ul#image_box").attr("rel") + "/sort_images",
+            dataType : "json",
+            data : images + "&_method=put",
+            success : function() {}
+          });
+        }
       }
     });
     
     $("ul#image_box").droppable({
       out : function(event, ui) {
+        $(ui.draggable).fadeTo("fast", 0.5);
+        
         $(ui.draggable).bind("mouseup", function() {
-          $(this).remove()
+          $(this).remove();
         });
       },
       over : function(event, ui) {
-        $(ui.draggable).unbind("mouseup")
+        $(ui.draggable).fadeTo("fast", 1.0);
+        $(ui.draggable).unbind("mouseup");
       }
     });
     
@@ -144,6 +159,12 @@ image_interface = {
       connectToSortable : 'ul#image_box',
       helper : 'clone',
       revert : 'invalid',
+      start   : function(event, ui) {
+        image_interface.current_images = $("ul#image_box").sortable(
+          "serialize", 
+          {attribute : "rel"}
+        )    
+      },
       stop   : function() {
         
       }
