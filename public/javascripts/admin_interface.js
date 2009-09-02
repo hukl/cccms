@@ -127,6 +127,7 @@ image_interface = {
     image_interface.connect_browser_and_box();
     image_interface.set_droppable_behavior();
     image_interface.bind_image_browser_toggle();    
+    image_interface.update_current_images();
   },
   
   
@@ -150,28 +151,14 @@ image_interface = {
     $("#image_browser ul li").draggable({
       connectToSortable : 'ul#image_box',
       helper : 'clone',
-      revert : 'invalid',
-      start   : function(event, ui) {
-        image_interface.current_images = $("ul#image_box").sortable(
-          "serialize", 
-          {attribute : "rel"}
-        )    
-      },
-      stop   : function() {
-
-      }
+      revert : 'invalid'
     });
   },
   
   initialize_sortable_image_box : function() {
+    
     $("ul#image_box").sortable({
       revert  : true,
-      start   : function(event, ui) {
-        image_interface.current_images = $("ul#image_box").sortable(
-          "serialize", 
-          {attribute : "rel"}
-        )    
-      },
       stop    : function(event, ui) {
         images = $("ul#image_box").sortable("serialize", {attribute : "rel"});
 
@@ -181,7 +168,9 @@ image_interface = {
             url  : "/pages/" + $("ul#image_box").attr("rel") + "/sort_images",
             dataType : "json",
             data : images + "&_method=put",
-            success : function() {}
+            success : function() {
+              image_interface.update_current_images();
+            }
           });
         }
       }
@@ -201,6 +190,13 @@ image_interface = {
       
       return false;
     });
+  },
+  
+  update_current_images : function() {
+    image_interface.current_images = $("ul#image_box").sortable(
+      "serialize", 
+      {attribute : "rel"}
+    );
   }
 }
       
