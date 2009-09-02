@@ -65,6 +65,10 @@ div.pagination span.current, div.pagination a:hover {
   text-align: right;
 }
 
+.clear_left {
+  clear: left;
+}
+
 #navigation {
   position: relative;
   margin-top: 10px;
@@ -74,13 +78,12 @@ div.pagination span.current, div.pagination a:hover {
   float: left;
 }
 
-
 #navigation a:hover {
   color: #ffffff;
   background-color: #000000;
 }
 
-#main_navigation a, #sub_navigation a {
+#main_navigation a, #sub_navigation a, #metadata a {
   letter-spacing: 1px;
   padding-left: 5px;
   padding-right: 5px;
@@ -91,7 +94,7 @@ div.pagination span.current, div.pagination a:hover {
   color: #969696;
 }
 
-#sub_navigation a:hover {
+#sub_navigation a:hover, #metadata a:hover {
   color: #ffffff;
   background-color: #ff9600;
 }
@@ -101,7 +104,7 @@ div.pagination span.current, div.pagination a:hover {
   background-color: #ff9600;
 }
 
-#navigation a.selected {
+#navigation a.selected, #metadata a.selected {
   color: #ffffff;
   background-color: #000000;
 }

@@ -118,6 +118,17 @@ image_interface = {
   current_images : "",
   
   initialize : function() {
+    $("#image_browser_toggle").bind("click", function(){
+      if ($("#image_browser_toggle").attr("class") == "unselected") {
+        $("#image_browser_toggle").attr("class", "selected");
+      }
+      else {
+        $("#image_browser_toggle").attr("class", "unselected");
+      }
+      
+      return false
+    });
+    
     $("ul#image_box").sortable({
       revert  : true,
       start   : function(event, ui) {
