@@ -143,7 +143,7 @@ image_interface = {
     
     $("ul#image_box").droppable({
       out : function(event, ui) {
-        $(ui.draggable).fadeTo("fast", 0.5);
+        $(ui.draggable).fadeTo("fast", 0.4);
         
         $(ui.draggable).bind("mouseup", function() {
           $(this).remove();
