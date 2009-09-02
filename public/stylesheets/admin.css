@@ -376,12 +376,12 @@ table#content th.content {
   margin: 5px;
 }
 
-div#asset_toolbox {
+div#image_browser {
   position: absolute;
   top: 40px;
   left: 800px;
 }
 
-div#asset_toolbox ul li {
+div#image_browser ul li {
   list-style-type: none;
 }

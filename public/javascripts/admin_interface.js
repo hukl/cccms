@@ -3,7 +3,7 @@ $(document).ready(function () {
   menu_items.initialize_search();
   meta_data.initialize();
   menu_item_sorter.initialize();
-  
+  image_interface.initialize();
   
   jQuery.ajaxSetup({ 
     'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
@@ -27,8 +27,7 @@ meta_data = {
       $("#metadata").slideToggle(1200);
 
       if ($("#button").attr("class") == "unselected") {
-        $("#button").attr("class", "selected");
-        image_interface.initialize(); 
+        $("#button").attr("class", "selected");        
       }
       else {
         $("#button").attr("class", "unselected");
@@ -118,17 +117,32 @@ image_interface = {
   current_images : "",
   
   initialize : function() {
-    $("#image_browser_toggle").bind("click", function(){
-      if ($("#image_browser_toggle").attr("class") == "unselected") {
-        $("#image_browser_toggle").attr("class", "selected");
-      }
-      else {
-        $("#image_browser_toggle").attr("class", "unselected");
-      }
-      
-      return false
-    });
     
+    $("#image_browser").hide();
+    
+    image_interface.bind_image_browser_toggle();
+    image_interface.initialize_sortable_image_box();
+    image_interface.connect_browser_and_box();
+  },
+  
+  connect_browser_and_box : function() {
+    $("#image_browser ul li").draggable({
+      connectToSortable : 'ul#image_box',
+      helper : 'clone',
+      revert : 'invalid',
+      start   : function(event, ui) {
+        image_interface.current_images = $("ul#image_box").sortable(
+          "serialize", 
+          {attribute : "rel"}
+        )    
+      },
+      stop   : function() {
+
+      }
+    });
+  },
+  
+  initialize_sortable_image_box : function() {
     $("ul#image_box").sortable({
       revert  : true,
       start   : function(event, ui) {
@@ -139,7 +153,7 @@ image_interface = {
       },
       stop    : function(event, ui) {
         images = $("ul#image_box").sortable("serialize", {attribute : "rel"});
-        
+
         if (images != image_interface.current_images) {
           $.ajax({
             type : "POST",
@@ -155,7 +169,7 @@ image_interface = {
     $("ul#image_box").droppable({
       out : function(event, ui) {
         $(ui.draggable).fadeTo("fast", 0.4);
-        
+
         $(ui.draggable).bind("mouseup", function() {
           $(this).remove();
         });
@@ -165,23 +179,21 @@ image_interface = {
         $(ui.draggable).unbind("mouseup");
       }
     });
-    
-    $("div#asset_toolbox ul li").draggable({
-      connectToSortable : 'ul#image_box',
-      helper : 'clone',
-      revert : 'invalid',
-      start   : function(event, ui) {
-        image_interface.current_images = $("ul#image_box").sortable(
-          "serialize", 
-          {attribute : "rel"}
-        )    
-      },
-      stop   : function() {
-        
+  },
+  
+  bind_image_browser_toggle : function() {
+    $("#image_browser_toggle").bind("click", function(){
+      if ($("#image_browser_toggle").attr("class") == "unselected") {
+        $("#image_browser_toggle").attr("class", "selected");
+        $("#image_browser").show();
       }
+      else {
+        $("#image_browser_toggle").attr("class", "unselected");
+        $("#image_browser").hide();
+      }
+      
+      return false;
     });
-    
-    $("ul, li").disableSelection();
   }
 }
       
