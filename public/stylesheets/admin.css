@@ -83,7 +83,7 @@ div.pagination span.current, div.pagination a:hover {
   background-color: #000000;
 }
 
-#main_navigation a, #sub_navigation a, #metadata a {
+#main_navigation a, #sub_navigation a, #metadata a, input[type=submit]{
   letter-spacing: 1px;
   padding-left: 5px;
   padding-right: 5px;
@@ -229,13 +229,24 @@ input[type=password] {
 }
 
 input[type=submit] {
-  min-width: 65px;
-  border: 1px solid #989898;
+  border: none;
+  padding-top: 0px;
+  padding-bottom: 1px;
   background-color: #ffffff;
+}
+
+input[type=submit]:hover {
+  border: none;
+  color: #ffffff;
+  background-color: #ff9600;
 }
 
 input[type=radio] {
   border: 1px solid #989898;
+}
+
+div#login_form input[type=text], div#login_form input[type=password] {
+  width: 150px;
 }
 
 textarea#page_abstract {
