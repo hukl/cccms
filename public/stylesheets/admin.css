@@ -48,6 +48,16 @@ th {
   width: 12px;
 }
 
+span#flash_error {
+  color: #ffffff;
+  letter-spacing: 1px;
+  background-color: #ff9600;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
 /* Pagination */
 
 div.pagination {
@@ -87,6 +97,8 @@ div.pagination span.current, div.pagination a:hover {
   letter-spacing: 1px;
   padding-left: 5px;
   padding-right: 5px;
+  padding-top: 1px;
+  padding-bottom: 1px;
   text-transform: lowercase;
 }
 
@@ -260,7 +272,7 @@ textarea#page_abstract {
   height: 600px;
 }
 
-#page_editor #metadata, #page_editor #content {
+#page_editor #metadata, #page_editor #content, #admin_overview {
   margin-left: -125px;
 }
 

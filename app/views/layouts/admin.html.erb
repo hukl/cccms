@@ -47,6 +47,9 @@
       <div style="clear: both;"></div>
       <div id="flash">
         <%= flash[:notice] %>
+        <% if flash[:error] %>
+          <span id="flash_error"><%= flash[:error] %></span>
+        <% end %>
       </div>
       <div id="content">
         <%= yield :layout %>
