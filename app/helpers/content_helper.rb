@@ -63,7 +63,7 @@ module ContentHelper
     options = {}
     
     begin
-      if content =~ /<aggregate([^<>]*)>/
+      if content =~ /<p><aggregate([^<>]*)><\/p>/
         tag = $~.to_s
         matched_data = $1.scan(/\w+\=\"[a-zA-Z\s\/_\d,]*\"/)
         
