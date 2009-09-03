@@ -61,7 +61,7 @@ class Node < ActiveRecord::Base
       draft.save
       draft
     elsif draft && self.lock_owner != current_user
-      raise "Page is locked"
+      raise LockedByAnotherUser
     else
       lock_for! current_user
       create_new_draft current_user
@@ -153,5 +153,7 @@ class Node < ActiveRecord::Base
       end
     end
 end
+
+class LockedByAnotherUser < StandardError; end
 
 
