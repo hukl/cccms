@@ -127,7 +127,7 @@ class NodeTest < ActiveSupport::TestCase
     node.publish_draft!
     node.find_or_create_draft @user1
     assert_equal @user1, node.lock_owner
-    assert_raise(RuntimeError) do
+    assert_raise(LockedByAnotherUser) do
       node.find_or_create_draft @user2
     end
   end
