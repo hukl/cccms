@@ -16,13 +16,7 @@ class PagesController < ApplicationController
   
   def sort_images
     page = Page.find(params[:id])
-    
-    page.related_assets.destroy_all
-    
-    params[:images].each_with_index do |id, index|
-      asset = Asset.find(id)
-      page.related_assets.create(:asset_id => asset.id, :position => index+1)
-    end
+    page.update_assets(params[:images])
     
     render :nothing => true, :status => 200
   end

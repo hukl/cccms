@@ -172,6 +172,19 @@ class Page < ActiveRecord::Base
     end
   end
   
+  def update_assets image_ids
+    
+    transaction do
+      self.related_assets.delete_all
+      
+      image_ids.each_with_index do |id, index|
+        asset = Asset.find(id)
+        self.related_assets.create!(:asset_id => asset.id, :position => index+1)
+      end
+    end
+    
+  end
+  
   private
     
     def set_page_title
@@ -188,6 +201,13 @@ class Page < ActiveRecord::Base
           xml_doc     = xml_string.parse
           links       = xml_doc.find("//a[not(starts-with(@href, 'http://'))]")
           locales     = I18n.available_locales.reject {|l| l == :root}
+          
+          if xml_doc.find("//p/aggregate")[0]
+            aggregate_tags   = xml_doc.find("//aggregate")
+            aggregate_tags[0].parent.replace_with aggregate_tags[0]
+          end
+          
+          
 
           links.each do |link|
             unless locales.include? link[:href].slice(1,2).to_sym
