@@ -16,6 +16,10 @@ module ContentHelper
     )
   end
   
+  def tags
+    render :partial => 'content/tags'
+  end
+  
   def headline_image
     image = @page.assets.images.first
     if image

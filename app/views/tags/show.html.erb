@@ -1,0 +1,9 @@
+<%= 
+    render(
+      :partial => 'custom/partials/article',
+      :collection => @pages,
+      :as => :page
+    )
+  %>
+  
+<%= will_paginate @pages %>

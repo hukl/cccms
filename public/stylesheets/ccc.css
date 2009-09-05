@@ -62,7 +62,7 @@ div#frontpage_calendar {
 div#frontpage_calendar h2 {
   border-top: 2px solid #000000;
   border-bottom: 2px dashed #000000;
-  font-size: 18px;
+  font-size: 16px;
   padding-top: 2px;
   padding-bottom: 2px;
 }
@@ -119,9 +119,10 @@ div#center_column h2 a {
 
 div#right_column {
   position: absolute;
-  background-color: #f1f1f1;
+  background-color: #ffffff;
+  padding-left: 70px;
   left: 735px;
-  width: 174px; 
+  width: 115px; 
   height: 100px;
 }
 

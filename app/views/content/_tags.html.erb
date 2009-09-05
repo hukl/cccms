@@ -1,0 +1,8 @@
+<div id="frontpage_calendar">
+  <h2>Tags</h2>
+  <ul class="teasertext">
+    <% @page.tags.each do |tag| %>
+      <li><%= link_to tag.name, tag_path(:id => tag.name) %></li>
+    <% end %>
+  </ul>
+</div>

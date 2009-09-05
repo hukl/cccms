@@ -1,5 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :assets
 
   map.filter :locale
   
@@ -9,7 +8,8 @@ ActionController::Routing::Routes.draw do |map|
     :action => 'render_page',
     :page_path => ['home']
   )
-  
+  map.resources :assets
+  map.resources :tags
   map.resources :occurrences
   map.resources :events
   map.resources :revisions, :member => {:diff => :post, :restore => :put}
