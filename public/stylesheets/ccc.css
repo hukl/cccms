@@ -127,8 +127,8 @@ div#right_column {
 }
 
 div.teaser_ruler {
-  border-top: 2px solid #000000;
-  border-bottom: 2px dashed #000000;
+  border-top: 1px solid #CCCCCC;
+  border-bottom: 1px dashed #CCCCCC;
   height: 3px;
   margin-top: 30px;
 }
