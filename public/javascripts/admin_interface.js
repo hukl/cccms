@@ -5,8 +5,8 @@ $(document).ready(function () {
   menu_item_sorter.initialize();
   
   jQuery.ajaxSetup({ 
-    'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
-  })
+    'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript");}
+  });
   
   $(document).ajaxSend(function(event, request, settings) {
     if (typeof(AUTH_TOKEN) == "undefined") return;
