@@ -107,7 +107,7 @@ div#left_column {
 div#center_column {
   position: absolute;
   background-color: #ffffff;
-  left: 185px;
+  left: 200px;
   width: 460px;
   padding-left: 15px;
   padding-right: 15px; 
@@ -139,4 +139,32 @@ div.article_partial h2 a {
 
 div.article_partial p.excerpt {
   color: #404040;
+}
+
+div#search {
+  position: absolute;
+  top: 145px;
+  left: 676px;
+  height: 1000px;
+  vertical-align: top;
+}
+
+div#search input[type=button] {
+  display: block;
+  height: 20px;
+}
+
+div#search input[type=text] {
+  display: block;
+  padding: 0px;
+  margin: 0px;
+  height: 20px;
+  width: 132px;
+  line-height: 20px;
+  border: none;
+  background-image: url(/images/search_field.png);
+  background-repeat:no-repeat;
+  padding-right: 5px;
+  margin-right: 5px;
+  background-position: top top;
 }
