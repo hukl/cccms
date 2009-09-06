@@ -108,7 +108,7 @@ div#center_column {
   position: absolute;
   background-color: #ffffff;
   left: 185px;
-  width: 528px;
+  width: 460px;
   padding-left: 15px;
   padding-right: 15px; 
 }
@@ -121,7 +121,7 @@ div#right_column {
   position: absolute;
   background-color: #ffffff;
   padding-left: 70px;
-  left: 735px;
+  left: 676px;
   width: 115px; 
   height: 100px;
 }
