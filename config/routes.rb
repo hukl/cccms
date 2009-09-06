@@ -18,6 +18,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout    '/logout',  :controller => 'sessions', :action => 'destroy'
   map.login     '/login',   :controller => 'sessions', :action => 'new'
   map.admin_search 'admin/search', :controller => 'admin', :action => 'search'
+  map.search    'search',   :controller => "search", :action => 'index' 
   map.resources :users
   map.resources :menu_items, :member => {:sort => :post}
   map.resource  :session

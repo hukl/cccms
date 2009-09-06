@@ -1,0 +1,19 @@
+<h2>Suche</h2>
+
+<% form_tag search_path, :method => 'get' do %>
+  <%= text_field_tag :search_term %>
+  <%= submit_tag "Suchen" %>
+<% end %>
+
+
+<% if params[:search_term] %>
+  <h3>Suchergebnisse für Suchbegriff: <%= params[:search_term] %></h3>
+<% end %>
+
+<%= 
+  render(
+    :partial => 'custom/partials/article',
+    :collection => @results,
+    :as => :page
+  )
+%>
