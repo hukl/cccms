@@ -1,5 +1,7 @@
 class ContentController < ApplicationController
   
+  # Public
+  
   before_filter :find_page
   
   # This is the method that renders most of the the public content. It recieves
@@ -27,7 +29,7 @@ class ContentController < ApplicationController
 
   def render_gallery
     @images = @page.assets.images
-    render :file => "custom/page_templates/public/gallery"#, :layout => true
+    render :file => "custom/page_templates/public/gallery"
   end
   
   private

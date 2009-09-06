@@ -1,4 +1,7 @@
 class AdminController < ApplicationController
+  
+  # Private
+  
   before_filter :login_required
 
   def index

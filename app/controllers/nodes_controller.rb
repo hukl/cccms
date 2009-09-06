@@ -1,6 +1,9 @@
 class NodesController < ApplicationController
   
+  # Private
+  
   layout 'admin'
+  
   before_filter :login_required
   before_filter :find_node, :only => [
                               :show, 

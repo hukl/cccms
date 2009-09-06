@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
   
+  # Private
+  
+  before_filter :login_required
+  
   layout 'admin'
   
   def index

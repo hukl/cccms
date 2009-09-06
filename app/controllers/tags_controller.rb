@@ -1,4 +1,7 @@
 class TagsController < ApplicationController
+  
+  # Public
+  
   def index
   end
 

@@ -1,6 +1,8 @@
 # This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
   
+  # Public
+  
   layout 'admin'
   
   # render new.rhtml

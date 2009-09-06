@@ -1,4 +1,8 @@
 class MenuItemsController < ApplicationController
+
+  # Private
+
+  before_filter :login_required
   
   layout 'admin'
   

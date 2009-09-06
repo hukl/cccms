@@ -1,4 +1,9 @@
 class OccurrencesController < ApplicationController
+  
+  # Private
+  
+  before_filter :login_required
+  
   # GET /occurrences
   # GET /occurrences.xml
   def index
