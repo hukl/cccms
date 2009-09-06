@@ -23,7 +23,6 @@ Rails::Initializer.run do |config|
   # config.gem "rake",           :version => ">= 0.8.3"
   # config.gem "rack",           :version => ">= 0.9.1"
   config.gem "libxml-ruby", :lib => 'xml'
-  config.gem "relevance-rcov", :lib => 'rcov', :souce => "http://gems.github.com"
   config.gem "erdgeist-chaos_calendar", :lib => "chaos_calendar", :source => "http://gems.github.com"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
