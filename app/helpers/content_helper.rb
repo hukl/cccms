@@ -20,6 +20,11 @@ module ContentHelper
     render :partial => 'content/tags'
   end
   
+  def featured_articles
+    @featured_articles = FeaturedArticle.all
+    render :partial => 'content/featured_articles'
+  end
+  
   def headline_image
     image = @page.assets.images.first
     if image

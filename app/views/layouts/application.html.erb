@@ -15,17 +15,12 @@
         <%= image_tag "header.png" %>
       </div>
       <div id="search">
-        <table>
-        <% form_tag search_path, :method => 'get' do %>
-          <tr>
-            <td><%= text_field_tag :search_term %></td>
-            <td style="padding-top: 2px"><%= image_submit_tag("search_button.png") %></td>
-          </tr>
-        <% end %>
-        </table>
+        <%= render :partial => "content/search" %>
       </div>
       <div id="left_column">
         <%= main_menu %>
+        
+        <%= language_selector %>
         
         <%= calendar %>
       </div>
@@ -34,6 +29,7 @@
       </div>
       <div id="right_column">
         <%= tags %>
+        <%= featured_articles %>
       </div>
     </div>
     
