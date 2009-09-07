@@ -1,3 +1,11 @@
 development:
   enable_star: 1
   min_infix_len: 1
+  
+production:
+  enable_star: 1
+  min_infix_len: 1
+  config_file: "RAILS_ROOT/config/ENVIRONMENT.sphinx.conf"
+  searchd_log_file: "/var/log/searchd.log"
+  query_log_file: "/var/log/searchd.query.log"
+  pid_file: "/var/run/sphinxsearch/searchd.pid"
