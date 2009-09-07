@@ -111,9 +111,13 @@ class Node < ActiveRecord::Base
     parent.nil? ? [slug] : parent.path_to_root.push(slug)
   end
   
-  def update_unique_name  
-    path = self.path_to_root[1..-1]
+  def current_unique_name
+    path = path_to_root[1..-1] # excluding root
     self.unique_name = path.join("/")
+  end
+  
+  def update_unique_name  
+    current_unique_name
     self.save
   end
   
@@ -145,11 +149,8 @@ class Node < ActiveRecord::Base
     
     def check_for_changed_slug
       if parent and changed.include? "slug"
-        self.update_unique_name
-        
-        if tmp_descendants = descendants
-          tmp_descendants.each { |descendant| descendant.update_unique_name }
-        end
+        self.unique_name = current_unique_name
+        self.descendants.each { |descendant| descendant.update_unique_name }
       end
     end
 end
