@@ -15,23 +15,10 @@ module CollectiveIdea #:nodoc:
       #
       # == API
       #
-      # Methods names are aligned with acts_as_tree as much as possible, to make replacment from one
-      # by another easier, except for the creation:
+      # Methods names are aligned with acts_as_tree as much as possible to make replacment from one
+      # by another easier.
       #
-      # in acts_as_tree:
       #   item.children.create(:name => "child1")
-      #
-      # in acts_as_nested_set:
-      #   # adds a new item at the "end" of the tree, i.e. with child.left = max(tree.right)+1
-      #   child = MyClass.new(:name => "child1")
-      #   child.save
-      #   # now move the item to its right place
-      #   child.move_to_child_of my_item
-      #
-      # You can pass an id or an object to:
-      # * <tt>#move_to_child_of</tt>
-      # * <tt>#move_to_right_of</tt>
-      # * <tt>#move_to_left_of</tt>
       #
       module SingletonMethods
         # Configuration options are:
@@ -66,35 +53,43 @@ module CollectiveIdea #:nodoc:
           write_inheritable_attribute :acts_as_nested_set_options, options
           class_inheritable_reader :acts_as_nested_set_options
           
-          include Comparable
-          include Columns
-          include InstanceMethods
-          extend Columns
-          extend ClassMethods
+          unless self.is_a?(ClassMethods)
+            include Comparable
+            include Columns
+            include InstanceMethods
+            extend Columns
+            extend ClassMethods
+            
+            belongs_to :parent, :class_name => self.base_class.class_name,
+              :foreign_key => parent_column_name
+            has_many :children, :class_name => self.base_class.class_name,
+              :foreign_key => parent_column_name
 
-          # no bulk assignment
-          attr_protected  left_column_name.intern,
-                          right_column_name.intern, 
-                          parent_column_name.intern
-                          
-          before_create :set_default_left_and_right
-          before_destroy :prune_from_tree
-                          
-          # no assignment to structure fields
-          [left_column_name, right_column_name, parent_column_name].each do |column|
-            module_eval <<-"end_eval", __FILE__, __LINE__
-              def #{column}=(x)
-                raise ActiveRecord::ActiveRecordError, "Unauthorized assignment to #{column}: it's an internal field handled by acts_as_nested_set code, use move_to_* methods instead."
-              end
-            end_eval
-          end
+            attr_accessor :skip_before_destroy
           
-          named_scope :roots, :conditions => {parent_column_name => nil}, :order => quoted_left_column_name
-          named_scope :leaves, :conditions => "#{quoted_right_column_name} - #{quoted_left_column_name} = 1", :order => quoted_left_column_name
-          if self.respond_to?(:define_callbacks)
-            define_callbacks("before_move", "after_move")              
-          end
+            # no bulk assignment
+            attr_protected  left_column_name.intern,
+                            right_column_name.intern
+                          
+            before_create  :set_default_left_and_right
+            before_save    :store_new_parent
+            after_save     :move_to_new_parent
+            before_destroy :destroy_descendants
+                          
+            # no assignment to structure fields
+            [left_column_name, right_column_name].each do |column|
+              module_eval <<-"end_eval", __FILE__, __LINE__
+                def #{column}=(x)
+                  raise ActiveRecord::ActiveRecordError, "Unauthorized assignment to #{column}: it's an internal field handled by acts_as_nested_set code, use move_to_* methods instead."
+                end
+              end_eval
+            end
+          
+            named_scope :roots, :conditions => {parent_column_name => nil}, :order => quoted_left_column_name
+            named_scope :leaves, :conditions => "#{quoted_right_column_name} - #{quoted_left_column_name} = 1", :order => quoted_left_column_name
 
+            define_callbacks("before_move", "after_move") if self.respond_to?(:define_callbacks)
+          end
           
         end
         
@@ -192,6 +187,30 @@ module CollectiveIdea #:nodoc:
             set_left_and_rights.call(root_node)
           end
         end
+
+        # Iterates over tree elements and determines the current level in the tree.
+        # Only accepts default ordering, odering by an other column than lft
+        # does not work. This method is much more efficent than calling level
+        # because it doesn't require any additional database queries.
+        #
+        # Example:
+        #    Category.each_with_level(Category.root.self_and_descendants) do |o, level|
+        #
+        def each_with_level(objects)
+          path = [nil]
+          objects.each do |o|
+            if o.parent_id != path.last
+              # we are on a new level, did we decent or ascent?
+              if path.include?(o.parent_id)
+                # remove wrong wrong tailing paths elements
+                path.pop while path.last != o.parent_id
+              else
+                path << o.parent_id
+              end
+            end
+            yield(o, path.length - 1)
+          end
+        end
       end
       
       # Mixed into both classes and instances to provide easy access to the column names
@@ -255,7 +274,7 @@ module CollectiveIdea #:nodoc:
         end
         
         def leaf?
-          right - left == 1
+          !new_record? && right - left == 1
         end
 
         # Returns true is this is a child node
@@ -281,15 +300,10 @@ module CollectiveIdea #:nodoc:
           self_and_ancestors.find(:first)
         end
 
-        # Returns the immediate parent
-        def parent
-          nested_set_scope.find_by_id(parent_id) if parent_id
-        end
-
         # Returns the array of all parents and self
         def self_and_ancestors
           nested_set_scope.scoped :conditions => [
-            "#{self.class.table_name}.#{quoted_left_column_name} <= ? AND #{self.class.table_name}.#{quoted_right_column_name} >= ?", left, right
+            "#{self.class.quoted_table_name}.#{quoted_left_column_name} <= ? AND #{self.class.quoted_table_name}.#{quoted_right_column_name} >= ?", left, right
           ]
         end
 
@@ -310,7 +324,7 @@ module CollectiveIdea #:nodoc:
 
         # Returns a set of all of its nested children which do not have children  
         def leaves
-          descendants.scoped :conditions => "#{self.class.table_name}.#{quoted_right_column_name} - #{self.class.table_name}.#{quoted_left_column_name} = 1"
+          descendants.scoped :conditions => "#{self.class.quoted_table_name}.#{quoted_right_column_name} - #{self.class.quoted_table_name}.#{quoted_left_column_name} = 1"
         end    
 
         # Returns the level of this object in the tree
@@ -322,18 +336,13 @@ module CollectiveIdea #:nodoc:
         # Returns a set of itself and all of its nested children
         def self_and_descendants
           nested_set_scope.scoped :conditions => [
-            "#{self.class.table_name}.#{quoted_left_column_name} >= ? AND #{self.class.table_name}.#{quoted_right_column_name} <= ?", left, right
+            "#{self.class.quoted_table_name}.#{quoted_left_column_name} >= ? AND #{self.class.quoted_table_name}.#{quoted_right_column_name} <= ?", left, right
           ]
         end
 
         # Returns a set of all of its children and nested children
         def descendants
           without_self self_and_descendants
-        end
-
-        # Returns a set of only this entry's immediate children
-        def children
-          nested_set_scope.scoped :conditions => {parent_column_name => self}
         end
 
         def is_descendant_of?(other)
@@ -361,13 +370,13 @@ module CollectiveIdea #:nodoc:
 
         # Find the first sibling to the left
         def left_sibling
-          siblings.find(:first, :conditions => ["#{self.class.table_name}.#{quoted_left_column_name} < ?", left],
-            :order => "#{self.class.table_name}.#{quoted_left_column_name} DESC")
+          siblings.find(:first, :conditions => ["#{self.class.quoted_table_name}.#{quoted_left_column_name} < ?", left],
+            :order => "#{self.class.quoted_table_name}.#{quoted_left_column_name} DESC")
         end
 
         # Find the first sibling to the right
         def right_sibling
-          siblings.find(:first, :conditions => ["#{self.class.table_name}.#{quoted_left_column_name} > ?", left])
+          siblings.find(:first, :conditions => ["#{self.class.quoted_table_name}.#{quoted_left_column_name} > ?", left])
         end
 
         # Shorthand method for finding the left sibling and moving to the left of it.
@@ -417,7 +426,7 @@ module CollectiveIdea #:nodoc:
       protected
       
         def without_self(scope)
-          scope.scoped :conditions => ["#{self.class.table_name}.#{self.class.primary_key} != ?", self]
+          scope.scoped :conditions => ["#{self.class.quoted_table_name}.#{self.class.primary_key} != ?", self]
         end
         
         # All nested set queries should use this nested_set_scope, which performs finds on
@@ -432,6 +441,19 @@ module CollectiveIdea #:nodoc:
           self.class.base_class.scoped options
         end
         
+        def store_new_parent
+          @move_to_new_parent_id = parent_id_changed? ? parent_id : false
+          true # force callback to return true
+        end
+        
+        def move_to_new_parent
+          if @move_to_new_parent_id.nil?
+            move_to_root
+          elsif @move_to_new_parent_id
+            move_to_child_of(@move_to_new_parent_id)
+          end
+        end
+        
         # on creation, set automatically lft and rgt to the end of the tree
         def set_default_left_and_right
           maxright = nested_set_scope.maximum(right_column_name) || 0
@@ -442,29 +464,38 @@ module CollectiveIdea #:nodoc:
       
         # Prunes a branch off of the tree, shifting all of the elements on the right
         # back to the left so the counts still work.
-        def prune_from_tree
-          return if right.nil? || left.nil?
-          diff = right - left + 1
-
-          delete_method = acts_as_nested_set_options[:dependent] == :destroy ?
-            :destroy_all : :delete_all
-
+        def destroy_descendants
+          return if right.nil? || left.nil? || skip_before_destroy
+          
           self.class.base_class.transaction do
-            nested_set_scope.send(delete_method,
-              ["#{quoted_left_column_name} > ? AND #{quoted_right_column_name} < ?",
-                left, right]
-            )
+            if acts_as_nested_set_options[:dependent] == :destroy
+              descendants.each do |model|
+                model.skip_before_destroy = true
+                model.destroy
+              end
+            else
+              nested_set_scope.delete_all(
+                ["#{quoted_left_column_name} > ? AND #{quoted_right_column_name} < ?",
+                  left, right]
+              )
+            end
+            
+            # update lefts and rights for remaining nodes
+            diff = right - left + 1
             nested_set_scope.update_all(
               ["#{quoted_left_column_name} = (#{quoted_left_column_name} - ?)", diff],
-              ["#{quoted_left_column_name} >= ?", right]
+              ["#{quoted_left_column_name} > ?", right]
             )
             nested_set_scope.update_all(
               ["#{quoted_right_column_name} = (#{quoted_right_column_name} - ?)", diff],
-              ["#{quoted_right_column_name} >= ?", right]
+              ["#{quoted_right_column_name} > ?", right]
             )
+            
+            # Don't allow multiple calls to destroy to corrupt the set
+            self.skip_before_destroy = true
           end
         end
-
+        
         # reload left, right, and parent
         def reload_nested_set
           reload(:select => "#{quoted_left_column_name}, " +
