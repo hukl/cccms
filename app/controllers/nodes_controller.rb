@@ -28,15 +28,17 @@ class NodesController < ApplicationController
   end
 
   def create
-    @node = Node.new( params[:node] )
+    parent = case params[:kind]
+    when "top_level"  then Node.root
+    when "update"     then Update.find_or_create_parent
+    when "generic"    then Node.find(params[:parent_id])
+    end
     
-    parent = Node.find(params[:parent_id])
-    
-    if parent and @node.save
-      @node.move_to_child_of parent
+    if parent
+      @node = parent.children.create(:slug => params[:title].parameterize.to_s)
+      @node.draft.update_attributes(:title => params[:title])
       redirect_to(edit_node_path(@node))
     else
-      @node.errors.add("Parent node")
       render :action => :new
     end
   end

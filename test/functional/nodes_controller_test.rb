@@ -19,10 +19,55 @@ class NodesControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  def test_create
+  test "create generic node with parent_id provided" do
     login_as :quentin
-    post :create, :node => {:slug => 'foobar'}, :parent_id => Node.root.id
-    assert_redirected_to edit_node_path(Node.last)
+    assert_difference "Node.count", +1  do
+      post( 
+        :create, 
+        :kind => "generic", 
+        :parent_id => Node.first.id,
+        :title => "Hello Spaceboy"
+      )
+    end
+    
+    assert_response :redirect
+    assert_equal "hello-spaceboy", Node.last.slug
+    assert_equal Node.last.parent_id, Node.first.id
+    assert_equal 1, Node.last.level
+  end
+  
+  test "create update node" do
+    login_as :quentin
+    #difference of three because "updates" and "2009" node get created as well
+    assert_difference "Node.count", +3  do
+      post( 
+        :create,
+        :kind => "update",
+        :title => "Hello Spaceboy"
+      )
+    end
+    
+    assert_response :redirect
+    expected = "updates/#{Time.now.year.to_s}/hello-spaceboy"
+    assert_equal expected, Node.last.unique_name
+    assert_equal 3, Node.last.level
+  end
+  
+  test "create top level node" do
+    login_as :quentin
+    
+    assert_difference "Node.count", +1  do
+      post( 
+        :create,
+        :kind => "top_level",
+        :title => "Hello Spaceboy"
+      )
+    end
+    
+    assert_response :redirect
+    expected = "hello-spaceboy"
+    assert_equal expected, Node.last.unique_name
+    assert_equal 1, Node.last.level
   end
   
   def test_editing_a_node

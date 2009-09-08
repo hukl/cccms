@@ -100,6 +100,8 @@ menu_items = {
 
 parent_search = {
   initialize_search : function() {
+    parent_search.initialize_radio_buttons();
+    
     $("#parent_search_term").bind("keyup", function() {
       if ($(this).attr("value")) {
         $.ajax({
@@ -118,10 +120,11 @@ parent_search = {
       }
     });
   },
+  
   show_results : function(results) {
     $("#search_results").empty();
     for (result in results) {
-      var link = $(("<a href='#' rel='" + results[result].id+ "'>"+ results[result].title + "</a>"));
+      var link = $(("<a href='#'>"+ results[result].title + "</a>"));
       $(link).bind("click", parent_search.link_closure(results[result]));
       
       
@@ -134,10 +137,10 @@ parent_search = {
       
     }
   },
+  
   link_closure : function(node) {
     var barf = function(){
       $("#parent_search_term").attr("value", node.title);
-      alert(node.id);
       $("#parent_id").attr("value", node.node_id);
       $('#search_results').slideUp();
       $('#search_results').empty();
@@ -145,5 +148,20 @@ parent_search = {
     }
     
     return barf;
+  },
+  
+  initialize_radio_buttons : function() {
+    $("#kind_top_level").bind("change", function(){
+      $("#parent_search_field").hide();
+    });
+    
+    $("#kind_update").bind("change", function(){
+      $("#parent_search_field").hide();
+    });
+    
+    $("#kind_generic").bind("change", function(){
+      $("#parent_search_field").show();
+    });
+    
   }
 }

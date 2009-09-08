@@ -5,15 +5,19 @@
 
 <p>What kind of node do you want to create?</p>
 
-<% form_for nodes_path do %>
+<% form_tag nodes_path do %>
 <table id="new_node">
   <tr>
     <td class="description">Type</td>
     <td>
       <div>
-        <%= radio_button_tag :kind, "generic" %>
-        Generic ( can be created anywhere )
+        <%= radio_button_tag :kind, "top_level" %>
+        Top Level
       </div>
+      <p>
+        <%= radio_button_tag :kind, "generic", :selected => true %>
+        Generic ( can be created anywhere )
+      </p>
       <p>
         <%= radio_button_tag :kind, "update" %>
         Update / Press release ( is automatically created in /updates )
@@ -24,7 +28,7 @@
     <td class="description">Title</td>
     <td><%= text_field_tag :title %></td>
   </tr>
-  <tr>
+  <tr id="parent_search_field">
     <td class="description">Parent</td>
     <td>
       <%= text_field_tag :parent_search_term %>
