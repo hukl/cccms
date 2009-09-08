@@ -276,6 +276,14 @@ textarea#page_abstract {
   margin-left: -125px;
 }
 
+#new_node {
+  margin-left: -118px;
+}
+
+#new_node input[type=text] {
+  width: 350px;
+}
+
 tr {}
 
 td {

@@ -3,6 +3,7 @@ $(document).ready(function () {
   menu_items.initialize_search();
   meta_data.initialize();
   menu_item_sorter.initialize();
+  parent_search.initialize_search();
   
   jQuery.ajaxSetup({ 
     'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript");}

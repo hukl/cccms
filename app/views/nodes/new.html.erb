@@ -2,19 +2,41 @@
 
 <%= error_messages_for :node %>
 
-<% form_for @node do |f| %>
-  <p>
-    <%= f.label 'Parent node' %><br />
-    <%= select_tag( 
-          :parent_id, 
-          options_for_select(
-            Node.root.self_and_descendants.select{|x| x.level < 3}.map{|x| [x.unique_name,x.id]}
-          )
-        ) %>
-  </p>
-  <p>
-    <%= f.label :slug %><br />
-    <%= f.text_field :slug %>
-  </p>
-  <p><%= f.submit 'Create node' %></p>
+
+<p>What kind of node do you want to create?</p>
+
+<% form_for nodes_path do %>
+<table id="new_node">
+  <tr>
+    <td class="description">Type</td>
+    <td>
+      <div>
+        <%= radio_button_tag :kind, "generic" %>
+        Generic ( can be created anywhere )
+      </div>
+      <p>
+        <%= radio_button_tag :kind, "update" %>
+        Update / Press release ( is automatically created in /updates )
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td class="description">Title</td>
+    <td><%= text_field_tag :title %></td>
+  </tr>
+  <tr>
+    <td class="description">Parent</td>
+    <td>
+      <%= text_field_tag :parent_search_term %>
+      <%= hidden_field_tag :parent_id %>
+      <div id="search_results">
+
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td></td>
+    <td class="right"><%= submit_tag "Create" %></td>
+  </tr>
+</table>
 <% end %>
