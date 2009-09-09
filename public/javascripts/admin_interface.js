@@ -5,6 +5,25 @@ $(document).ready(function () {
   menu_item_sorter.initialize();
   parent_search.initialize_search();
   
+  $(".with_editor").tinymce({
+    script_url : '/javascripts/tiny_mce/tiny_mce.js',
+    theme: "advanced",
+    mode : "specific_textareas",
+    editor_selector : "with_editor",
+    theme_advanced_toolbar_location : "top",
+    theme_advanced_toolbar_align : "left",
+    theme_advanced_buttons1 : "bold, italic, underline, bullist, numlist, link, unlink, formatselect, code",
+    theme_advanced_buttons2 : "",
+    theme_advanced_buttons3 : "",
+    extended_valid_elements : "aggregate[tags|limit|order_by|order_direction|partial]",
+    relative_urls : false,
+    entity_encoding : "raw",
+    oninit : "cccms.setup_autosave"
+  });
+  
+  
+  
+  
   jQuery.ajaxSetup({ 
     'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript");}
   });
