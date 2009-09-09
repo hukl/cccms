@@ -13,6 +13,7 @@ class Node < ActiveRecord::Base
   # Callbacks
   after_create  :initialize_empty_page
   before_save   :check_for_changed_slug
+  after_save    :update_unique_names_of_children
   
   # Validations
   # validates_length_of :slug, :within => 3..40
@@ -151,7 +152,15 @@ class Node < ActiveRecord::Base
     def check_for_changed_slug
       if parent and changed.include? "slug"
         self.unique_name = current_unique_name
-        self.descendants.each { |descendant| descendant.update_unique_name }
+      end
+    end
+    
+    # Watch out recursion ahead! update_unique_name itself triggers this 
+    # after_save callback which invokes update_unique_name on its children.
+    # Hopefully until no childrens occur
+    def update_unique_names_of_children
+      self.descendants.each do |descendant| 
+        descendant.update_unique_name
       end
     end
 end
