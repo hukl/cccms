@@ -1,8 +1,6 @@
 admin_search = {
   
   initialize : function() {
-    $("#search_widget").hide();
-
     $(document).bind("keydown", 'Alt+f', function(){
       admin_search.display_toggle();
       return false;
