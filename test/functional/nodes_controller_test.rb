@@ -127,4 +127,74 @@ class NodesControllerTest < ActionController::TestCase
     assert_equal "There", test_node.draft.body
     assert_equal "Foobar", test_node.draft.template_name
   end
+  
+  
+  test "publish draft with staged_slug unqueal slug" do
+    login_as :quentin
+    
+    test_node = Node.create! :slug => "test_node", :staged_slug => "peter_pan"
+    test_node.move_to_child_of Node.root
+    
+    put :publish, :id => test_node.id
+    
+    test_node.reload
+    assert_equal "peter_pan", test_node.slug
+    assert_equal "peter_pan", test_node.unique_name
+  end
+  
+  test "publish draft with staged_slug with more levels of nodes" do
+    login_as :quentin
+    
+    test_node = Node.create! :slug => "test_node", :staged_slug => "peter_pan"
+    test_node.move_to_child_of Node.root
+    test_node2 = Node.create! :slug => "test_node2"
+    test_node2.move_to_child_of test_node
+
+    put :publish, :id => test_node.id
+    
+    test_node.reload; test_node2.reload
+    assert_equal "peter_pan/test_node2", test_node2.unique_name
+    assert_equal "peter_pan", test_node.unique_name
+  end
+  
+  test "publish draft with staged_parent_id" do
+    login_as :quentin
+    
+    parent = Node.create! :slug => "parent"
+    parent.move_to_child_of Node.root
+    test_node = Node.create! :slug => "test_node", :staged_parent_id => parent.id
+    test_node.move_to_child_of Node.root
+    test_node2 = Node.create! :slug => "test_node2"
+    test_node2.move_to_child_of test_node
+    
+    put :publish, :id => test_node.id
+    
+    test_node.reload; test_node2.reload
+    assert_equal "parent/test_node", test_node.unique_name
+    assert_equal "parent/test_node/test_node2", test_node2.unique_name
+  end
+  
+  test "publish draft with staged_parent_id and staged_slug" do
+    login_as :quentin
+    
+    parent = Node.create! :slug => "parent"
+    parent.move_to_child_of Node.root
+    
+    test_node = Node.create!(
+      :slug => "test_node", 
+      :staged_parent_id => parent.id,
+      :staged_slug => "peter_pan"
+    )
+    test_node.move_to_child_of Node.root
+    
+    test_node2 = Node.create! :slug => "test_node2"
+    test_node2.move_to_child_of test_node
+    
+    put :publish, :id => test_node.id
+    
+    test_node.reload; test_node2.reload
+    assert_equal "parent/peter_pan", test_node.unique_name
+    assert_equal "parent/peter_pan/test_node2", test_node2.unique_name
+  end
+  
 end

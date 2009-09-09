@@ -87,6 +87,15 @@ class Node < ActiveRecord::Base
       self.head = self.draft
       self.head.save!
       self.draft = nil
+      
+      if staged_slug && (staged_slug != slug)
+        self.slug = staged_slug
+      end
+      
+      if staged_parent_id && (staged_parent_id != parent_id)
+        self.parent_id = staged_parent_id
+      end
+      
       self.save!
       self.unlock!
     else

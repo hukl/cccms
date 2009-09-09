@@ -57,6 +57,7 @@ class NodesController < ApplicationController
   end
 
   def update
+    @node.update_attributes(params[:node])
     @draft = @node.find_or_create_draft current_user
     @draft.tag_list = params[:tag_list]
     if @draft.update_attributes( params[:page] )

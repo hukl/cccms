@@ -4,6 +4,7 @@ $(document).ready(function () {
   meta_data.initialize();
   menu_item_sorter.initialize();
   parent_search.initialize_search();
+  move_to_search.initialize_search();
   
   $(".with_editor").tinymce({
     script_url : '/javascripts/tiny_mce/tiny_mce.js',

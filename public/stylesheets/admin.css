@@ -416,3 +416,12 @@ div#image_browser {
 div#image_browser ul li {
   list-style-type: none;
 }
+
+input#move_to_search_term, input#node_staged_slug {
+  width: 690px;
+}
+
+#tag_list {
+  width: 680px;
+}
+

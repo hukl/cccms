@@ -18,7 +18,27 @@
       </tr>
       <tr>
         <td class="description">Slug</td>
-        <td><%= f.text_field :slug %></td>
+        <td>
+          <%= 
+            f.text_field(
+              :staged_slug, :value => @node.staged_slug || @node.slug
+            ) 
+          %>
+        </td>
+      </tr>
+      <tr>
+        <td class="description">parent</td>
+        <td>
+          <%= text_field_tag :move_to_search_term, @node.parent.title rescue "" %>
+          <div id="search_results">
+
+          </div>
+          <%= f.hidden_field(
+                :staged_parent_id, 
+                :value => @node.staged_parent_id || @node.parent_id
+              )
+           %>
+        </td>
       </tr>
       
       <% fields_for @draft do |d| %>
