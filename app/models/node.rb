@@ -16,6 +16,7 @@ class Node < ActiveRecord::Base
   
   # Validations
   # validates_length_of :slug, :within => 3..40
+  validates_uniqueness_of :slug, :scope => :parent_id
   
   # Index for Fulltext Search
   define_index do

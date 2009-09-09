@@ -98,14 +98,14 @@ class NodeTest < ActiveSupport::TestCase
   end
   
   def test_create_new_draft_of_published_page
-    node = Node.create :slug => "third_child"
+    node = Node.create :slug => "xyz"
     node.move_to_child_of @root
     
     assert node.publish_draft!
   end
   
   def test_find_or_create_draft_if_no_draft_exists
-    node = Node.create :slug => "third_child"
+    node = Node.create :slug => "xyz"
     node.move_to_child_of @root
     node.publish_draft!
     
@@ -113,7 +113,7 @@ class NodeTest < ActiveSupport::TestCase
   end
   
   def test_find_or_create_draft_if_draft_exists_and_is_owned_by_user
-    node = Node.create :slug => "third_child"
+    node = Node.create :slug => "xyz"
     node.move_to_child_of @root
     node.publish_draft!
     
@@ -122,7 +122,7 @@ class NodeTest < ActiveSupport::TestCase
   end
   
   def test_exception_if_draft_exists_but_locked_by_another_user
-    node = Node.create :slug => "third_child"
+    node = Node.create :slug => "xyz"
     node.move_to_child_of @root
     node.publish_draft!
     node.find_or_create_draft @user1
