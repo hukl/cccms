@@ -1,6 +1,6 @@
 <h1>Create new node</h1>
 
-<%= error_messages_for :node %>
+<%= error_messages_for( :node ).gsub("Slug", "Title") %>
 
 
 <p>What kind of node do you want to create?</p>
