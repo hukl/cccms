@@ -1,6 +1,7 @@
 class RssController < ApplicationController
   
   def updates
+    @host = request.protocol + request.host_with_port
     
     @items = Page.heads.find_tagged_with(
       "update",

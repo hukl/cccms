@@ -1,5 +1,14 @@
 module LinkHelper
   
+  def content_path_helper path_array
+    url_for(
+      :controller => :content,
+      :action => :render_page,
+      :locale => params[:locale] || I18n.locale,
+      :page_path => path_array
+    )
+  end
+  
   def link_to_path title, path, html_options = {}
     if params[:page_path]
       active = (params[:page_path].join("/") == path.sub(/^\//, ""))
