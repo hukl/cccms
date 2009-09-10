@@ -20,6 +20,15 @@ class Occurrence < ActiveRecord::Base
     )
   end
   
+  def self.find_next
+    find(
+      :all,
+      :limit => 1,
+      :include => :node,
+      :conditions => ["start_time > ?", Time.now]
+    )
+  end
+  
   # Deletes all Occurrences which belong to the given event. Afterwards a few
   # variables are set to save repetitive queries. The occurrences of the given
   # event are then calculated and created.

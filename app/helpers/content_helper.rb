@@ -10,6 +10,11 @@ module ContentHelper
   
   def calendar
     occurrences = Occurrence.find_in_range(Time.now, (Time.now+14.days))
+    
+    if occurrences.empty?
+      occurrences = Occurrence.find_next
+    end
+    
     render(
       :partial  => 'content/front_page_calendar', 
       :locals   => {:occurrences => occurrences}
