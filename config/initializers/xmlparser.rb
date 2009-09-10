@@ -4,3 +4,11 @@ class XML::Node
     remove!
   end
 end
+
+module Builder
+  class XmlBase
+    def _escape(text)
+      text
+    end
+  end
+end

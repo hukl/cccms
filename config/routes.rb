@@ -23,6 +23,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :menu_items, :member => {:sort => :post}
   map.resource  :session
   
+  map.rss       'rss/:action',         :controller => 'rss'
+  map.rss       'rss/:action.:format', :controller => 'rss'
+  
   map.connect   ':controller/:action/:id'
   map.connect   ':controller/:action/:id.:format'
   

@@ -30,7 +30,7 @@ module ActiveRecord
         end
 
         def tagged_with_scope(tags, options={})
-          options.assert_valid_keys([:match, :order, :user])
+          options.assert_valid_keys([:match, :order, :user, :limit])
 
           tags = Tag.parse(tags)
           return [] if tags.empty?
@@ -44,7 +44,8 @@ module ActiveRecord
                         "LEFT OUTER JOIN #{Tag.table_name} #{table_name}_tags ON #{table_name}_tags.id = #{table_name}_taggings.tag_id",
             :conditions => conditions,
             :group  =>  group,
-            :order => options[:order]
+            :order => options[:order],
+            :limit => options[:limit]
           }
 
           with_scope(:find => find_parameters) { yield }
