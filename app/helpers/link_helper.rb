@@ -9,6 +9,10 @@ module LinkHelper
     )
   end
   
+  def content_url_helper path_array
+    request.protocol + request.host_with_port + content_path_helper(path_array)
+  end
+  
   def link_to_path title, path, html_options = {}
     if params[:page_path]
       active = (params[:page_path].join("/") == path.sub(/^\//, ""))
