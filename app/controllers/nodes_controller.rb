@@ -38,8 +38,7 @@ class NodesController < ApplicationController
       @node.draft.update_attributes(:title => params[:title])
       redirect_to(edit_node_path(@node))
     else
-      debugger
-      #@node.errors.add_to_base("Titel zu kurz") if @node.errors["slug"]
+      @node.errors.add_to_base("Titel zu kurz") if @node.errors["slug"]
       render :new
     end
   end
