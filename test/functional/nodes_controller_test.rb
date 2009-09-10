@@ -70,6 +70,22 @@ class NodesControllerTest < ActionController::TestCase
     assert_equal 1, Node.last.level
   end
   
+  test "creating a top_level node without a title should not work" do
+    login_as :quentin
+    
+    assert_no_difference "Node.count" do
+      post(:create, :kind => "top_level")
+    end
+  end
+  
+  test "creating a generic node without a parent_id should not work" do
+    login_as :quentin
+    
+    assert_no_difference "Node.count" do
+      post(:create, :kind => "generic")
+    end
+  end
+  
   def test_editing_a_node
     login_as :quentin
     

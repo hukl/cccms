@@ -16,7 +16,8 @@ class Node < ActiveRecord::Base
   after_save    :update_unique_names_of_children
   
   # Validations
-  # validates_length_of :slug, :within => 3..40
+  validates_length_of :slug, :within => 1..255
+  validates_presence_of   :slug
   validates_uniqueness_of :slug, :scope => :parent_id
   
   # Index for Fulltext Search

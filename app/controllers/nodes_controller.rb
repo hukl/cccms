@@ -26,23 +26,24 @@ class NodesController < ApplicationController
   def new
     @node = Node.new params[:node]
   end
-
+  
   def create
-    parent = case params[:kind]
-    when "top_level"  then Node.root
-    when "update"     then Update.find_or_create_parent
-    when "generic"    then Node.find(params[:parent_id])
-    end
+    params[:title] ||= ""
     
-    if parent
-      @node = parent.children.create(:slug => params[:title].parameterize.to_s)
+    @node = Node.new
+    @node.parent_id = find_parent
+    @node.slug = params[:title].parameterize.to_s
+    
+    if @node.save
       @node.draft.update_attributes(:title => params[:title])
       redirect_to(edit_node_path(@node))
     else
-      render :action => :new
+      debugger
+      #@node.errors.add_to_base("Titel zu kurz") if @node.errors["slug"]
+      render :new
     end
   end
-
+  
   def show
     @page = Node.find(params[:id]).pages.last
   end
@@ -104,5 +105,20 @@ class NodesController < ApplicationController
   
     def find_node
       @node = Node.find(params[:id])
+    end
+    
+    def find_parent
+      case params[:kind]
+      when "top_level"
+        Node.root.id
+      when "update"
+        Update.find_or_create_parent.id
+      when "generic"
+        if params[:parent_id] && Node.find(params[:parent_id])
+          params[:parent_id]
+        else
+          nil
+        end
+      end
     end
 end
