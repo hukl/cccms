@@ -22,6 +22,7 @@
         <%= main_menu %>
         
         <%= language_selector %>
+        <%= link_to( "Edit", node_path(:id => @page.node) )if current_user %>
         
         <%= calendar %>
       </div>
