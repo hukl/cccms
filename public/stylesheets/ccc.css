@@ -59,7 +59,7 @@ div#main_navigation a.active {
 div#frontpage_calendar {
 }
 
-div#frontpage_calendar h2 {
+div#frontpage_calendar h2, div#tags h2, div#featured_articles h2 {
   border-top: 2px solid #000000;
   border-bottom: 2px dashed #000000;
   font-size: 16px;
@@ -67,21 +67,23 @@ div#frontpage_calendar h2 {
   padding-bottom: 2px;
 }
 
-div#frontpage_calendar ul {
+div#frontpage_calendar ul, div#tags ul, div#featured_articles ul {
   padding: 0px;
 }
 
-div#frontpage_calendar li {
+div#frontpage_calendar li, div#tags li, div#featured_articles li {
   list-style-type: none;
   margin-bottom: 20px;
 }
 
-div#frontpage_calendar li a {
+div#frontpage_calendar li a, div#tags li a, div#featured_articles li a {
   text-decoration: none;
   color: #535353;
 }
 
-div#frontpage_calendar li a:hover {
+div#frontpage_calendar li a:hover, 
+div#tags li a:hover, 
+div#featured_articles li a:hover {
   text-decoration: none;
   color: #ff9600;
 }
