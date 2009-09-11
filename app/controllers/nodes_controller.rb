@@ -49,8 +49,8 @@ class NodesController < ApplicationController
   def edit
     begin
       @draft = @node.find_or_create_draft( current_user )
-    rescue LockedByAnotherUser
-      flash[:error] = "Page is locked by another user who is working on it!"
+    rescue LockedByAnotherUser => e
+      flash[:error] = e.message
       redirect_to :back
     end
   end

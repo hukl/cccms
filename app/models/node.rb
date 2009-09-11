@@ -64,7 +64,11 @@ class Node < ActiveRecord::Base
       draft.save
       draft
     elsif draft && self.lock_owner != current_user
-      raise LockedByAnotherUser
+      raise(
+        LockedByAnotherUser, 
+        "Page is locked by another user who is working on it! " \
+        "Last modification: #{draft.updated_at.to_s(:db)}"
+      )
     else
       lock_for! current_user
       create_new_draft current_user
