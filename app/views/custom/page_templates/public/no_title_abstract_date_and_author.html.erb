@@ -1,0 +1,6 @@
+<div class="article">
+  <div><%= headline_image %></div>
+  <%= aggregate?(@page.body) %>
+</div>
+
+<%= will_paginate(@content_collection) if @content_collection %>
