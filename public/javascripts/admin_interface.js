@@ -5,7 +5,7 @@ $(document).ready(function () {
   menu_item_sorter.initialize();
   parent_search.initialize_search();
   move_to_search.initialize_search();
-  
+
   $(".with_editor").tinymce({
     script_url : '/javascripts/tiny_mce/tiny_mce.js',
     theme: "advanced",
@@ -19,7 +19,7 @@ $(document).ready(function () {
     extended_valid_elements : "aggregate[tags|limit|order_by|order_direction|partial]",
     relative_urls : false,
     entity_encoding : "raw",
-    oninit : "cccms.setup_autosave"
+    oninit : cccms.setup_autosave()
   });
   
   
@@ -103,7 +103,7 @@ cccms = {
       }
     };
   
-    setInterval('$("#page_editor > form").submitWithAjax()', 15000);
+    setInterval('$("#page_editor > form").submitWithAjax()', 7000);
   }
 }
 
