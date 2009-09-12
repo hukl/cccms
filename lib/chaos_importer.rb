@@ -20,7 +20,7 @@ class ChaosImporter
   
   def initialize path
     unless Node.root
-      Node.create!
+      Node.create! :slug => "root"
     end
     
     @directory  = path
