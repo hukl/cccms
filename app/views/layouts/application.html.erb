@@ -22,7 +22,9 @@
         <%= main_menu %>
         
         <%= language_selector %>
-        <%= link_to( "Edit", node_path(:id => @page.node) )if current_user %>
+        <% if current_user && @page.node %>
+          <%= link_to "Edit", node_path(:id => @page.node) %>
+        <% end %>
         
         <%= calendar %>
       </div>
