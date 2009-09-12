@@ -137,6 +137,10 @@ class Node < ActiveRecord::Base
     self.save
   end
   
+  def locked?
+    !self.lock_owner.nil?
+  end
+  
   def unlock!
     self.lock_owner = nil
     self.save

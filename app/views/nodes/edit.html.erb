@@ -48,7 +48,7 @@
       </tr>
       <tr>
         <td class="description">Publish at</td>
-        <td><%= d.datetime_select :published_at %></td>
+        <td><%= d.datetime_select :published_at, :value => @draft.published_at %></td>
       </tr>
       <tr>
         <td class="description">Template</td>

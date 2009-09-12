@@ -16,11 +16,11 @@
     <tr class="<%= cycle("even", "odd") %>">
       <td class="node_id"><%= node.id %></td>
       <td class="title">
-        <h4><%= link_to title_for_node(node), edit_node_path(node) %></h4>
+        <h4><%= link_to title_for_node(node), node_path(node) %></h4>
         <p><%= link_to_path(node.unique_name, node.unique_name) %></p>
       </td>
       <td class="actions">
-          <%= link_to 'Preview',     node_path(node) %>
+          <%= link_to 'show',      node_path(node) %>
           <%= link_to 'Revisions', :controller => :revisions, :action => :show, :id => node.id %>
           <%# link_to 'Destroy',  node, :method => :delete, :confirm => "Are you sure you want to delete this node?" %>
           <%= link_to 'Unlock', unlock_node_path(node), :method => :put, :confirm => "Are you sure you want to unlock?" %>

@@ -1,26 +1,49 @@
 <% content_for :subnavigation do %>
   <%= link_to 'Edit', edit_node_path(@node), :class => "unselected" %>
   <%= link_to 'Preview', preview_page_path(@page) %>
-  <%= link_to 'Revisions', revision_path(params[:id]) %>  
+  <%= link_to 'Revisions', revision_path(params[:id]) %>
+  <%= link_to 'Unlock', unlock_node_path(@node), :method => :put, :confirm => "Are you sure you want to unlock?" %>
 <% end %>
 
 
 <div id="page_editor" class="show_node">
   <table id="content">
     <tr>
-      <th class="description"></th>
-      <th class="content"></th>
+      <td class="description">Path</td>
+      <td><%= @page.public_link %></td>
     </tr>
     <tr>
-      <td class="description">Title</td>
+      <td class="description">Author</td>
+      <td><%= @page.user.try(:login) %></td>
+    </tr>
+    <% if @page.node.locked? %>
+    <tr>
+      <td class="description">Locked by</td>
+      <td><%= @page.node.lock_owner.login %></td>
+    </tr>
+    <% end %>
+    <tr>
+      <td class="description">Last updated</td>
+      <td><%= @page.updated_at %></td>
+    </tr>
+    <tr>
+      <td class="description">Published at</td>
+      <td><%= @page.published_at %></td>
+    </tr>
+    <tr>
+      <td class="description">Revision</td>
+      <td><%= @page.revision %></td>
+    </tr>
+    <tr>
+      <td class="description"><strong>Title</strong></td>
       <td><%= @page.title %></td>
     </tr>
     <tr>
-      <td class="description">Abstract</td>
+      <td class="description"><strong>Abstract</strong></td>
       <td><%= @page.abstract %></td>
     </tr>
     <tr>
-      <td class="description">Body</td>
+      <td class="description"><strong>Body</strong></td>
       <td><%= @page.body %></td>
     </tr>
     <tr>

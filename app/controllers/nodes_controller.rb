@@ -90,7 +90,7 @@ class NodesController < ApplicationController
       flash[:notice] = "Cannot unlock"
     end
     
-    redirect_to nodes_path
+    redirect_to :back
   end
   
   def move_to
