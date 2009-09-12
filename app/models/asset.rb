@@ -7,7 +7,7 @@ class Asset < ActiveRecord::Base
     :styles => {
       :medium   => "300x300",
       :thumb    => "100x100",
-      :headline => "530x250#"
+      :headline => "460x250#"
     }
   )
   

@@ -29,7 +29,7 @@ class ContentController < ApplicationController
 
   def render_gallery
     @images = @page.assets.images
-    render :file => "custom/page_templates/public/gallery"
+    render :file => "content/gallery"
   end
   
   private
