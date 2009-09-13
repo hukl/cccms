@@ -3,6 +3,9 @@ $(document).ready(function () {
   
   if ($("#menu_search_term").length != 0) {
     menu_items.initialize_search();
+  }
+  
+  if ($("#menu_item_list").length != 0) {
     menu_item_sorter.initialize();
   }
   
@@ -122,7 +125,7 @@ menu_item_sorter = {
     $("#menu_item_list").sortable({
       axis: 'y',
       items: 'tr',
-      handle: 'td',
+      handle: 'td.menu_sort_handle',
       placeholder: 'ui-state-highlight',
       start: function(e, ui) {
         menu_item_sorter.placeholder_helper(e,ui);
