@@ -1,5 +1,6 @@
 class Asset < ActiveRecord::Base
   
+  has_many :related_assets, :dependent => :destroy
   has_many :pages, :through => :related_assets
   
   has_attached_file(
