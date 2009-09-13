@@ -8,7 +8,10 @@
 <table id="menu_item_list">
   <% @menu_items.each do |menu_item| %>
   <tr id="menu_items-<%= menu_item.id %>">
-    <td><%= menu_item.title %></td>
+    <td class="menu_sort_handle">
+      <div></div>
+    </td>
+    <td class="menu_item_title"><%= menu_item.title %></td>
     <td><%= link_to "Edit", edit_menu_item_path(menu_item) %></td>
     <td>
       <%= link_to( 
