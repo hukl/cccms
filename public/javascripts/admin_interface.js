@@ -1,11 +1,23 @@
 $(document).ready(function () {
   admin_search.initialize();
-  menu_items.initialize_search();
-  meta_data.initialize();
-  menu_item_sorter.initialize();
-  parent_search.initialize_search();
-  move_to_search.initialize_search();
-
+  
+  if ($("#menu_search_term").length != 0) {
+    menu_items.initialize_search();
+    menu_item_sorter.initialize();
+  }
+  
+  if ($("#metadata").length != 0) {
+    meta_data.initialize();
+  }
+  
+  if ($("#parent_search_term").length != 0) {
+    parent_search.initialize_search();
+  }
+  
+  if ($("#move_to_search_term").length != 0) {
+    move_to_search.initialize_search();
+  }
+  
   $(".with_editor").tinymce({
     script_url : '/javascripts/tiny_mce/tiny_mce.js',
     theme: "advanced",
@@ -21,9 +33,6 @@ $(document).ready(function () {
     entity_encoding : "raw",
     oninit : cccms.setup_autosave()
   });
-  
-  
-  
   
   jQuery.ajaxSetup({ 
     'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript");}
