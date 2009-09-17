@@ -11,6 +11,9 @@ class ScopedCategory < ActiveRecord::Base
   acts_as_nested_set :scope => :organization
   set_table_name 'categories'
 end
+class RenamedColumns < ActiveRecord::Base
+  acts_as_nested_set :parent_column => 'mother_id', :left_column => 'red', :right_column => 'black'
+end
 
 class AwesomeNestedSetTest < TestCaseClass
 
@@ -33,16 +36,28 @@ class AwesomeNestedSetTest < TestCaseClass
   def test_left_column_name
     assert_equal 'lft', Default.left_column_name
     assert_equal 'lft', Default.new.left_column_name
+    assert_equal 'red', RenamedColumns.left_column_name
+    assert_equal 'red', RenamedColumns.new.left_column_name
   end
-
+  
   def test_right_column_name
     assert_equal 'rgt', Default.right_column_name
     assert_equal 'rgt', Default.new.right_column_name
+    assert_equal 'black', RenamedColumns.right_column_name
+    assert_equal 'black', RenamedColumns.new.right_column_name
   end
 
   def test_parent_column_name
     assert_equal 'parent_id', Default.parent_column_name
     assert_equal 'parent_id', Default.new.parent_column_name
+    assert_equal 'mother_id', RenamedColumns.parent_column_name
+    assert_equal 'mother_id', RenamedColumns.new.parent_column_name
+  end
+  
+  def test_creation_with_altered_column_names
+    assert_nothing_raised do 
+      RenamedColumns.create!()
+    end
   end
   
   def test_quoted_left_column_name
@@ -193,6 +208,13 @@ class AwesomeNestedSetTest < TestCaseClass
   def test_children
     category = categories(:top_level)
     category.children.each {|c| assert_equal category.id, c.parent_id }
+  end
+  
+  def test_order_of_children
+    categories(:child_2).move_left
+    assert_equal categories(:child_2), categories(:top_level).children[0]
+    assert_equal categories(:child_1), categories(:top_level).children[1]
+    assert_equal categories(:child_3), categories(:top_level).children[2]
   end
   
   def test_is_or_is_ancestor_of?
