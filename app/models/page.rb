@@ -62,7 +62,7 @@ class Page < ActiveRecord::Base
     
     Page.heads.find_tagged_with(
       options[:tags].gsub(/\s/, ", "), 
-      :match => :all,
+      :match_all => true,
       :order => "#{options[:order_by]} #{options[:order_direction]}"
     ).paginate(:page=>page, :per_page => options[:limit])
     

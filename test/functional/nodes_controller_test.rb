@@ -25,14 +25,14 @@ class NodesControllerTest < ActionController::TestCase
       post( 
         :create, 
         :kind => "generic", 
-        :parent_id => Node.first.id,
+        :parent_id => Node.root.id,
         :title => "Hello Spaceboy"
       )
     end
     
     assert_response :redirect
     assert_equal "hello-spaceboy", Node.last.slug
-    assert_equal Node.last.parent_id, Node.first.id
+    assert_equal Node.last.parent_id, Node.root.id
     assert_equal 1, Node.last.level
   end
   
