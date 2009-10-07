@@ -99,6 +99,12 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
   
+  test "editing own user details is allowed" do
+    login_as :quentin
+    get :edit, :id => User.find_by_login("quentin").id
+    assert_response :success
+  end
+  
   test "updating an user when being logged in as regular user wont work" do
     user = User.find_by_login("aaron")
     login_as :quentin
@@ -113,6 +119,14 @@ class UsersControllerTest < ActionController::TestCase
   test "updating an user when being login in as admin user" do
     user = User.find_by_login("quentin")
     login_as :aaron
+    put :update, :id => user.id, :user => {:login => "random"}
+    assert_redirected_to user_path(user)
+    assert_equal "random", user.reload.login
+  end
+  
+  test "updating own user details is allowd" do
+    user = User.find_by_login("quentin")
+    login_as :quentin
     put :update, :id => user.id, :user => {:login => "random"}
     assert_redirected_to user_path(user)
     assert_equal "random", user.reload.login
