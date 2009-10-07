@@ -2,8 +2,6 @@ require 'test_helper'
 
 class NodesControllerTest < ActionController::TestCase
 
-  include AuthenticatedTestHelper
-
   def test_get_index
     Node.root.descendants.delete_all
     test_node = Node.create :slug => "foo"

@@ -1,12 +1,13 @@
 <h1>Users</h1>
 
-<table>
+<table id="user_list">
   <tr>
     <td>login</td>
   </tr>
-  <% @users.each do |user| %>
-  <tr>
-    <td><%= user.login %></td>
-  </tr>
-  <% end %>
+  <%= user_list_by_admin_status %>
 </table>
+
+
+<% content_for :subnavigation do %>
+  <%= link_to "create", new_user_path %>
+<% end %>

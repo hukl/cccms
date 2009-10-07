@@ -439,3 +439,7 @@ input#move_to_search_term, input#node_staged_slug {
   width: 680px;
 }
 
+table#user_list td {
+  padding-right: 30px;
+}
+

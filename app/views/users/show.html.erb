@@ -1,2 +1,20 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h1>User: <%= @user.login %></h1>
+
+<table id="new_node">
+  <tr>
+    <td class="description">Login</td>
+    <td><%= @user.login %></td>
+  </tr>
+  <tr>
+    <td class="description">E-Mail</td>
+    <td><%= @user.email %></td>
+  </tr>
+  <tr>
+    <td class="description">Admin?</td>
+    <td><%= @user.admin ? "yes" : "no" %></td>
+  </tr>
+</table>
+
+<% content_for :subnavigation do %>
+  <%= link_to 'Edit', edit_user_path(@user) %>
+<% end %>

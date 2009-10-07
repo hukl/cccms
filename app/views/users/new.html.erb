@@ -1,2 +1,30 @@
-<h1>Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+<h1>Create new user</h1>
+
+<% form_for @user do |f| %>
+<table id="new_node">
+  <tr>
+    <td class="description">Login</td>
+    <td><%= f.text_field :login %></td>
+  </tr>
+  <tr>
+    <td class="description">E-Mail</td>
+    <td><%= f.text_field :email %></td>
+  </tr>
+  <tr>
+    <td class="description">Password</td>
+    <td><%= f.text_field :password %></td>
+  </tr>
+  <tr>
+    <td class="description">Confirm</td>
+    <td><%= f.text_field :password_confirmation %></td>
+  </tr>
+  <tr>
+    <td class="description">Admin?</td>
+    <td><%= f.check_box :admin %></td>
+  </tr>
+  <tr>
+    <td class="description"></td>
+    <td class="right"><%= f.submit "Create" %></td>
+  </tr>
+</table>
+<% end %>

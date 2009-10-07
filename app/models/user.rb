@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   validates_format_of       :email, :with => Authentication.email_regex,
                             :message => Authentication.bad_email_message
 
-  attr_accessible :login, :email, :password, :password_confirmation
+  attr_accessible :login, :email, :password, :password_confirmation, :admin
 
   # Authenticates a user by their login name and unencrypted password. Returns the user or nil.
   def self.authenticate(login, password)
