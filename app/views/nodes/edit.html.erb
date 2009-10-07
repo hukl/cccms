@@ -3,7 +3,7 @@
   <%= link_to 'Show', @node %>
   <%= link_to 'Preview', preview_page_path(@draft) %>
   <%= link_to 'Publish', publish_node_path, :method => :put, :confirm => "Publish this draft?" %>
-  <%= link_to 'Revisions', revision_path(params[:id]) %>  
+  <%= link_to 'Revisions', node_revisions_path(@node) %>  
 <% end %>
 
 <div id="page_editor">

@@ -21,7 +21,7 @@
       </td>
       <td class="actions">
           <%= link_to 'show',      node_path(node) %>
-          <%= link_to 'Revisions', :controller => :revisions, :action => :show, :id => node.id %>
+          <%= link_to 'Revisions', node_revisions_path(node) %>
           <%# link_to 'Destroy',  node, :method => :delete, :confirm => "Are you sure you want to delete this node?" %>
           <%= link_to 'Unlock', unlock_node_path(node), :method => :put, :confirm => "Are you sure you want to unlock?" %>
       </td>

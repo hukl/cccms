@@ -84,7 +84,7 @@ class NodesControllerTest < ActionController::TestCase
     end
   end
   
-  def test_editing_a_node
+  test "editing a node" do
     login_as :quentin
     
     node = Node.find_by_unique_name("fourth_child")

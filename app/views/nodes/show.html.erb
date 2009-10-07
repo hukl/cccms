@@ -1,7 +1,7 @@
 <% content_for :subnavigation do %>
   <%= link_to 'Edit', edit_node_path(@node), :class => "unselected" %>
   <%= link_to 'Preview', preview_page_path(@page) %>
-  <%= link_to 'Revisions', revision_path(params[:id]) %>
+  <%= link_to 'Revisions', node_revisions_path(@node) %>
   <%= link_to 'Unlock', unlock_node_path(@node), :method => :put, :confirm => "Are you sure you want to unlock?" %>
 <% end %>
 

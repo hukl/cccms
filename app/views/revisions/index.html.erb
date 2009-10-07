@@ -1,1 +1,44 @@
-<h1>Revisions#index</h1>
+<% content_for :subnavigation do %>
+  <%= link_to 'Edit', edit_node_path(@node) %>
+<% end %>
+
+<h2>Revisions for Node: <%= @node.unique_name %></h2>
+
+<% form_tag diff_node_revisions_path(@node) do %>
+<table id="revisions">
+  <tr class="header">
+    <th>First</th>
+    <th>Last</th>
+    <th>Rev.</th>
+    <th>Title</th>
+    <th>User</th>
+    <th>Date</th>
+    <th></th>
+  </tr>
+<% @node.pages.reverse.each do |page| %>
+  <tr>
+    <td><%= radio_button_tag :start_revision, page.revision %></td>
+    <td><%= radio_button_tag :end_revision, page.revision %></td>
+    <td class="revision"><%= page.revision %></td>
+    <td class="title"><%= page.title %></td>
+    <td class="user"><%= page.user.try(:login)  %></td>
+    <td class="date"><%= page.updated_at %></td>
+    <td>
+      <%= link_to 'show', node_revision_path(@node, page) %>
+    </td>
+    <td>
+      <%= link_to(
+            'restore', 
+            restore_node_revision_path(@node, page), 
+            :method => :put, 
+            :confirm => "Restore this revision?"
+          ) %>
+    </td>
+  </tr>
+<% end %>
+  <tr class="no_hover">
+    <td colspan="8" class="right"><%= submit_tag 'Diff revisions' %></td>
+  </tr>
+</table>
+
+<% end %>
