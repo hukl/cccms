@@ -4,7 +4,7 @@ xml.feed(:xmlns => "http://www.w3.org/2005/Atom", "xml:base" => @host) do
   xml.title("CCC.de Recent Change")
   xml.link(:href => "http://www.ccc.de/")
   xml.link(:rel => "self", :href => "/rss/updates.xml")
-  xml.updated(@items.first.published_at.xmlschema)
+  xml.updated(@items.first.updated_at.xmlschema)
   xml.author do
     xml.name("Chaos Computer Club e.V.")
   end
