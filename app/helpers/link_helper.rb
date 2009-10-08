@@ -18,6 +18,10 @@ module LinkHelper
       active = (params[:page_path].join("/") == path.sub(/^\//, ""))
     end
     
+    active_class = active ? {:class => 'active'} : {:class => 'inactive'}
+    
+    html_options = html_options.merge(active_class)
+    
     params[:locale] ||= I18n.locale
     
     link_to( 
@@ -27,7 +31,7 @@ module LinkHelper
         :locale => params[:locale],
         :page_path => path.sub(/^\//, "").split("/")
       },
-      active ? {:class => 'active'} : {:class => 'inactive'}
+      html_options
     )
   end
   
