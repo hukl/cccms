@@ -9,12 +9,8 @@
     <%= stylesheet_link_tag "ccc" %>
     <%= javascript_include_tag 'jquery-1.3.2.min' %>
     <%= javascript_include_tag 'shadowbox/shadowbox' %>
-    <%= javascript_include_tag 'public' %>
     <%= stylesheet_link_tag "shadowbox" %>
-    
-    <script type="text/javascript" charset="utf-8">
-      Shadowbox.init();
-    </script>
+    <%= javascript_include_tag 'public' %>
     
     <%= auto_discovery_link_tag(:rss, {:controller => "rss", :action => "updates"}) %>
   </head>
@@ -45,6 +41,5 @@
         <%= featured_articles %>
       </div>
     </div>
-    
   </body>
 </html>

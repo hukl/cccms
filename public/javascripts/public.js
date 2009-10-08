@@ -1,7 +1,23 @@
+Shadowbox.init({
+  skipSetup : true
+});
+
+
 $(document).ready(function(){
+
+  Shadowbox.setup(".shadowbox_image", {gallery : "fofo"})
+    
   if ($("#headline_image img").length != 0) {
     image_handler.initialize();
   }
+  
+  $("div#headline_image a").bind("click", function() {
+    return false;
+  });
+  
+  $("div#headline_image a img").bind("click", function(){
+    $(".shadowbox_image:first").trigger("click");
+  });
 });
 
 

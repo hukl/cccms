@@ -31,15 +31,12 @@ module ContentHelper
   end
   
   def headline_image
-    image = @page.assets.images.first
-    if image
-      link_to_path(
-        image_tag(image.upload.url(:headline)),
-        ("galleries/" + @page.node.unique_name)
-      )
+    @images = @page.assets.images
+    
+    unless @images.empty?
+      render :partial => 'content/headline_image'
     end
   end
-  
   
   # Returns the published_at attribute of a page if it is not nil, otherwise
   # it returns the auto-filled value of the created_at attribute

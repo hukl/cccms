@@ -1,0 +1,10 @@
+<%= link_to_path(
+  image_tag(@images[0].upload.url(:headline)),
+  ("galleries/" + @page.node.unique_name)
+) %>
+
+<div class="shadowbox_images" style="display: none">
+  <% @images.each do |image| %>
+    <%= link_to "hallo", image.upload.url, :class => "shadowbox_image" %>
+  <% end %>
+</div>
