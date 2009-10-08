@@ -11,6 +11,8 @@ class ContentController < ApplicationController
   # returns the most recent page associated to this node instead.
   def render_page
     
+    expires_in 10.minutes, :public => true
+    
     if @page and @page.public?
      template = @page.valid_template
 
