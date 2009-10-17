@@ -14,10 +14,8 @@ class ContentController < ApplicationController
     expires_in 10.minutes, :public => true
     
     if @page and @page.public?
-     template = @page.valid_template
-
       render(
-        :file => template,
+        :file => @page.valid_template,
         :layout => true
       )
     else
