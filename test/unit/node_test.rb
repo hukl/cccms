@@ -16,8 +16,7 @@ class NodeTest < ActiveSupport::TestCase
   end
   
   def test_returning_existing_drafts
-    test_node = Node.create! :slug => "test_node"
-    test_node.move_to_child_of Node.root
+    test_node = Node.root.children.create! :slug => "test_node"
     
     assert_not_nil test_node.draft
     assert_equal 1, test_node.pages.length
@@ -39,10 +38,7 @@ class NodeTest < ActiveSupport::TestCase
   
   def test_unique_path_returns_an_array
     assert_equal ["first_child"], @first_child.unique_path
-    
-    new_node = Node.create! :slug => "third_child"
-    new_node.move_to_child_of @first_child
-    
+    new_node = @first_child.children.create! :slug => "third_child"
     assert_equal ["first_child", "third_child"], new_node.unique_path
   end
   
@@ -87,8 +83,7 @@ class NodeTest < ActiveSupport::TestCase
   end
   
   def test_created_nodes_have_an_empty_draft_and_no_head
-    node = Node.create :slug => "third_child"
-    node.move_to_child_of @root
+    node = Node.root.children.create! :slug => "third_child_beta"
     
     assert !node.pages.empty?
     assert_equal 1, node.pages.length
@@ -98,23 +93,18 @@ class NodeTest < ActiveSupport::TestCase
   end
   
   def test_create_new_draft_of_published_page
-    node = Node.create :slug => "xyz"
-    node.move_to_child_of @root
-    
+    node = Node.root.children.create :slug => "xyz"
     assert node.publish_draft!
   end
   
   def test_find_or_create_draft_if_no_draft_exists
-    node = Node.create :slug => "xyz"
-    node.move_to_child_of @root
+    node = Node.root.children.create :slug => "xyz"
     node.publish_draft!
-    
     assert_not_nil node.find_or_create_draft( @user1 )
   end
   
   def test_find_or_create_draft_if_draft_exists_and_is_owned_by_user
-    node = Node.create :slug => "xyz"
-    node.move_to_child_of @root
+    node = Node.root.children.create :slug => "xyz"
     node.publish_draft!
     
     node.find_or_create_draft @user1
@@ -122,8 +112,7 @@ class NodeTest < ActiveSupport::TestCase
   end
   
   def test_exception_if_draft_exists_but_locked_by_another_user
-    node = Node.create :slug => "xyz"
-    node.move_to_child_of @root
+    node = Node.root.children.create :slug => "xyz"
     node.publish_draft!
     node.find_or_create_draft @user1
     assert_equal @user1, node.lock_owner
@@ -133,13 +122,11 @@ class NodeTest < ActiveSupport::TestCase
   end
   
   def test_creation_of_unique_name
-    node = Node.create :slug => 'child'
-    node.move_to_child_of @root
+    node = Node.root.children.create :slug => 'child'
     node.reload
     assert_equal 'child', node.unique_name
 
-    node = Node.create :slug => 'deep_child'
-    node.move_to_child_of @first_child
+    node = @first_child.children.create :slug => 'deep_child'
     node.reload
     assert_equal 'first_child/deep_child', node.unique_name
   end
@@ -177,14 +164,9 @@ class NodeTest < ActiveSupport::TestCase
   end
   
   def test_retrieving_page_current
-    updates = Node.create(:slug => 'updates')
-    updates.move_to_child_of @root
-
-    year = Node.create(:slug => '2008')
-    year.move_to_child_of updates
-
-    foo = Node.create(:slug => 'foo')
-    foo.move_to_child_of year
+    updates = Node.root.children.create(:slug => 'updates')
+    year    = updates.children.create(:slug => '2008')
+    foo     = year.children.create(:slug => 'foo')
 
     assert_not_nil Node.find_by_unique_name('updates/2008/foo')
 
@@ -201,14 +183,9 @@ class NodeTest < ActiveSupport::TestCase
   end
 
   def test_retrieving_page_by_revision
-    updates = Node.create(:slug => 'updates')
-    updates.move_to_child_of @root
-
-    year = Node.create(:slug => '2008')
-    year.move_to_child_of updates
-
-    foo = Node.create(:slug => 'foo')
-    foo.move_to_child_of year
+    updates = Node.root.children.create(:slug => 'updates')
+    year    = updates.children.create(:slug => '2008')
+    foo     = year.children.create(:slug => 'foo')
 
     assert_not_nil Node.find_by_unique_name('updates/2008/foo')
 
@@ -224,8 +201,7 @@ class NodeTest < ActiveSupport::TestCase
   # Thats a lengthy test to make sure everything works as it should, it was 
   # created during a bug hunt
   def test_creating_new_draft
-    test_node = Node.create! :slug => "test_node"
-    test_node.move_to_child_of Node.root
+    test_node = Node.root.children.create! :slug => "test_node"
     test_node.draft.user = @user1
     test_node.save
     assert test_node.publish_draft!
@@ -241,8 +217,7 @@ class NodeTest < ActiveSupport::TestCase
   end
   
   test "restoring a revision" do
-    test_node = Node.create! :slug => "test_node"
-    test_node.move_to_child_of Node.root
+    test_node = Node.root.children.create! :slug => "test_node"
     create_revisions( test_node, 3 )
     test_node.find_or_create_draft @user1
     test_node.reload

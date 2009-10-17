@@ -9,10 +9,8 @@ class PageTest < ActiveSupport::TestCase
   
   def test_aggregation
     # Create two nodes and move them beneath the root node
-    n1 = Node.create! :slug => "one"
-    n2 = Node.create! :slug => "two"
-    n1.move_to_child_of Node.root
-    n2.move_to_child_of Node.root
+    n1 = Node.root.children.create! :slug => "one"
+    n2 = Node.root.children.create! :slug => "two"
     
     # get the drafts and assign a user to it
     assert_not_nil d1 = n1.find_or_create_draft( @user1 )
@@ -50,8 +48,7 @@ class PageTest < ActiveSupport::TestCase
   end
   
   def test_before_save_rewrite_links_in_body
-    n = Node.create :slug => "link_test"
-    n.move_to_child_of Node.root
+    n = Node.root.children.create :slug => "link_test"
     d = n.find_or_create_draft @user1
     
     before = "<h1>Hello World</h1>\n" \
@@ -69,8 +66,7 @@ class PageTest < ActiveSupport::TestCase
   end
   
   def test_before_save_rewrite_links_in_body_if_no_locale_prefix_present
-    n = Node.create :slug => "link_test"
-    n.move_to_child_of Node.root
+    n = Node.root.children.create :slug => "link_test"
     d = n.find_or_create_draft @user1
     
     before = "<h1>Hello World</h1>\n" \
@@ -88,8 +84,7 @@ class PageTest < ActiveSupport::TestCase
   end
   
   def test_before_save_rewrite_links_skips_on_external_links
-    n = Node.create :slug => "link_test"
-    n.move_to_child_of Node.root
+    n = Node.root.children.create :slug => "link_test"
     d = n.find_or_create_draft @user1
     
     before = "<h1>Hello World</h1>\n" \

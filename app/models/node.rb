@@ -16,9 +16,12 @@ class Node < ActiveRecord::Base
   after_save    :update_unique_names_of_children
   
   # Validations
-  validates_length_of :slug, :within => 1..255,        :unless => "parent_id.nil?"
+  validates_length_of     :slug, :within => 1..255,    :unless => "parent_id.nil?"
   validates_presence_of   :slug,                       :unless => "parent_id.nil?"
   validates_uniqueness_of :slug, :scope => :parent_id, :unless => "parent_id.nil?"
+  validates_presence_of   :parent_id,                  :unless => "Node.root.nil?"
+  
+  validate :borders       # This should never ever happen.
   
   # Index for Fulltext Search
   define_index do
@@ -181,6 +184,12 @@ class Node < ActiveRecord::Base
     def update_unique_names_of_children
       self.descendants.each do |descendant| 
         descendant.update_unique_name
+      end
+    end
+    
+    def borders
+      if lft && rgt && (lft > rgt)
+        errors.add("Fuck!. lft should never be smaller than rgt")
       end
     end
 end

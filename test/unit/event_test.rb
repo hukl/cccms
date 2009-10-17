@@ -4,8 +4,7 @@ class EventTest < ActiveSupport::TestCase
   
   def setup
     Page.delete_all
-    @cal_node = Node.create :slug => "calendar"
-    @cal_node.move_to_child_of Node.root
+    @cal_node       = Node.root.children.create! :slug => "calendar"
     @draft          = @cal_node.find_or_create_draft User.first
     @draft.title    = "99C3"
     @draft.abstract = "The 99th Chaos Comunication Congress"

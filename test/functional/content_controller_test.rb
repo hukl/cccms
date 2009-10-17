@@ -94,8 +94,7 @@ class ContentControllerTest < ActionController::TestCase
   protected
   
     def create_node_under_root slug
-      node = Node.create! :slug => slug
-      node.move_to_child_of Node.root
+      node = Node.root.children.create! :slug => slug
       node
     end
   

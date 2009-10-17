@@ -38,4 +38,18 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  
+  def create_node_with_published_page
+    node = create_node_with_draft
+    draft = node.draft
+    draft.title = "Test"
+    draft.abstract = "Test"
+    draft.body = "Test"
+    node.publish_draft!
+    node
+  end
+  
+  def create_node_with_draft
+    Node.root.children.create :slug => "test_node"
+  end
 end
