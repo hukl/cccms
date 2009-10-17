@@ -16,9 +16,9 @@ class Node < ActiveRecord::Base
   after_save    :update_unique_names_of_children
   
   # Validations
-  validates_length_of :slug, :within => 1..255
-  validates_presence_of   :slug
-  validates_uniqueness_of :slug, :scope => :parent_id
+  validates_length_of :slug, :within => 1..255,        :unless => "parent_id.nil?"
+  validates_presence_of   :slug,                       :unless => "parent_id.nil?"
+  validates_uniqueness_of :slug, :scope => :parent_id, :unless => "parent_id.nil?"
   
   # Index for Fulltext Search
   define_index do
@@ -103,8 +103,7 @@ class Node < ActiveRecord::Base
       
       self.save!
       self.unlock!
-    else
-      nil
+      self
     end
   end
   
@@ -142,8 +141,11 @@ class Node < ActiveRecord::Base
   end
   
   def unlock!
-    self.lock_owner = nil
-    self.save
+    if self.lock_owner
+      self.lock_owner = nil
+      self.save
+      self
+    end
   end
   
   def title
