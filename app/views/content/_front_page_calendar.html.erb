@@ -4,7 +4,7 @@
     <% occurrences.each do |occurrence| %>
       <li>
         <div><%= l occurrence.start_time.to_date, :format => :default %></div>
-        <%= link_to_path occurrence.node.head.title, occurrence.node.unique_name %>
+        <%= link_to_path sanitize( occurrence.node.head.title ), occurrence.node.unique_name %>
       </li>
     <% end %>
   </ul>

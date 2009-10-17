@@ -36,15 +36,15 @@
     </tr>
     <tr>
       <td class="description"><strong>Title</strong></td>
-      <td><%= @page.title %></td>
+      <td><%= sanitize( @page.title ) %></td>
     </tr>
     <tr>
       <td class="description"><strong>Abstract</strong></td>
-      <td><%= @page.abstract %></td>
+      <td><%= sanitize( @page.abstract ) %></td>
     </tr>
     <tr>
       <td class="description"><strong>Body</strong></td>
-      <td><%= @page.body %></td>
+      <td><%= sanitize( @page.body ) %></td>
     </tr>
     <tr>
       <td></td>

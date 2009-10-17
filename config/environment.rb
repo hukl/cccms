@@ -30,9 +30,19 @@ Rails::Initializer.run do |config|
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
-  # Skip frameworks you're not going to use. To use Rails without a database,
-  # you must remove the Active Record framework.
-  # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
+  # Allowed Tags
+  # strong em b i p code pre tt samp kbd var sub sup dfn cite big small 
+  # address hr br div span h1 h2 h3 h4 h5 h6 ul ol li dt dd abbr 
+  # acronym a img blockquote del ins
+  
+  # Allowed Attributes:
+  # href src width height alt cite datetime title class name xml:lang abbr))
+  
+  # Add tags to whitelist with:
+  # config.action_view.sanitized_allowed_tags = 'table', 'tr', 'td'
+  
+  # Add attributes to whitelist with:
+  # config.action_view.sanitized_allowed_attributes = 'id', 'class', 'style'
 
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer

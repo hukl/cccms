@@ -85,13 +85,13 @@ module ContentHelper
         
         options[:partial] = select_partial( options[:partial] )
 
-        content.sub(tag, render_collection(options))
+        sanitize( content.sub(tag, render_collection(options)) )
       else
-        content
+        sanitize( content )
       end
       
     rescue
-      content
+      sanatize( content )
     end
   end
   

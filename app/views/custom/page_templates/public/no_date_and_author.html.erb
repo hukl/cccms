@@ -1,7 +1,7 @@
 <div class="article">
   <h2><%= @page.title %></h2>
   <hr class="subtitle" />
-  <p><em><%= @page.abstract %></em></p>
+  <p><em><%= sanitize( @page.abstract ) %></em></p>
   <div id="headline_image"><%= headline_image %></div>
   <%= aggregate?(@page.body) %>
 </div>
