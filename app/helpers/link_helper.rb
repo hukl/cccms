@@ -40,4 +40,15 @@ module LinkHelper
       return :class => "selected"
     end
   end
+  
+  def unlock_link
+    message = "Are you sure you want to unlock?\n" +
+              "Locked by #{@node.lock_owner.login}\n" +
+              "Last modified #{@page.updated_at.to_s(:db)}"
+    
+    link_to(
+      'Unlock', unlock_node_path(@node), :method => :put, :confirm => message
+    )
+  end
+  
 end

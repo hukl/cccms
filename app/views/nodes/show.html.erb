@@ -2,7 +2,7 @@
   <%= link_to 'Edit', edit_node_path(@node), :class => "unselected" %>
   <%= link_to 'Preview', preview_page_path(@page) %>
   <%= link_to 'Revisions', node_revisions_path(@node) %>
-  <%= link_to 'Unlock', unlock_node_path(@node), :method => :put, :confirm => "Are you sure you want to unlock?" %>
+  <%= unlock_link if @node.locked? %>
 <% end %>
 
 
@@ -19,7 +19,7 @@
     <% if @page.node.locked? %>
     <tr>
       <td class="description">Locked by</td>
-      <td><%= @page.node.lock_owner.login %></td>
+      <td><span class="warning"><%= @page.node.lock_owner.login %></span></td>
     </tr>
     <% end %>
     <tr>

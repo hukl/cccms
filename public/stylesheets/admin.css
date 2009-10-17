@@ -48,7 +48,7 @@ th {
   width: 12px;
 }
 
-span#flash_error {
+span#flash_error, span.warning {
   color: #ffffff;
   letter-spacing: 1px;
   background-color: #ff9600;

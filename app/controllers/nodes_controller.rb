@@ -43,7 +43,8 @@ class NodesController < ApplicationController
   end
   
   def show
-    @page = Node.find(params[:id]).pages.last
+    node = Node.find(params[:id])
+    @page = node.draft || node.head
   end
 
   def edit
@@ -51,7 +52,11 @@ class NodesController < ApplicationController
       @draft = @node.find_or_create_draft( current_user )
     rescue LockedByAnotherUser => e
       flash[:error] = e.message
-      redirect_to :back
+      if request.referer
+        redirect_to :back
+      else
+        redirect_to node_path(@node)
+      end
     end
   end
 
@@ -81,22 +86,13 @@ class NodesController < ApplicationController
   end
   
   def unlock
-    # TODO that actually has to be implemented in the model, once we have
-    # permissions
-    if @node.lock_owner
-      @node.unlock!
+    if @node.unlock!
       flash[:notice] = "Node unlocked"
     else
-      flash[:notice] = "Cannot unlock"
+      flash[:notice] = "Already unlocked"
     end
     
-    redirect_to :back
-  end
-  
-  def move_to
-    parent = Node.find params[:parent_id]
-    @node.move_to_child_of parent
-    redirect_to(@node)
+    redirect_to node_path(@node)
   end
   
   private
