@@ -93,7 +93,11 @@ div.pagination span.current, div.pagination a:hover {
   background-color: #000000;
 }
 
-#main_navigation a, #sub_navigation a, #metadata a, input[type=submit]{
+#main_navigation a,
+#sub_navigation a,
+#metadata a,
+input[type=submit],
+#overview_toggle a {
   letter-spacing: 1px;
   padding-left: 5px;
   padding-right: 5px;
@@ -116,53 +120,53 @@ div.pagination span.current, div.pagination a:hover {
   background-color: #ff9600;
 }
 
-#navigation a.selected, #metadata a.selected {
+#navigation a.selected, #metadata a.selected, #overview_toggle a.selected {
   color: #ffffff;
   background-color: #000000;
 }
 
 /* Nodes */
 
-table#node_table {
+table.node_table {
   width: 899px;
   border-collapse: collapse;
 }
 
-table#node_table tr {
+table.node_table tr {
   height: 65px;
   border-bottom: 1px solid #000000;
 }
 
-table#node_table th.title {
+table.node_table th.title {
   width: 450px;
 }
 
-table#node_table tr.header {
+table.node_table tr.header {
   height: 20px;
   text-align: left;
 }
 
-table#node_table td {
+table.node_table td {
   padding-top: 0px;
   padding-bottom: 0px;
   padding-right: 25px;
   padding-left: 0px;
 }
 
-table#node_table .node_id {
+table.node_table .node_id {
   padding-left: 10px;
   padding-right: 15px;
 }
 
-table#node_table tr.header:hover {
+table.node_table tr.header:hover {
   background-color: #ffffff;
 }
 
-table#node_table tr:hover {
+table.node_table tr:hover {
   background-color: #f1f1f1;
 }
 
-table#node_table .actions {
+table.node_table .actions {
   text-transform: lowercase;
 }
 

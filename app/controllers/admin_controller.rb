@@ -5,9 +5,13 @@ class AdminController < ApplicationController
   before_filter :login_required
 
   def index
-    @drafts = Page.drafts
+    @drafts = Node.all(
+      :limit => 20,
+      :order => "updated_at desc",
+      :conditions => ["draft_id IS NOT NULL"]
+    )
     @recent_changes = Node.all(
-      :limit => 50,
+      :limit => 20,
       :order => "updated_at desc",
       :conditions => [ 
         "updated_at < ? AND updated_at > ?", Time.now, Time.now-14.days

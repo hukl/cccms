@@ -21,6 +21,27 @@ $(document).ready(function () {
     move_to_search.initialize_search();
   }
   
+  if ($('#recent_changes_toggle').length != 0) {
+    $('#current_drafts_table').hide();
+    $('#recent_changes_toggle').attr("class", "selected");
+    
+    $('#recent_changes_toggle').bind("click", function(){
+      $('#recent_changes_toggle').attr("class", "selected");
+      $('#current_drafts_toggle').attr("class", "unselected");
+      $('#recent_changes_table').show();
+      $('#current_drafts_table').hide();
+      return false;
+    });
+    
+    $('#current_drafts_toggle').bind("click", function(){
+      $('#recent_changes_toggle').attr("class", "unselected");
+      $('#current_drafts_toggle').attr("class", "selected");
+      $('#current_drafts_table').show();
+      $('#recent_changes_table').hide();
+      return false;
+    });
+  }
+  
   $(".with_editor").tinymce({
     script_url : '/javascripts/tiny_mce/tiny_mce.js',
     theme: "advanced",
