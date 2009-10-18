@@ -36,33 +36,37 @@
     <% end %>
   </table>
 </div>
-<h1>Current Drafts</h1>
 
-<table id="current_drafts_table" class="node_table">
-  <tr class="header">
-    <th class="node_id">ID</th>
-    <th class="title">Title</th>
-    <th class="actions">Actions</th>
-    <th class="editor">Locked by</th>
-    <th class="revision">Rev.</th>
-  </tr>
-  <% @drafts.each do |node| %>
-  <tr class="<%= cycle("even", "odd") %>">
-    <td class="node_id"><%= node.id %></td>
-    <td class="title">
-      <h4><%= link_to title_for_node(node), node_path(node) %></h4>
-      <p><%= link_to_path(node.unique_name, node.unique_name) %></p>
-    </td>
-    <td class="actions">
-      <%= link_to 'show',      node_path(node) %>
-      <%= link_to 'Revisions', node_revisions_path(node) %>
-    </td>
-    <td>
-      <%= node.lock_owner.login if node.lock_owner %>
-    </td>
-    <td>
-      <%= node.draft ? node.draft.revision : node.head.revision %>
-    </td>
-  </tr>
-  <% end %>
-</table>
+<div id="current_drafts_table">
+  
+  <h1>Current Drafts</h1>
+  
+  <table class="node_table">
+    <tr class="header">
+      <th class="node_id">ID</th>
+      <th class="title">Title</th>
+      <th class="actions">Actions</th>
+      <th class="editor">Locked by</th>
+      <th class="revision">Rev.</th>
+    </tr>
+    <% @drafts.each do |node| %>
+    <tr class="<%= cycle("even", "odd") %>">
+      <td class="node_id"><%= node.id %></td>
+      <td class="title">
+        <h4><%= link_to title_for_node(node), node_path(node) %></h4>
+        <p><%= link_to_path(node.unique_name, node.unique_name) %></p>
+      </td>
+      <td class="actions">
+        <%= link_to 'show',      node_path(node) %>
+        <%= link_to 'Revisions', node_revisions_path(node) %>
+      </td>
+      <td>
+        <%= node.lock_owner.login if node.lock_owner %>
+      </td>
+      <td>
+        <%= node.draft ? node.draft.revision : node.head.revision %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>
