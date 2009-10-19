@@ -2,9 +2,9 @@
   <h2><%= @page.title %></h2>
   <h3><%= date_for_page @page %>, <%= @page.user.try(:login) %></h3>
   <hr class="subtitle" />
-  <p><em><%= sanitize( @page.abstract )%></em></p>
+  <div class="abstract"><p><em><%= sanitize( @page.abstract )%></em></p></div>
   <div id="headline_image"><%= headline_image %></div>
-  <%= aggregate?(@page.body) %>
+  <div class="body"><%= aggregate?(@page.body) %></div>
 </div>
 
 <%= will_paginate(@content_collection) if @content_collection %>
