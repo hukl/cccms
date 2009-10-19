@@ -18,7 +18,7 @@
   <body>
     <div id="wrapper">
       <div id="header">
-        <%= image_tag "header.png" %>
+        <%= link_to_path(image_tag("header.png"), "/home") %>
       </div>
       <div id="search">
         <%= render :partial => "content/search" %>

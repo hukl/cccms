@@ -41,6 +41,10 @@ div#header {
   height: 224px;
 }
 
+div#header img {
+  border: none;
+}
+
 div#main_navigation ul {
   margin-left: 0;
   padding-left: 0;
@@ -63,6 +67,7 @@ div#main_navigation a:hover {
 div#main_navigation a.active {
   color: #535353;
   text-transform: uppercase;
+  font-size: 14px;
 }
 
 div#main_navigation a.inactive {
@@ -143,6 +148,7 @@ div#center_column h2 a {
 }
 
 div#center_column h2.headline {
+  margin-top: 8px;
   border-bottom: 2px solid #cccccc;
 }
 
