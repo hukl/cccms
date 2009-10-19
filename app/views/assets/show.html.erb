@@ -3,8 +3,21 @@
   <%= link_to 'Back', assets_path %>
 <% end %>
 
-
-
-<%= image_tag @asset.upload.url(:medium) %><br />
-<%= @asset.upload.content_type %><br />
-<%= "#{@asset.upload.size/1024} KB" %><br />
+<table>
+  <tr>
+    <td>Thumbnail</td>
+    <td><%= image_tag @asset.upload.url(:medium) %></td>
+  </tr>
+  <tr>
+    <td>Public Path</td>
+    <td><%= @asset.upload.url.sub(/\?\d+$/, "") %></td>
+  </tr>
+  <tr>
+    <td>Content Type</td>
+    <td><%= @asset.upload.content_type %></td>
+  </tr>
+  <tr>
+    <td>Size</td>
+    <td><%= "#{@asset.upload.size/1024} KB" %></td>
+  </tr>
+</table>
