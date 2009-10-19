@@ -155,6 +155,10 @@ class Node < ActiveRecord::Base
     head ? head.title : draft.title
   end
   
+  def update_unique_names?
+    !children.empty? && !children.first.path_to_root.include?(self.slug)
+  end
+  
   protected
     def lock_for! current_user
       self.lock_owner = current_user
@@ -182,8 +186,10 @@ class Node < ActiveRecord::Base
     # after_save callback which invokes update_unique_name on its children.
     # Hopefully until no childrens occur
     def update_unique_names_of_children
-      self.descendants.each do |descendant| 
-        descendant.update_unique_name
+      unless root?
+        self.descendants.each do |descendant|
+          descendant.update_unique_name
+        end
       end
     end
     

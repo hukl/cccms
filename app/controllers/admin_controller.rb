@@ -35,7 +35,11 @@ class AdminController < ApplicationController
   end
   
   def menu_search
-    @results = Node.search params[:search_term]
+    if params[:search_term] == "Root"
+      @results = [Node.root]
+    else
+      @results = Node.search params[:search_term]
+    end
     
     respond_to do |format|
       format.html do
