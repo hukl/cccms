@@ -29,7 +29,7 @@ module LinkHelper
         :controller => :content,
         :action => :render_page,
         :locale => params[:locale],
-        :page_path => path.sub(/^\//, "").split("/")
+        :page_path => (path.sub(/^\//, "").split("/") rescue "")
       },
       html_options
     )
