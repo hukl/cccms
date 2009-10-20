@@ -443,7 +443,7 @@ input#move_to_search_term, input#node_staged_slug {
   width: 680px;
 }
 
-table.user_list td {
+table.user_list td.user_login {
   padding-right: 30px;
 }
 

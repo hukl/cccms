@@ -1,9 +1,19 @@
+<% users.each do |user| %>
 <tr>
-  <td><%= user.login %></td>
+  <td class="user_login"><%= user.login %></td>
   <td><%= link_to "show", user_path(user) %></td>
+  <% if current_user.admin? || current_user == user %>
   <td>
-    <% if current_user.admin? || current_user == user %>
-      <%= link_to "edit", edit_user_path(user) %>
-    <% end %>
+    <%= link_to "edit", edit_user_path(user) %>
   </td>
+  <td>
+    <%= link_to(
+          "destroy",
+          user_path(user),
+          :method => :delete,
+          :confirm => "Do you really want to delete user #{user.login}?"
+        ) %>
+  </td>
+  <% end %>
 </tr>
+<% end %>

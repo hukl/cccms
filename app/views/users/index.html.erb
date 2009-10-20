@@ -2,11 +2,11 @@
   <tr>
     <td><h1>Admins</h1></td>
   </tr>
-  <%= render :partial => "user", :collection => @users[:admin], :as => :user %>
+  <%= render :partial => "user", :locals => {:users => @users[:admin] ||= []} %>
   <tr>
     <td><h1>Users</h1></td>
   </tr>
-  <%= render :partial => "user", :collection => @users[:user], :as => :user %>
+  <%= render :partial => "user", :locals => {:users => @users[:user] ||= []} %>
 </table>
 
 <% content_for :subnavigation do %>
