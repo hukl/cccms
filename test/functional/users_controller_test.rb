@@ -13,8 +13,8 @@ class UsersControllerTest < ActionController::TestCase
     login_as :aaron
     get :index
     assert_response :success
-    assert_select "a", "Destroy"
-    assert_select "a", "Show", "Edit Link is missing"
+    assert_select "a", "destroy"
+    assert_select "a", "show", "Show Link is missing"
   end
   
   test "get new when logged in as admin" do
