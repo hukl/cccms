@@ -18,10 +18,12 @@
     <td class="description">Confirm</td>
     <td><%= f.text_field :password_confirmation %></td>
   </tr>
+  <% if current_user.admin? %>
   <tr>
     <td class="description">Admin?</td>
     <td><%= f.check_box :admin %></td>
   </tr>
+  <% end %>
   <tr>
     <td class="description"></td>
     <td class="right"><%= f.submit "Update" %></td>
