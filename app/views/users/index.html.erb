@@ -1,22 +1,13 @@
-<h1>Users</h1>
-
-<table id="user_list">
+<table class="user_list">
   <tr>
-    <th>login</th>
+    <td><h1>Admins</h1></td>
   </tr>
-  <% @users.each do |user| %>
+  <%= render :partial => "user", :collection => @users[:admin], :as => :user %>
   <tr>
-    <td><%= user.login %></td>
-    <td><%= link_to "show", user_path(user) %></td>
-    <td>
-    <% if current_user == user || current_user.admin? %>
-      <%= link_to "Edit", edit_user_path(user) %>
-    <% end %>
-    </td>
+    <td><h1>Users</h1></td>
   </tr>
-  <% end %>
+  <%= render :partial => "user", :collection => @users[:user], :as => :user %>
 </table>
-
 
 <% content_for :subnavigation do %>
   <%= link_to "create", new_user_path %>

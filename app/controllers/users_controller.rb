@@ -9,7 +9,9 @@ class UsersController < ApplicationController
   layout 'admin'
 
   def index
-    @users = User.all(:order => "login ASC")
+    @users = User.all(:order => "login ASC").group_by do |user|
+      user.admin? ? :admin : :user
+    end
   end
 
   def new
@@ -20,6 +22,7 @@ class UsersController < ApplicationController
     @user = User.new params[:user]
 
     if @user.save
+      flash[:notice] = "User created #{@user.login}"
       redirect_to user_path(@user)
     else
       render :new
@@ -31,6 +34,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(params[:user])
+      flash[:notice] = "Updated user #{@user.login}"
       redirect_to user_path(@user)
     else
       render :edit

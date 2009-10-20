@@ -1,0 +1,9 @@
+<tr>
+  <td><%= user.login %></td>
+  <td><%= link_to "show", user_path(user) %></td>
+  <td>
+    <% if current_user.admin? || current_user == user %>
+      <%= link_to "edit", edit_user_path(user) %>
+    <% end %>
+  </td>
+</tr>
