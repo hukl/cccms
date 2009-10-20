@@ -2,9 +2,19 @@
 
 <table id="user_list">
   <tr>
-    <td>login</td>
+    <th>login</th>
   </tr>
-  <%= user_list_by_admin_status %>
+  <% @users.each do |user| %>
+  <tr>
+    <td><%= user.login %></td>
+    <td><%= link_to "show", user_path(user) %></td>
+    <td>
+    <% if current_user == user || current_user.admin? %>
+      <%= link_to "Edit", edit_user_path(user) %>
+    <% end %>
+    </td>
+  </tr>
+  <% end %>
 </table>
 
 
