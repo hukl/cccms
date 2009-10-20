@@ -80,7 +80,7 @@ class Node < ActiveRecord::Base
   
   def create_new_draft user
     empty_page = self.pages.create!
-    empty_page.user = user
+    empty_page.user = user unless (self.head && self.head.user)
     empty_page.save
     
     empty_page.clone_attributes_from self.head
@@ -157,6 +157,10 @@ class Node < ActiveRecord::Base
   
   def update_unique_names?
     !children.empty? && !children.first.path_to_root.include?(self.slug)
+  end
+  
+  def head?
+    head_id
   end
   
   protected

@@ -55,6 +55,10 @@
         <td><%= d.select :template_name, custom_page_templates, {:prompt => 'Select Template'} %></td>
       </tr>
       <tr>
+        <td class="description">Author</td>
+        <td><%= d.select :user_id, user_list %></td>
+      </tr>
+      <tr>
         <td class="description">Images</td>
         <td> 
           <ul id="image_box" rel="<%= @draft.id %>">

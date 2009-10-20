@@ -45,6 +45,7 @@ class ActiveSupport::TestCase
     draft.title = "Test"
     draft.abstract = "Test"
     draft.body = "Test"
+    draft.user = users(:quentin)
     node.publish_draft!
     node
   end

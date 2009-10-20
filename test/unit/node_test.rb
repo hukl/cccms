@@ -230,6 +230,31 @@ class NodeTest < ActiveSupport::TestCase
     assert_equal 4, test_node.draft.revision
   end
   
+  test "a new revision keeps the initial user" do
+    Node.root.descendants.destroy_all
+    node  = create_node_with_draft
+    draft = node.draft
+    draft.user = users(:aaron)
+    draft.save
+    node.publish_draft!
+    new_draft = node.find_or_create_draft( users(:quentin) )
+    assert_equal "aaron", new_draft.user.login
+  end
+  
+  test "a new revision can overwrite the initial author" do
+    Node.root.descendants.destroy_all
+    node  = create_node_with_draft
+    draft = node.draft
+    draft.user = users(:aaron)
+    draft.save
+    node.publish_draft!
+    new_draft = node.find_or_create_draft( users(:quentin) )
+    new_draft.user_id = users(:quentin).id
+    new_draft.save
+    node.publish_draft!
+    assert_equal "quentin", node.head.user.login
+  end
+  
   def create_revisions node, count
     count.times do
       node.find_or_create_draft @user1

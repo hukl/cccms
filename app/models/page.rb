@@ -38,7 +38,7 @@ class Page < ActiveRecord::Base
   before_save   :rewrite_links_in_body
   
   # Security
-  attr_accessible :title, :abstract, :body, :template_name, :published_at
+  attr_accessible :title, :abstract, :body, :template_name, :published_at, :user_id
   
   # Class Methods
   
@@ -126,6 +126,7 @@ class Page < ActiveRecord::Base
     self.tag_list = page.tag_list
     self.template_name = page.template_name
     self.published_at = page.published_at
+    self.user = page.user
     
     # Getting rid of the auto-generated empty translations
     self.globalize_translations.delete_all

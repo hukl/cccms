@@ -21,6 +21,9 @@ module NodesHelper
     Page.custom_templates.map {|x| [x.gsub("_", " ").titlecase, x]}
   end
   
+  def user_list
+    User.all.map {|u| [u.login, u.id]}
+  end
   
   def event_information
     if @node.event

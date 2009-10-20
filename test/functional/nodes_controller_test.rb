@@ -57,12 +57,12 @@ class NodesControllerTest < ActionController::TestCase
       post( 
         :create,
         :kind => "top_level",
-        :title => "Hello Spaceboy"
+        :title => "Hello My Spaceboy"
       )
     end
     
     assert_response :redirect
-    expected = "hello-spaceboy"
+    expected = "hello-my-spaceboy"
     assert_equal expected, Node.last.unique_name
     assert_equal 1, Node.last.level
   end
@@ -261,6 +261,29 @@ class NodesControllerTest < ActionController::TestCase
     node.publish_draft!
     
     assert Node.valid?
+  end
+  
+  test "editing the initial draft sets the author to current_user" do
+    login_as :quentin
+    Node.root.descendants.destroy_all
+    node  = create_node_with_draft
+    get :edit, :id => node.id
+    assert_equal "quentin", node.draft.user.login
+  end
+  
+  test "updating the author of a node with existing head" do
+    login_as :quentin
+    Node.root.descendants.destroy_all
+    node  = create_node_with_published_page
+    assert_equal "quentin", node.head.user.login
+    node.find_or_create_draft users(:quentin)
+    assert node.draft.valid?
+    assert node.valid?
+    
+    put :update, :id => node.id, :page => {:user_id => users(:aaron).id}
+    assert_response :redirect
+    assert_equal "aaron", node.reload.draft.user.login
+
     
   end
 end
