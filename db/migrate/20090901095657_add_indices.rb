@@ -20,7 +20,6 @@ class AddIndices < ActiveRecord::Migration
     end
     
     change_table :page_translations do |t|
-      t.index :page_id
       t.index :locale
     end
   end
