@@ -18,7 +18,8 @@ namespace :cccms do
       :login => 'admin', 
       :email => 'admin@cccms.de', 
       :password => 'foobar',
-      :password_confirmation => 'foobar'
+      :password_confirmation => 'foobar',
+      :admin => true
     )
   end
   
