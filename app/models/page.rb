@@ -178,9 +178,11 @@ class Page < ActiveRecord::Base
     transaction do
       self.related_assets.delete_all
       
-      image_ids.each_with_index do |id, index|
-        asset = Asset.find(id)
-        self.related_assets.create!(:asset_id => asset.id, :position => index+1)
+      if image_ids
+        image_ids.each_with_index do |id, index|
+          asset = Asset.find(id)
+          self.related_assets.create!(:asset_id => asset.id, :position => index+1)
+        end
       end
     end
     
