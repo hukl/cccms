@@ -1,9 +1,7 @@
 <h2>Suche</h2>
 
-
-
 <% if params[:search_term] %>
-  <h3>Suchergebnisse für Suchbegriff: <%= params[:search_term] %></h3>
+  <h3>Suchergebnisse für Suchbegriff: <%=h params[:search_term] %></h3>
 <% end %>
 
 <%= 
