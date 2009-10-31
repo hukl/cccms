@@ -25,3 +25,6 @@ config.action_controller.perform_caching             = true
 
 # Enable threaded mode
 # config.threadsafe!
+
+ExceptionNotifier.exception_recipients = %w(hukl@h3q.com)
+ExceptionNotifier.sender_address = %("CCCMS Error" <error@ccc.de>)
