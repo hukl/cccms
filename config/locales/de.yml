@@ -2,6 +2,7 @@
 # by Clemens Kofler (clemens@railway.at)
 
 de:
+  old_ccc_de: das alte ccc.de
   date:
     formats:
       default: "%d.%m.%Y"

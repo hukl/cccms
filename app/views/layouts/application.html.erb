@@ -26,11 +26,17 @@
       <div id="left_column">
         <%= main_menu %>
         
+        <div class="main_navigation">
+          <ul>
+            <li><a class="inactive" href="http://213.73.89.124/"><%= t(:old_ccc_de) %></a></li>
+          </ul>
+        </div>
+        
         <%= language_selector %>
         <% if current_user && @page.node %>
           <%= link_to "Edit", node_path(:id => @page.node) %>
         <% end %>
-        
+      
         <%= calendar %>
       </div>
       <div id="center_column">

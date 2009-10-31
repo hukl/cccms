@@ -45,33 +45,32 @@ div#header img {
   border: none;
 }
 
-div#main_navigation ul {
+div.main_navigation ul {
   margin-left: 0;
   padding-left: 0;
 }
 
-div#main_navigation li {
+div.main_navigation li {
   list-style-type: none;
 }
 
-div#main_navigation a {
+div.main_navigation a {
   text-decoration: none;
-  font-size: 18px;
-  color: #d1d1d1;
+  font-size: 14px;
 }
 
-div#main_navigation a:hover {
+div.main_navigation a:hover {
   color: #535353;
 }
 
-div#main_navigation a.active {
+div.main_navigation a.active {
   color: #535353;
   text-decoration: underline;
   text-transform: lowercase;
   font-size: 14px;
 }
 
-div#main_navigation a.inactive {
+div.main_navigation a.inactive {
   color: #535353;
   text-transform: lowercase;
   font-size: 14px;
