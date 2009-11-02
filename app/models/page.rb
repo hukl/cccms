@@ -35,7 +35,11 @@ class Page < ActiveRecord::Base
   
   # Filter
   before_create :set_page_title
+  before_create :set_published_at
   before_save   :rewrite_links_in_body
+  
+  # Validations
+  validates_presence_of :published_at, :on => :update
   
   # Security
   attr_accessible :title, :abstract, :body, :template_name, :published_at, :user_id
@@ -126,7 +130,6 @@ class Page < ActiveRecord::Base
     self.tag_list = page.tag_list
     self.template_name = page.template_name
     self.published_at = page.published_at
-    self.user = page.user
     
     # Getting rid of the auto-generated empty translations
     self.globalize_translations.delete_all
@@ -193,6 +196,12 @@ class Page < ActiveRecord::Base
     def set_page_title
       if title.nil?
         title = "Untitled"
+      end
+    end
+    
+    def set_published_at
+      if self.published_at.nil?
+        self.published_at = Time.now
       end
     end
     
