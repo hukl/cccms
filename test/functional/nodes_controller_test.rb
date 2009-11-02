@@ -283,7 +283,31 @@ class NodesControllerTest < ActionController::TestCase
     put :update, :id => node.id, :page => {:user_id => users(:aaron).id}
     assert_response :redirect
     assert_equal "aaron", node.reload.draft.user.login
-
+  end
+  
+  test "updating an existing page should not modify published_at" do
+    login_as :quentin
+    Node.root.descendants.destroy_all
+    node  = create_node_with_published_page
     
+    get :edit, :id => node.id
+    assert_response :success
+    
+    put :publish, :id => node.id
+    
+    node.reload
+    assert_equal node.pages[0].published_at, node.pages[1].published_at
+  end
+  
+  test "updating an exisiting page should not alter the author" do
+    login_as :aaron
+    Node.root.descendants.destroy_all
+    node  = create_node_with_published_page
+    get :edit,    :id => node.id
+    
+    put :publish, :id => node.id
+    
+    node.reload
+    assert_equal node.pages[0].user, node.pages[1].user
   end
 end
