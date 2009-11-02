@@ -14,7 +14,7 @@ xml.feed(:xmlns => "http://www.w3.org/2005/Atom", "xml:base" => @host) do
     xml.entry do
       xml.title(item.title)
       xml.link(
-        :href => content_path_helper(item.node.unique_path),
+        :href => "http://www.ccc.de/#{item.node.unique_path}",
         :rel => "alternate"
       )
       xml.id(content_url_helper(item.node.unique_path))
