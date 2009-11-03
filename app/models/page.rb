@@ -57,7 +57,7 @@ class Page < ActiveRecord::Base
 
     defaults = {
       :tags             => "",
-      :limit            => 20,
+      :limit            => 25,
       :order_by         => "pages.id",
       :order_direction  => "ASC"
     }
