@@ -3,7 +3,9 @@ class RssController < ApplicationController
   before_filter :authenticate, :only => :recent_changes
   before_filter :get_host
   
-  def updates    
+  def updates
+    expires_in 31.minutes, :public => true
+    
     @items = Page.heads.find_tagged_with(
       "update",
       :order => "published_at DESC",
