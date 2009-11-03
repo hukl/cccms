@@ -33,6 +33,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    params[:user].delete(:admin) unless current_user.is_admin?
     if @user.update_attributes(params[:user])
       flash[:notice] = "Updated user #{@user.login}"
       redirect_to user_path(@user)

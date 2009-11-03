@@ -79,7 +79,11 @@ class User < ActiveRecord::Base
     return false
   end
   
-    private
+  def is_admin?
+    !!admin
+  end
+  
+  private
     
     def set_permission(granted, node)    
       permission = self.permissions.for_node(node).first

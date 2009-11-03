@@ -158,5 +158,23 @@ class UsersControllerTest < ActionController::TestCase
     assert_redirected_to users_path
   end
   
+  test "admin user can promote regular users to admins" do
+    login_as :aaron
+    user = users(:quentin)
+    put :update, :id => user.id, :user => {:admin => true}
+    
+    user.reload
+    assert_equal true, user.is_admin?
+  end
+  
+  test "regular users cannot promote themselves to admins" do
+    login_as :quentin
+    user = users(:quentin)
+    put :update, :id => user.id, :user => {:admin => true}
+    
+    user.reload
+    assert_equal false, user.is_admin?
+  end
+  
   
 end
