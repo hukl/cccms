@@ -284,7 +284,7 @@ textarea#page_abstract {
   margin-left: -118px;
 }
 
-#new_node input[type=text] {
+#new_node input[type=text], #new_node input[type=password] {
   width: 350px;
 }
 
