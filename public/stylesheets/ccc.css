@@ -1,4 +1,5 @@
 body {
+  background-color: #FFFFFF;
   margin: 0;
   padding: 0;
   text-align: center;
@@ -48,6 +49,7 @@ div#header img {
 div.main_navigation ul {
   margin-left: 0;
   padding-left: 0;
+  line-height: 18px;
 }
 
 div.main_navigation li {
@@ -64,16 +66,16 @@ div.main_navigation a:hover {
 }
 
 div.main_navigation a.active {
-  color: #535353;
-  text-decoration: underline;
-  text-transform: lowercase;
+  color: #000000;
+  text-decoration: none;
+  text-transform: uppercase;
   font-size: 14px;
 }
 
 div.main_navigation a.inactive {
-  color: #535353;
+  color: #CCCCCC;
   text-transform: lowercase;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 div#frontpage_calendar {
