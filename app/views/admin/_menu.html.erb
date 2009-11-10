@@ -1,5 +1,5 @@
 <%= language_selector %>
-
+<%= link_to 'Logout', :controller => :sessions, :action => :destroy %>
 <%= link_to 'Overview', :controller => :admin, :action => 'index' %>
 <%= link_to 'Nodes', nodes_path, selected?('nodes') %>
 <%= link_to 'Assets', assets_path, selected?('assets') %>

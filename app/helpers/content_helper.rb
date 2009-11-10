@@ -91,7 +91,7 @@ module ContentHelper
       end
       
     rescue
-      sanatize( content )
+      sanitize( content )
     end
   end
   
