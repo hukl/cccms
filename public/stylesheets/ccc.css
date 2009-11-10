@@ -10,22 +10,22 @@ body {
 }
 
 h2 {
-  font-size: 16px;
+  font-size: 15px;
   line-height: 22px;
   font-family: Helvetica;
 }
 
 a {
-  color: #F8921E;
-  text-decoration: none;
+  color: #535353;
+  text-decoration: underline;
 }
 
 a:visited {
-  color: #000000;
+  color: #535353;
 }
 
 a:hover {
-  color: #ff9600;
+  color: #535353;
 }
 
 pre {
@@ -47,6 +47,8 @@ div#header img {
   border: none;
 }
 
+/*------------------main-navigation-------------------*/
+
 div.main_navigation ul {
   margin-left: 0;
   padding-left: 0;
@@ -62,8 +64,8 @@ div.main_navigation a {
   font-size: 14px;
 }
 
-div.main_navigation a:hover {
-  color: #535353;
+div.main_navigation a.inactive:hover {
+  color: #F8921E;
 }
 
 div.main_navigation a.active {
@@ -79,11 +81,14 @@ div.main_navigation a.inactive {
   font-size: 13px;
 }
 
+/*------------------calendar-featured-tags-------------------*/
+
 div#frontpage_calendar {
   margin-top: 30px;
 }
 
 div#frontpage_calendar h2, div#tags h2, div#featured_articles h2 {
+  color: #CCCCCC;
   border-top: 2px solid #CCCCCC;
   border-bottom: 2px solid #CCCCCC;
   font-size: 16px;
@@ -116,6 +121,7 @@ div#featured_articles li a:hover {
   color: #ff9600;
 }
 
+/*--------------------------------------------------------------*/
 
 div.author_and_date {
   font-style: italic;
@@ -151,6 +157,10 @@ div#center_column h2 a {
   color: #535353;
 }
 
+div#center_column h2 a:hover {
+  color: #8e8e8e;
+}
+
 div#center_column h2.headline {
   margin-top: 8px;
   border-bottom: 2px solid #cccccc;
@@ -161,7 +171,7 @@ div#right_column {
   background-color: #ffffff;
   padding-left: 70px;
   left: 675px;
-  width: 145px; 
+  width: 155px; 
   height: 100px;
 }
 
