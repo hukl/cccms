@@ -30,6 +30,7 @@ class Page < ActiveRecord::Base
   # Associations
   belongs_to :node
   belongs_to :user
+  belongs_to :editor, :class_name => "User"
   has_many   :related_assets
   has_many   :assets, :through => :related_assets, :order => "position ASC"
   

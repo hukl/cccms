@@ -310,4 +310,41 @@ class NodesControllerTest < ActionController::TestCase
     node.reload
     assert_equal node.pages[0].user, node.pages[1].user
   end
+  
+  test "editor and author are the same on a new node" do
+    login_as :quentin
+    node = create_node_with_draft
+    get :edit, :id => node.id
+    
+    node.reload
+    assert_equal "quentin", node.draft.user.login
+    assert_equal "quentin", node.draft.editor.login
+  end
+  
+  test "creating new draft alters the editor but keeps the author" do
+    node = create_node_with_published_page
+    assert_equal "quentin", node.head.user.login
+    
+    login_as :aaron
+    get :edit,  :id => node.id
+    
+    node.reload
+    assert_equal "quentin", node.head.user.login
+    assert_equal "aaron",   node.draft.editor.login
+  end
+  
+  test "unlocking and relocking changes editor if done by another user" do
+    node  = create_node_with_published_page
+    draft = node.find_or_create_draft users(:quentin)
+    assert_equal draft.user.login, draft.editor.login
+    assert node.locked?
+    node.unlock!
+    
+    login_as :aaron
+    get :edit, :id => node.id
+    
+    node.reload
+    assert_equal "quentin", node.draft.user.login
+    assert_equal "aaron", node.draft.editor.login
+  end
 end

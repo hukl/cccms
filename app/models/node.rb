@@ -63,7 +63,8 @@ class Node < ActiveRecord::Base
       draft
     elsif draft && self.lock_owner.nil?
       lock_for! current_user
-      draft.user = current_user if draft.user.nil?
+      draft.user    = current_user if draft.user.nil?
+      draft.editor  = current_user
       draft.save
       draft
     elsif draft && self.lock_owner != current_user
@@ -79,8 +80,9 @@ class Node < ActiveRecord::Base
   end
   
   def create_new_draft user
-    empty_page = self.pages.create!
-    empty_page.user = (self.head ? self.head.user : user)
+    empty_page        = self.pages.create!
+    empty_page.user   = (self.head ? self.head.user : user)
+    empty_page.editor = user
     empty_page.save
     
     empty_page.clone_attributes_from self.head
