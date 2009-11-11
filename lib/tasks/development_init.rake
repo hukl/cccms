@@ -109,4 +109,11 @@ namespace :cccms do
       p.save!
     end
   end
+  
+  desc "Remove pages without a node"
+  task :remove_orphans => :environment do |t|
+    orphans = Page.all.select { |x| x.node == nil }
+    orphans.each { |page| page.destroy }
+  end
+  
 end
