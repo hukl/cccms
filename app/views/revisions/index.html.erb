@@ -11,7 +11,7 @@
     <th>Last</th>
     <th>Rev.</th>
     <th>Title</th>
-    <th>User</th>
+    <th>Editor</th>
     <th>Date</th>
     <th></th>
   </tr>
@@ -21,7 +21,7 @@
     <td><%= radio_button_tag :end_revision, page.revision %></td>
     <td class="revision"><%= page.revision %></td>
     <td class="title"><%= page.title %></td>
-    <td class="user"><%= page.user.try(:login)  %></td>
+    <td class="user"><%= page.editor.try(:login) %></td>
     <td class="date"><%= page.updated_at %></td>
     <td>
       <%= link_to 'show', node_revision_path(@node, page) %>

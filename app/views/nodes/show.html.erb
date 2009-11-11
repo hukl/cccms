@@ -16,6 +16,10 @@
       <td class="description">Author</td>
       <td><%= @page.user.try(:login) %></td>
     </tr>
+    <tr>
+      <td class="description">Editor</td>
+      <td><%= @page.editor.try(:login) %></td>
+    </tr>
     <% if @page.node.locked? %>
     <tr>
       <td class="description">Locked by</td>
