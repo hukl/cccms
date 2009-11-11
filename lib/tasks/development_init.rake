@@ -82,4 +82,31 @@ namespace :cccms do
       end
     end
   end
+  
+  desc "Migrate users to editors"
+  task :migrate_editors => :environment do |t|
+    Page.record_timestamps = false
+    Page.before_save.reject! {|filter| filter.method == :rewrite_links_in_body}
+    
+    Page.all.each do |page|
+      if page.node.locked?
+        page.editor = page.node.lock_owner
+        puts "#{page.id} #{page.node.lock_owner.login}"
+      else
+        page.editor = page.user if page.user
+      end
+      
+      page.save!
+    end
+    
+  end
+  
+  desc "Repair pages without published_at set"
+  task :set_published_at => :environment do |t|
+    unpublished = Page.all(:conditions => {:published_at => nil})
+    unpublished.each do |p|
+      p.published_at = p.created_at
+      p.save!
+    end
+  end
 end
