@@ -91,7 +91,6 @@ namespace :cccms do
     Page.all.each do |page|
       if page.node.locked?
         page.editor = page.node.lock_owner
-        puts "#{page.id} #{page.node.lock_owner.login}"
       else
         page.editor = page.user if page.user
       end
