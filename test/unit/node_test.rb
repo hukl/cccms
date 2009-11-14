@@ -15,6 +15,14 @@ class NodeTest < ActiveSupport::TestCase
     @user2 = User.create :login => 'show', :email => "f@b.com", :password => 'foobar', :password_confirmation => 'foobar'
   end
   
+  test "can only create one root node" do
+    Node.delete_all
+    Node.create! :slug => :root
+    assert_raise(ActiveRecord::RecordInvalid) do
+      Node.create! :slug => :root
+    end
+  end
+  
   def test_returning_existing_drafts
     test_node = Node.root.children.create! :slug => "test_node"
     
