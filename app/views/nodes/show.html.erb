@@ -39,6 +39,10 @@
       <td><%= @page.revision %></td>
     </tr>
     <tr>
+      <td class="description">Tagged with:</td>
+      <td><%= @page.tag_list %></td>
+    </tr>
+    <tr>
       <td class="description"><strong>Title</strong></td>
       <td><%= sanitize( @page.title ) %></td>
     </tr>
