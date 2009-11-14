@@ -2,6 +2,7 @@
 # by Clemens Kofler (clemens@railway.at)
 
 de:
+  show_tag_headline: "Seiten mit dem Tag:"
   old_ccc_de: das alte ccc.de
   date:
     formats:
