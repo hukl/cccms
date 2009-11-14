@@ -165,6 +165,14 @@ class Node < ActiveRecord::Base
     head_id
   end
   
+  # Returns immutable node id for all new nodes so that the atom feed entry ids
+  # stay the same eventhough the slug or positions changes.
+  # Can be removed after a year or so ;)
+  def feed_id
+    new_id_format_date = "2009-11-14".to_time
+    self.created_at < new_id_format_date ? unique_path : id
+  end
+  
   protected
     def lock_for! current_user
       self.lock_owner = current_user
