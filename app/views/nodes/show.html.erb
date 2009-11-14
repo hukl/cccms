@@ -9,8 +9,8 @@
 <div id="page_editor" class="show_node">
   <table id="content">
     <tr>
-      <td class="description">Path</td>
-      <td><%= @page.public_link %></td>
+      <td class="description">Public Link</td>
+      <td><%= link_to @page.public_link, content_url(@node.unique_path) %></td>
     </tr>
     <tr>
       <td class="description">Author</td>

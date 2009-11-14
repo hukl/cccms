@@ -33,6 +33,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect   'galleries/*page_path',
                 :controller => 'content', :action => 'render_gallery'
   
-  map.connect   '/*page_path',
+  map.content   '/*page_path',
                 :controller => 'content', :action => 'render_page'
 end
