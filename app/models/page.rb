@@ -37,6 +37,7 @@ class Page < ActiveRecord::Base
   # Filter
   before_create :set_page_title
   before_create :set_published_at
+  before_create :set_template
   before_save   :rewrite_links_in_body
   
   # Validations
@@ -128,9 +129,9 @@ class Page < ActiveRecord::Base
     self.reload
     
     # Clone untranslated attributes
-    self.tag_list = page.tag_list
-    self.template_name = page.template_name
-    self.published_at = page.published_at
+    self.tag_list         = page.tag_list
+    self.template_name  ||= page.template_name
+    self.published_at     = page.published_at
     
     # Getting rid of the auto-generated empty translations
     self.globalize_translations.delete_all
@@ -206,6 +207,12 @@ class Page < ActiveRecord::Base
       end
     end
     
+    def set_template
+      if node && node.update?
+        self.template_name = "update"
+      end
+    end
+    
     def rewrite_links_in_body
       begin
         if self.body
@@ -220,8 +227,6 @@ class Page < ActiveRecord::Base
             aggregate_tags[0].parent.replace_with aggregate_tags[0]
           end
           
-          
-
           links.each do |link|
             unless locales.include? link[:href].slice(1,2).to_sym
               link[:href] = link[:href].sub(/^\//, "/#{I18n.locale}/")

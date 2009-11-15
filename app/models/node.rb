@@ -123,7 +123,7 @@ class Node < ActiveRecord::Base
   
   # returns an array with all parts of a unique_name rather than a string
   def unique_path
-    unique_name.split("/") rescue unique_name
+    unique_name.split("/") rescue [unique_name]
   end
   
   # returns array with pages up to root excluding root
@@ -163,6 +163,10 @@ class Node < ActiveRecord::Base
   
   def head?
     head_id
+  end
+  
+  def update?
+    unique_path.length == 3 && unique_path[0] == "updates"
   end
   
   # Returns immutable node id for all new nodes so that the atom feed entry ids

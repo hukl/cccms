@@ -263,6 +263,19 @@ class NodeTest < ActiveSupport::TestCase
     assert_equal "quentin", node.head.user.login
   end
   
+  
+  test "update?" do
+    Node.root.descendants.delete_all
+    updates       = Node.root.children.create!( :slug => "updates" )
+    assert !updates.update?
+    
+    updates2009   = updates.children.create!( :slug => "2009" )
+    assert !updates2009.update?
+    
+    update        = updates2009.children.create!( :slug => "my-first-update" )
+    assert update.update?
+  end
+  
   def create_revisions node, count
     count.times do
       node.find_or_create_draft @user1

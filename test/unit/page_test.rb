@@ -134,4 +134,13 @@ class PageTest < ActiveSupport::TestCase
     assert_equal 1, Page.find_with_outdated_translations(:delta_time => 23.minutes).count
     assert_equal 2, Page.count
   end
+  
+  test "pages under /updates node get the update template assigned" do
+    Node.root.descendants.delete_all
+    updates       = Node.root.children.create!( :slug => "updates" )
+    updates2009   = updates.children.create!( :slug => "2009" )
+    update        = updates2009.children.create!( :slug => "my-first-update" )
+    assert_equal "update", update.draft.template_name
+  end
+  
 end
