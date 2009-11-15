@@ -100,6 +100,25 @@ namespace :cccms do
     
   end
   
+  desc "Change Update Templates from standard to update"
+  task :change_update_templates => :environment do |t|
+    Page.record_timestamps = false
+    Page.before_save.reject! {|filter| filter.method == :rewrite_links_in_body}
+    
+    updates = (Node.find_by_unique_name("updates") || raise("No Update Node"))
+    
+    years = updates.children
+    
+    years.each do |year|
+      year.descendants.each do |update|
+        update.pages.each do |page|
+          page.template_name = "update"
+          page.save!
+        end
+      end
+    end
+  end
+  
   desc "Repair pages without published_at set"
   task :set_published_at => :environment do |t|
     unpublished = Page.all(:conditions => {:published_at => nil})
