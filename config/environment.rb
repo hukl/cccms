@@ -57,3 +57,6 @@ Rails::Initializer.run do |config|
 end
 
 require 'awesome_patch'
+
+ExceptionNotifier.exception_recipients = %w(hukl@berlin.ccc.de)
+ExceptionNotifier.sender_address = %("CCCMS Error" <error@ccc.de>)
