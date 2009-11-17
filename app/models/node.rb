@@ -95,7 +95,9 @@ class Node < ActiveRecord::Base
   def publish_draft!
     if self.draft
       self.head = self.draft
+      self.head.published_at ||= Time.now
       self.head.save!
+      
       self.draft = nil
       
       if staged_slug && (staged_slug != slug)

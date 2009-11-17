@@ -254,7 +254,7 @@ class NodeTest < ActiveSupport::TestCase
     node  = create_node_with_draft
     draft = node.draft
     draft.user = users(:aaron)
-    draft.save
+    draft.save!
     node.publish_draft!
     new_draft = node.find_or_create_draft( users(:quentin) )
     new_draft.user_id = users(:quentin).id
@@ -274,6 +274,11 @@ class NodeTest < ActiveSupport::TestCase
     
     update        = updates2009.children.create!( :slug => "my-first-update" )
     assert update.update?
+  end
+  
+  test "new nodes should have drafts with no publidhed_at set" do
+    node = Node.root.children.create( :slug => "wow" )
+    assert_nil node.draft.published_at
   end
   
   def create_revisions node, count

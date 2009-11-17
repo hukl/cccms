@@ -36,12 +36,8 @@ class Page < ActiveRecord::Base
   
   # Filter
   before_create :set_page_title
-  before_create :set_published_at
   before_create :set_template
   before_save   :rewrite_links_in_body
-  
-  # Validations
-  validates_presence_of :published_at, :on => :update
   
   # Security
   attr_accessible :title, :abstract, :body, :template_name, :published_at, :user_id
@@ -198,12 +194,6 @@ class Page < ActiveRecord::Base
     def set_page_title
       if title.nil?
         title = "Untitled"
-      end
-    end
-    
-    def set_published_at
-      if self.published_at.nil?
-        self.published_at = Time.now
       end
     end
     

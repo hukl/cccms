@@ -42,7 +42,6 @@ class ActiveSupport::TestCase
   def create_node_with_published_page
     node = create_node_with_draft
     draft = node.draft
-    draft.published_at = Time.now
     draft.title = "Test"
     draft.abstract = "Test"
     draft.body = "Test"
