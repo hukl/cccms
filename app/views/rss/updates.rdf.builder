@@ -16,7 +16,7 @@ xml.tag!("rdf:RDF", "xmlns:rdf" => "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   end
   
   @items.each do |item|
-    xml.item("rdf:about" => content_url(:page_path => item.node.id)) do
+    xml.item("rdf:about" => content_url(:page_path => item.node.unique_path)) do
       xml.title(item.title)
       xml.link(content_url(:page_path => item.node.unique_path))
       xml.description(item.abstract)
