@@ -14,6 +14,7 @@ class RssController < ApplicationController
     
     respond_to do |format|
       format.xml {}
+      format.rdf {}
     end
   end
 
