@@ -6,6 +6,8 @@ class RssController < ApplicationController
   def updates
     expires_in 31.minutes, :public => true
     
+    I18n.locale = :de
+    
     @items = Page.heads.find_tagged_with(
       "update",
       :order => "published_at DESC",
