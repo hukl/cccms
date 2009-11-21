@@ -12,7 +12,8 @@
     <%= stylesheet_link_tag "shadowbox" %>
     <%= javascript_include_tag 'public' %>
     
-    <%= auto_discovery_link_tag(:atom, {:controller => "rss", :action => "updates"}) %>
+    <%= auto_discovery_link_tag(:atom, {:controller => "rss", :action => "updates", :format => :xml}) %>
+    <%= auto_discovery_link_tag(:rdf,  {:controller => "rss", :action => "updates", :format => :rdf}) %>
   </head>
   
   <body>
