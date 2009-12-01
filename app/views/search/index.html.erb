@@ -1,13 +1,11 @@
-<h2>Suche</h2>
-
 <% if params[:search_term] %>
-  <h3>Suchergebnisse für Suchbegriff: <%=h params[:search_term] %></h3>
+  <h2>Suchergebnisse für Suchbegriff: <%=h params[:search_term] %></h2>
 <% end %>
 
 <%= 
   render(
-    :partial => 'custom/partials/article',
+    :partial => 'search_result',
     :collection => @results,
-    :as => :page
+    :as => :node
   )
 %>
