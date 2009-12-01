@@ -62,15 +62,17 @@ class Page < ActiveRecord::Base
     
     options = defaults.merge options
     
-    Page.heads.find_tagged_with(
-      options[:tags].gsub(/\s/, ", "), 
-      :match_all => true,
-      :order => "#{options[:order_by]} #{options[:order_direction]}"
-    ).paginate(:page=>page, :per_page => options[:limit])
-    
+    Page.heads.paginate(
+      find_options_for_find_tagged_with(
+        options[:tags].gsub(/\s/, ","), :match_all => true
+      ).merge(
+        :page     => page,
+        :per_page => options[:limit],
+        :order    => "#{options[:order_by]} #{options[:order_direction]}"
+      )
+    )
   end
 
-  
   def self.custom_templates
     files = Dir.entries(FULL_PUBLIC_TEMPLATE_PATH).select do |x| 
       x if x.gsub!(".html.erb", "")
