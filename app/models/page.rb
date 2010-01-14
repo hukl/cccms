@@ -10,14 +10,14 @@ class Page < ActiveRecord::Base
   named_scope( 
     :drafts, 
     :joins => :node,
-    :include => [:globalize_translations],
+    :include => [:translations],
     :conditions => ["nodes.draft_id = pages.id"]
   )
   
   named_scope(
     :heads,
     :joins => :node,
-    :include => [:globalize_translations],
+    :include => [:translations],
     :conditions => ["nodes.head_id = pages.id"]
   )
   
@@ -89,7 +89,7 @@ class Page < ActiveRecord::Base
   # outdated_translations? for more information.
   # Takes :locale => <locale> and :delta_time => 12.hours as options
   def self.find_with_outdated_translations options = {}
-    Page.all(:include => :globalize_translations).select do |page|
+    Page.all(:include => :translations).select do |page|
       page.outdated_translations? options
     end
   end
@@ -132,11 +132,11 @@ class Page < ActiveRecord::Base
     self.published_at     = page.published_at
     
     # Getting rid of the auto-generated empty translations
-    self.globalize_translations.delete_all
+    self.translations.delete_all
     
     # Clone translated attributes
-    page.globalize_translations.each do |translation|
-      self.globalize_translations.create!(translation.attributes)
+    page.translations.each do |translation|
+      self.translations.create!(translation.attributes)
     end
     
     # Clone asset references
@@ -163,7 +163,7 @@ class Page < ActiveRecord::Base
     
     options = default_options.merge options
     
-    translations = self.globalize_translations
+    translations = self.translations
     
     default = *(translations.select {|x| x.locale == I18n.default_locale})
     custom  = *(translations.select {|x| x.locale == options[:locale]})
