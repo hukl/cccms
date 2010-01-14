@@ -1,7 +1,8 @@
+require 'rubygems'
 begin
   require 'jeweler'
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+  puts "Jeweler not available. Install it with: sudo gem install jeweler"
   exit 1
 end
 require 'rake/testtask'
@@ -22,7 +23,8 @@ Jeweler::Tasks.new do |s|
   s.rdoc_options = ["--main", "README.rdoc", "--inline-source", "--line-numbers"]
   s.test_files = Dir['test/**/*.{yml,rb}']
 end
-
+ Jeweler::GemcutterTasks.new
+ 
 desc 'Default: run unit tests.'
 task :default => :test
 
