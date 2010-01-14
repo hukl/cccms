@@ -18,3 +18,4 @@ vendor/plugins/paperclip/tmp
 db/sphinx
 config/*.sphinx.conf
 tmp
+vendor/gems
