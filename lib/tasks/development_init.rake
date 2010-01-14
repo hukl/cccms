@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'csv'
 
 namespace :cccms do 

@@ -3,7 +3,7 @@ require 'xml'
 class Page < ActiveRecord::Base
   
   PUBLIC_TEMPLATE_PATH = File.join(%w(custom page_templates public))
-  FULL_PUBLIC_TEMPLATE_PATH = File.join(RAILS_ROOT, 'app', 'views', PUBLIC_TEMPLATE_PATH)
+  FULL_PUBLIC_TEMPLATE_PATH = File.join(Rails.root, 'app', 'views', PUBLIC_TEMPLATE_PATH)
   
   # named scopes
   
@@ -165,8 +165,8 @@ class Page < ActiveRecord::Base
     
     translations = self.translations
     
-    default = *(translations.select {|x| x.locale == I18n.default_locale})
-    custom  = *(translations.select {|x| x.locale == options[:locale]})
+    default = (translations.select {|x| x.locale == I18n.default_locale}).first
+    custom  = (translations.select {|x| x.locale == options[:locale]}).first
     
     if translations.size > 1 && default && custom
       difference = (default.updated_at - custom.updated_at).to_i.abs

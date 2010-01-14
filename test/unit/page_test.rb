@@ -118,7 +118,7 @@ class PageTest < ActiveSupport::TestCase
     assert_equal 2, page.translations.size
     assert_equal 0, Page.find_with_outdated_translations.size
     
-    english = *page.translations.select {|x| x.locale == :en}
+    english = (page.translations.select {|x| x.locale == :en}).first
     Page::Translation.record_timestamps = false
     english.update_attributes(:updated_at => (Time.now+25.hours))    
     Page::Translation.record_timestamps = true

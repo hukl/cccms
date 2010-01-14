@@ -6,9 +6,11 @@ class ApplicationController < ActionController::Base
   include ExceptionNotifiable
   include AuthenticatedSystem
     
-  helper :all # include all helpers, all the time
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
-
+  # helper :all # include all helpers, all the time
+  
+  protect_from_forgery
+  filter_parameter_logging :password
+  
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password, :password_confirmation
   

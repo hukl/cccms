@@ -123,7 +123,7 @@ module ContentHelper
   def partial_exists? partial
     File.exist?(
       File.join( 
-        RAILS_ROOT, 'app', 'views', 'custom', 'partials', "_#{partial}.html.erb"
+        Rails.root, 'app', 'views', 'custom', 'partials', "_#{partial}.html.erb"
       )
     )
   end
