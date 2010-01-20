@@ -3,6 +3,9 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'rails/test_help'
 
 class ActiveSupport::TestCase
+  
+  include AuthenticatedTestHelper
+  
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests

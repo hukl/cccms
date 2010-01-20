@@ -13,6 +13,8 @@ class ContentController < ApplicationController
     
     expires_in 20.minutes, :public => true
     
+    puts params.inspect
+    
     if @page and @page.public?
       render(
         :file => @page.valid_template,
@@ -34,7 +36,7 @@ class ContentController < ApplicationController
   
   private
     def find_page
-      path = params[:page_path].join('/')
+      path = "contact"
       @page = Node.find_page(path)
     end
 end

@@ -11,12 +11,10 @@
     <%= javascript_include_tag 'shadowbox/shadowbox' %>
     <%= stylesheet_link_tag "shadowbox" %>
     <%= javascript_include_tag 'public' %>
-    
-    <%= auto_discovery_link_tag(:atom, {:locale => :de, :controller => "rss", :action => "updates", :format => :xml}) %>
-    <%= auto_discovery_link_tag(:rss,  {:locale => :de, :controller => "rss", :action => "updates", :format => :rdf}) %>
-  </head>
+    </head>
   
   <body>
+    <%= link_to "Foo", content_path(:page_path => "contact") %>
     <div id="wrapper">
       <div id="header">
         <%= link_to_path(image_tag("header.png"), "/home") %>
