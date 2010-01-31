@@ -19,7 +19,8 @@ xml.feed(:xmlns => "http://www.w3.org/2005/Atom", "xml:base" => @host) do
         :type => "text/html"
       )
       xml.id(content_url(:page_path => item.node.feed_id))
-      xml.updated(item.published_at.xmlschema)
+      xml.updated(item.updated_at.xmlschema)
+      xml.published(item.published_at.xmlschema)
       xml.content(:type => "xhtml") do
         xml.div(item.body, :xmlns => "http://www.w3.org/1999/xhtml")
       end
