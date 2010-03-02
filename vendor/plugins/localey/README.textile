@@ -1,0 +1,30 @@
+h1. What is it for
+
+This plugin should enable your Rails 3 apps to encode the locale within the url
+like: http://example.com/*en*/posts/1 without the usual quirks. Your app and
+all helpers etc should behave normally.
+
+In earlier versions of rails you had to user things like
+svenfuchs/routing-filter plugin or pass :id or :locale parameters each time.
+
+Since Rails 3 isn't released yet its entirely possible that this plugin is 
+completely unnecessary and there are better ways to achieve this kind of url 
+locale encoding. If you you know one - please let me know.
+
+If you want to help out I could use help testing this plugin properly without 
+the need of an entire test app.
+
+h1. What does it do
+
+When you install this plugin two things will happen to your Rails 3 app:
+
+# The Localey middleware gets added to you middleware stack. It strips a locale
+parameter from env['PATH_INFO'] right before it is passed to rails dispatcher
+which will then see /posts instead of /en/posts. If a locale was found and valid
+according to I18n.available_locales I18n.locale is set accordingly.
+
+# ActionDispatch::Routing::RouteSet#generate is wrapped via alias_method to add
+the locale to every output of the original generate method.
+posts_path produces /*en*/posts instead of /posts
+
+Copyright (c) 2010 hukl, released under the MIT license
