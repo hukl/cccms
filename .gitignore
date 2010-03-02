@@ -17,4 +17,7 @@ public/system
 vendor/plugins/paperclip/tmp
 db/sphinx
 config/*.sphinx.conf
-tmp
+.bundle
+db/*.sqlite3
+tmp/**/*
+

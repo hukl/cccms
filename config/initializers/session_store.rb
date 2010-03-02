@@ -5,8 +5,8 @@
 # Make sure the secret is at least 30 characters and all random, 
 # no regular words or you'll be exposed to dictionary attacks.
 ActionController::Base.session = {
-  :key         => '_cccms_session',
-  :secret      => 'b50f62033369e6039f2ece511f83f10f70301024709e189ab28d42379a26b7bfd0739fb83d89b6b76dba350569e5b9d83ee4abedbd9da468deea963512e4102b'
+  :key    => '_cccms_session',
+  :secret => '0d0439210e7fe934a0867768ba18809f2ea9c77600a5d0fa24fd6b9943ab7140a0a9832fe88880ed79e0a65e2aef61b8410ac4dc893d45859fcf5872803eb33a'
 }
 
 # Use the database for sessions instead of the cookie-based default,
