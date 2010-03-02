@@ -24,10 +24,10 @@ def run_coverage(files)
       reg_exp = []
       for show_type in show_only
         reg_exp << case show_type
-        when 'm', 'models' : 'app\/models'
-        when 'c', 'controllers' : 'app\/controllers'
-        when 'h', 'helpers' : 'app\/helpers'
-        when 'l', 'lib' : 'lib'
+        when 'm', 'models'      then 'app\/models'
+        when 'c', 'controllers' then 'app\/controllers'
+        when 'h', 'helpers'     then 'app\/helpers'
+        when 'l', 'lib'         then 'lib'
         else
           show_type
         end
