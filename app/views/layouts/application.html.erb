@@ -5,15 +5,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   
-    <title><%= page_title %></title>
+    <title><%# page_title %></title>
     <%= stylesheet_link_tag "ccc" %>
     <%= javascript_include_tag 'jquery-1.3.2.min' %>
     <%= javascript_include_tag 'shadowbox/shadowbox' %>
     <%= stylesheet_link_tag "shadowbox" %>
     <%= javascript_include_tag 'public' %>
     
-    <%= auto_discovery_link_tag(:atom, {:locale => :de, :controller => "rss", :action => "updates", :format => :xml}) %>
-    <%= auto_discovery_link_tag(:rss,  {:locale => :de, :controller => "rss", :action => "updates", :format => :rdf}) %>
+    <%# auto_discovery_link_tag(:atom, {:locale => :de, :controller => "rss", :action => "updates", :format => :xml}) %>
+    <%# auto_discovery_link_tag(:rss,  {:locale => :de, :controller => "rss", :action => "updates", :format => :rdf}) %>
   </head>
   
   <body>
@@ -34,11 +34,11 @@
         </div>
         
         <%= language_selector %>
-        <% if current_user && @page.node %>
-          <%= link_to "Edit", node_path(:id => @page.node) %>
-        <% end %>
+        <%# if current_user && @page.node %>
+          <%# link_to "Edit", node_path(:id => @page.node) %>
+        <%# end %>
       
-        <%= calendar %>
+        <%# calendar %>
       </div>
       <div id="center_column">
         <%= yield :layout %>

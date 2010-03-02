@@ -15,7 +15,7 @@ module LinkHelper
   
   def link_to_path title, path, html_options = {}
     if params[:page_path]
-      active = (params[:page_path].join("/") == path.sub(/^\//, ""))
+      active = (params[:page_path] == path.sub(/^\//, ""))
     end
     
     active_class = active ? {:class => 'active'} : {:class => 'inactive'}
@@ -29,7 +29,7 @@ module LinkHelper
         :controller => :content,
         :action => :render_page,
         :locale => params[:locale],
-        :page_path => (path.sub(/^\//, "").split("/") rescue "")
+        :page_path => (path.sub(/^\//, "") rescue "")
       },
       html_options
     )

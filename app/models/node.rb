@@ -24,11 +24,11 @@ class Node < ActiveRecord::Base
   validate :borders       # This should never ever happen.
   
   # Index for Fulltext Search
-  define_index do
-    indexes head.translations.title
-    indexes slug
-    indexes unique_name
-  end
+  # define_index do
+  #   indexes head.translations.title
+  #   indexes slug
+  #   indexes unique_name
+  # end
   
   # Class methods
   

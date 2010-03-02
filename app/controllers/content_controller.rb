@@ -34,7 +34,6 @@ class ContentController < ApplicationController
   
   private
     def find_page
-      path = params[:page_path].join('/')
-      @page = Node.find_page(path)
+      @page = Node.find_page( params[:page_path] )
     end
 end
