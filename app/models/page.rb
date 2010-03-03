@@ -221,7 +221,9 @@ class Page < ActiveRecord::Base
           
           links.each do |link|
             unless locales.include? link[:href].slice(1,2).to_sym
-              link[:href] = link[:href].sub(/^\//, "/#{I18n.locale}/")
+              unless link[:href] =~ /sytem\/uploads/
+                link[:href] = link[:href].sub(/^\//, "/#{I18n.locale}/")
+              end
             end
           end
           
