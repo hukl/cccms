@@ -3,6 +3,9 @@ class TagsController < ApplicationController
   # Public
   
   def index
+    @page = Page.new :title => "Tags"
+    
+    @tags = Tag.all(:limit => 500)
   end
 
   def show
