@@ -28,8 +28,12 @@ class ContentController < ApplicationController
   end
 
   def render_gallery
-    @images = @page.assets.images
-    render :file => "content/gallery"
+    unless @page.nil?
+      @images = @page.assets.images
+      render :file => "content/gallery"
+    else
+      render :nothing => true, :status => 404
+    end
   end
   
   private
