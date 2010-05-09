@@ -19,6 +19,10 @@ class TagsController < ApplicationController
         :per_page => 23
       )
     )
+    
+    respond_to do |format|
+      format.html {}
+    end
   end
 
 end
