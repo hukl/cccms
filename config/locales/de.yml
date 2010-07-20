@@ -2,6 +2,7 @@
 # by Clemens Kofler (clemens@railway.at)
 
 de:
+  sponsors: Sponsoren
   show_tag_headline: "Seiten mit dem Tag:"
   old_ccc_de: das alte ccc.de
   date:
@@ -119,3 +120,4 @@ de:
         less_than_or_equal_to: "must be less than or equal to {{count}}"
         odd: "must be odd"
         even: "must be even"
+        

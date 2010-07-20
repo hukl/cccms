@@ -14,6 +14,8 @@ class TagsController < ApplicationController
     @tag = @tag ? @tag.name : params[:id]
     
     @page   = Page.new
+
+    params[:page] = ( params[:page].is_a?(Fixnum) ? params[:page] : 1 )
     
     @pages  = Page.heads.paginate(
       Page.find_options_for_find_tagged_with(@tag).merge(

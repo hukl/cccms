@@ -2,6 +2,7 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  sponsors: sponsors
   hello: "Hello world"
   show_tag_headline: "Pages tagged with:"
   old_ccc_de: the old ccc.de
