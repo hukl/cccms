@@ -1,6 +1,6 @@
 =CCCMS
 
-This is the repository for the CCCMS. Its a simple content management system 
+This is the repository for the CCCMS. It's a simple content management system 
 inspired all the good parts of different other simple content management systems.
 
 Go to the wiki to read what is all about
