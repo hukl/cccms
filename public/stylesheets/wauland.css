@@ -1,0 +1,59 @@
+/*** Global Settings ****/
+body {font : normal 12px/1.6em Arial, Helvetica, sans-serif;color : #0785AB;margin : 0;padding : 0;background:#FFFFFF;}
+p { margin : 0;padding : 0;}
+a:visited, a:link {color : #163366;text-decoration : underline;background:none;}
+a:hover {color : #000;text-decoration : none;background:none;}
+h1 { color : #0785AB;margin: 0px 0px 10px 0px;padding-bottom : 10px;font : normal 17px Georgia, serif;border-bottom : 1px solid #efece7;}
+h2 {color : #0785AB;margin : 20px 0 10px;padding-bottom : 10px;font : normal 17px Georgia, serif;border-bottom : 1px solid #efece7;}
+h3 {color : #0785AB;margin : 10px 0;padding-bottom : 10px;font : bold 14px Arial, Helvetica, sans-serif;border-bottom : 1px solid #efece7;}
+ul {padding:0;margin:0 0 0 17px;list-style: square url(images/bullet.gif);}
+.box {background : #f7f7f7;border : 1px solid #f0e9eb;padding : 15px;}
+label {    
+display:block;   
+}
+
+
+/*** Layout ****/
+#wrapper {margin : 0 auto;width : 776px;border-left : 1px solid #f0e9eb;border-right : 1px solid #f0e9eb;}
+#header {margin : 0 1px;}
+#bg {height : 36px;background : url(images/bg.gif) repeat-x;}
+#nav {background : #163366;padding : 10px 20px;text-align : right;color : #f6dde3;}
+#nav a:visited, #nav a:link {text-decoration : none;color : #f6dde3;}
+#nav a:hover {text-decoration : underline;color : #f6dde3;}
+#main-content {margin : 0 auto;}
+#logo {margin-bottom : 45px;}
+.logotxt1 {font : normal 18px Georgia, serif;color : #163366;margin : 10px 0 0 15px;}
+.logotxt2 {font : normal 18px Georgia, serif;color : #0785AB; }
+#left-column {width : 440px;padding : 0 30px 30px;float : left;}
+#right-column {width : 270px;float : right;}
+.crd a:visited, .crd a:link, .crd a:hover{text-decoration : none;color : #163366;cursor: text;}
+#footer {background : #f7f7f7;border-top : 1px solid #f0e9eb;padding : 10px 15px;clear : both;}
+
+/*** SideBAR ***/
+#main-image {text-align : center;}
+.sidebar {width : 218px;margin : 0 auto;padding : 10px 25px;background : url(images/shadow.jpg) no-repeat top;}
+
+
+/*** Forms ***/
+fieldset.action {background:#9da2a6; border-color:#e5e5e5 #797c80 #797c80 #e5e5e5; margin-top:-20px;}
+legend {background:#0785AB; color:#fff; font:17px/21px Calibri, Arial, Helvetica, sans-serif; padding:0 10px; margin:-26px 0 0 -11px; font-weight:bold; border:1px solid #fff; border-color:#e5e5c3 #505014 #505014 #e5e5c3;}
+label{
+float: left;
+width: 120px;
+font-weight: bold;
+margin-right: 30px;
+}
+
+input, textarea{
+width: 180px;
+margin-bottom: 5px;
+}
+
+textarea{
+width: 250px;
+height: 150px;
+}
+
+br{
+clear: left;
+}
