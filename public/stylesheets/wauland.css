@@ -6,7 +6,7 @@ a:hover {color : #000;text-decoration : none;background:none;}
 h1 { color : #0785AB;margin: 0px 0px 10px 0px;padding-bottom : 10px;font : normal 17px Georgia, serif;border-bottom : 1px solid #efece7;}
 h2 {color : #0785AB;margin : 20px 0 10px;padding-bottom : 10px;font : normal 17px Georgia, serif;border-bottom : 1px solid #efece7;}
 h3 {color : #0785AB;margin : 10px 0;padding-bottom : 10px;font : bold 14px Arial, Helvetica, sans-serif;border-bottom : 1px solid #efece7;}
-ul {padding:0;margin:0 0 0 17px;list-style: square url(images/bullet.gif);}
+ul {padding:0;margin:0 0 0 17px;list-style: square url(/images/bullet.gif);}
 .box {background : #f7f7f7;border : 1px solid #f0e9eb;padding : 15px;}
 label {    
 display:block;   
@@ -16,7 +16,7 @@ display:block;
 /*** Layout ****/
 #wrapper {margin : 0 auto;width : 776px;border-left : 1px solid #f0e9eb;border-right : 1px solid #f0e9eb;}
 #header {margin : 0 1px;}
-#bg {height : 36px;background : url(images/bg.gif) repeat-x;}
+#bg {height : 36px;background : url(/images/bg.gif) repeat-x;}
 #nav {background : #163366;padding : 10px 20px;text-align : right;color : #f6dde3;}
 #nav a:visited, #nav a:link {text-decoration : none;color : #f6dde3;}
 #nav a:hover {text-decoration : underline;color : #f6dde3;}
@@ -31,7 +31,7 @@ display:block;
 
 /*** SideBAR ***/
 #main-image {text-align : center;}
-.sidebar {width : 218px;margin : 0 auto;padding : 10px 25px;background : url(images/shadow.jpg) no-repeat top;}
+.sidebar {width : 218px;margin : 0 auto;padding : 10px 25px;background : url(/images/shadow.jpg) no-repeat top;}
 
 
 /*** Forms ***/

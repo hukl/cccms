@@ -17,9 +17,8 @@
 </div>
 <div class="box">
      <%= yield :layout %>
-    </div>
-      <div class="box">
-      </div>
+</div>
+</div>
          <div id="right-column">
             <div id="main-image"><img src="images/wauland.jpg" alt="Wau Holland" /></div>
             <div class="sidebar">
@@ -33,37 +32,6 @@
                   <li><a href="http://de.wikipedia.org/wiki/Wau_Holland" target="_blank">Wau Holland auf Wikipedia (de)</a></li>
                   <li><a href="http://en.wikipedia.org/wiki/Wau_Holland" target="_blank">Wau Holland on Wikipedia (en)</a> </li>
                 </ul>
-                <script src="http://widgets.twimg.com/j/2/widget.js"></script>
-                <script>
-                new TWTR.Widget({
-                  version: 2,
-                  type: 'profile',
-                  rpp: 4,
-                  interval: 6000,
-                  width: 250,
-                  height: 300,
-                  theme: {
-                    shell: {
-                      background: '#f7f7f7',
-                      color: '#333333'
-                    },
-                    tweets: {
-                      background: '#faf5fa',
-                      color: '#050005',
-                      links: '#4aed05'
-                    }
-                  },
-                  features: {
-                    scrollbar: false,
-                    loop: false,
-                    live: false,
-                    hashtags: true,
-                    timestamp: true,
-                    avatars: false,
-                    behavior: 'all'
-                  }
-                }).render().setUser('wauland').start();
-                </script>
         </div>
         <div id="footer"><br />
       <!--
