@@ -14,7 +14,7 @@ class AdminController < ApplicationController
       :limit => 20,
       :order => "updated_at desc",
       :conditions => [ 
-        "updated_at < ? AND updated_at > ?", Time.now, Time.now-14.days
+        "updated_at < ? AND updated_at > ? AND parent_id IS NOT NULL", Time.now, Time.now-14.days
       ]
     )
   end
