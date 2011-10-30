@@ -7,9 +7,9 @@ class AddJoinTableForFlagsPages < ActiveRecord::Migration
     add_index :flags_pages, [:flag_id]
     add_index :flags_pages, [:page_id]
   end
-  
+
   def self.down
     remove_table :flags_pages
   end
-  
+
 end

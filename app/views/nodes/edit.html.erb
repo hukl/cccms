@@ -3,13 +3,13 @@
   <%= link_to 'Show', @node %>
   <%= link_to 'Preview', preview_page_path(@draft) %>
   <%= link_to 'Publish', publish_node_path, :method => :put, :confirm => "Publish this draft?" %>
-  <%= link_to 'Revisions', node_revisions_path(@node) %>  
+  <%= link_to 'Revisions', node_revisions_path(@node) %>
 <% end %>
 
 <div id="page_editor">
 <% form_for(@node) do |f| %>
   <%= f.error_messages %>
-  
+
   <div id="metadata">
     <table>
       <tr>
@@ -19,10 +19,10 @@
       <tr>
         <td class="description">Slug</td>
         <td>
-          <%= 
+          <%=
             f.text_field(
               :staged_slug, :value => @node.staged_slug || @node.slug
-            ) 
+            )
           %>
         </td>
       </tr>
@@ -34,13 +34,13 @@
 
           </div>
           <%= f.hidden_field(
-                :staged_parent_id, 
+                :staged_parent_id,
                 :value => @node.staged_parent_id || @node.parent_id
               )
            %>
         </td>
       </tr>
-      
+
       <% fields_for @draft do |d| %>
       <tr>
         <td class="description">Tags - comma seperated</td>
@@ -60,7 +60,7 @@
       </tr>
       <tr>
         <td class="description">Images</td>
-        <td> 
+        <td>
           <ul id="image_box" rel="<%= @draft.id %>">
             <% @draft.assets.images.each do |image| %>
               <li rel="images_<%= image.id %>">
@@ -82,7 +82,7 @@
       </tr>
     </table>
   </div>
-  
+
   <table id="content">
     <tr>
       <th class="description"></th>

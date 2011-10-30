@@ -4,7 +4,7 @@ class CreatePermissions < ActiveRecord::Migration
       t.boolean :granted
       t.integer :node_id
       t.integer :user_id
-      
+
       t.timestamps
     end
   end

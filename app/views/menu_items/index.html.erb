@@ -14,8 +14,8 @@
     <td class="menu_item_title"><%= menu_item.title %></td>
     <td><%= link_to "Edit", edit_menu_item_path(menu_item) %></td>
     <td>
-      <%= link_to( 
-            "Delete", 
+      <%= link_to(
+            "Delete",
             menu_item_path(menu_item),
             :method => :delete,
             :confirm => "Are you sure?"

@@ -24,6 +24,6 @@ class TestCaseClass #:nodoc:
   self.fixture_path = File.dirname(__FILE__) + "/fixtures/"
   self.use_transactional_fixtures = true
   self.use_instantiated_fixtures  = false
-  
+
   fixtures :categories, :notes, :departments
 end

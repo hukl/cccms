@@ -1,15 +1,15 @@
 def run_coverage(files)
   rm_f "coverage"
   rm_f "coverage.data"
-  
+
   # turn the files we want to run into a string
   if files.empty?
     puts "No files were specified for testing"
     return
   end
-  
+
   files = files.join(" ")
-  
+
   if PLATFORM =~ /darwin/
     exclude = '--exclude "gems/*" --exclude "Library/Frameworks/*"'
   else
@@ -38,7 +38,7 @@ def run_coverage(files)
     exclude = exclude + params
   end
 
-  
+
   rcov = "rcov --rails -Ilib:test --sort coverage --text-report #{exclude}"
   puts
   puts
@@ -49,23 +49,23 @@ def run_coverage(files)
 end
 
 namespace :test do
-  
+
   desc "Measures unit, functional, and integration test coverage"
   task :coverage do
     run_coverage Dir["test/unit/**/*.rb", "test/functional/**/*.rb", "test/integration/**/*.rb"]
   end
-  
+
   namespace :coverage do
     desc "Runs coverage on unit tests"
     task :units do
       run_coverage Dir["test/unit/**/*.rb"]
     end
-    
+
     desc "Runs coverage on functional tests"
     task :functionals do
       run_coverage Dir["test/functional/**/*.rb"]
     end
-    
+
     desc "Runs coverage on integration tests"
     task :integration do
       run_coverage Dir["test/integration/**/*.rb"]

@@ -1,5 +1,5 @@
 module NodesHelper
-  
+
   def title_for_node node
     if node.head
       node.head.title
@@ -7,8 +7,8 @@ module NodesHelper
       node.draft.title
     end
   end
-  
-  
+
+
   def truncated_title_for_node node
     if (title = title_for_node node) && title.size > 20
       "<span title='#{title}'>#{truncate(title, 40)}</span>"
@@ -16,15 +16,15 @@ module NodesHelper
       title
     end
   end
-  
+
   def custom_page_templates
     Page.custom_templates.map {|x| [x.gsub("_", " ").titlecase, x]}
   end
-  
+
   def user_list
     User.all.map {|u| [u.login, u.id]}
   end
-  
+
   def event_information
     if @node.event
       "#{@node.event.start_time.to_s(:db)} - #{@node.event.end_time.to_s(:db)} > " \

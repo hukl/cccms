@@ -38,22 +38,22 @@ class User < ActiveRecord::Base
   def email=(value)
     write_attribute :email, (value ? value.downcase : nil)
   end
-  
+
   # Permission stuff
-  
+
   def grant(node)
     set_permission(true, node)
   end
-  
+
   def revoke(node)
     set_permission(false, node)
   end
 
-  def inherit(node)    
+  def inherit(node)
     permission = self.permissions.for_node(node).first
     permission.destroy if permission
   end
-  
+
   def get_permission_for(node)
     permissions = {}
     self.permissions.for_node(node).each do |permission|
@@ -61,9 +61,9 @@ class User < ActiveRecord::Base
     end
     permissions
   end
-  
+
   # Checks for permission on the node and if necessary ascends the
-  # nodetree until permission is found or returns false if it is not found 
+  # nodetree until permission is found or returns false if it is not found
   # at all.
   def has_permission?(node)
     node_permission = self.permissions.for_node(node)
@@ -75,22 +75,22 @@ class User < ActiveRecord::Base
         return local_permission
       end
     end
-    
+
     return false
   end
-  
+
   def is_admin?
     !!admin
   end
-  
+
   private
-    
-    def set_permission(granted, node)    
+
+    def set_permission(granted, node)
       permission = self.permissions.for_node(node).first
       if permission
         permission.granted = granted
       else
-        self.permissions.create!( :node       => node, 
+        self.permissions.create!( :node       => node,
                                   :granted    => granted )
       end
     end

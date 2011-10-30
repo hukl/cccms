@@ -1,5 +1,5 @@
 module AdminHelper
-  
+
   def language_selector
     case I18n.locale
     when :de

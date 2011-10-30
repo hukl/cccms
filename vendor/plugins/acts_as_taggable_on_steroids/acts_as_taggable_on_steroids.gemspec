@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "README",
     ]
-  s.test_files = [  
+  s.test_files = [
     "test/abstract_unit.rb",
     "test/acts_as_taggable_test.rb",
     "test/database.yml",

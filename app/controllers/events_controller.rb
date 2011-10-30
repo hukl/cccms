@@ -1,11 +1,11 @@
 class EventsController < ApplicationController
-  
+
   # Private
-  
+
   before_filter :login_required
-  
+
   layout 'admin'
-  
+
   # GET /events
   # GET /events.xml
   def index

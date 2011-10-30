@@ -2,7 +2,7 @@
   Die Besuchsszenarien des Webservers www.ccc.de
 ==
 
-Ich gehe davon aus, dass der Server www.ccc.de von vier Benutzerprofilen besucht wird, die alle ihre eigene Erwartung an die Fuehrung durch das System stellen. Um all diese 
+Ich gehe davon aus, dass der Server www.ccc.de von vier Benutzerprofilen besucht wird, die alle ihre eigene Erwartung an die Fuehrung durch das System stellen. Um all diese
 Besucher zufriedenzustellen, muessen wir uns klar werden, was WIR denen eigentlich vermitteln wollen.
 
 --
@@ -11,8 +11,8 @@ Besucher zufriedenzustellen, muessen wir uns klar werden, was WIR denen eigentli
 
 Dieser Benutzer hat wahrscheinlich aus der Presse, von Freunden oder auf ner Demo vom CCC erfahren und schaut sich nun auf der Startseite zum ersten Mal um.
 
-Um ihn dort abzuholen, braucht es hier gut sichtbar einen sehr kurzen Text, was der CCC ist, dekoriert mit einem Link, wo er unsere detailliertere Selbstdarstellung findet. Auf 
-dieser Selbstdarstellungsseite sollte es weiterfuehrende Links zu den regionalen Gruppen, den Mitgliedschaftsformalitaeten (inklusive Mitgliedsantrag) geben und -- am besten im 
+Um ihn dort abzuholen, braucht es hier gut sichtbar einen sehr kurzen Text, was der CCC ist, dekoriert mit einem Link, wo er unsere detailliertere Selbstdarstellung findet. Auf
+dieser Selbstdarstellungsseite sollte es weiterfuehrende Links zu den regionalen Gruppen, den Mitgliedschaftsformalitaeten (inklusive Mitgliedsantrag) geben und -- am besten im
 Fliesstext -- auf die aktuell brennenden Themen kurz eingegangen und der User dorthin ueber Links in die Themenseiten weitergefuehrt werden.
 
 --
@@ -21,8 +21,8 @@ Fliesstext -- auf die aktuell brennenden Themen kurz eingegangen und der User do
 
 Dieser Benutzer hat ueber eine Suchmaschine auf eine der Themenseiten, Pressemitteilungen oder Veranstaltungshinweise gefunden.
 
-Um ihn von dort abzuholen und weiter durch die Seite zu locken, sollten natuerlich zu allen an der Seite befestigten Keywords weitere passende Themenseiten, Meldungen und Termine 
-aufgefuehrt werden. Ihm sollten auch dezent alle aktuellen Meldungen in einer reduzierten Listenansicht in einer Box angezeigt werden, zusammen mit Veranstaltungs- und 
+Um ihn von dort abzuholen und weiter durch die Seite zu locken, sollten natuerlich zu allen an der Seite befestigten Keywords weitere passende Themenseiten, Meldungen und Termine
+aufgefuehrt werden. Ihm sollten auch dezent alle aktuellen Meldungen in einer reduzierten Listenansicht in einer Box angezeigt werden, zusammen mit Veranstaltungs- und
 Kampagnenhinweisen.
 
 --
@@ -31,13 +31,13 @@ Kampagnenhinweisen.
 
 Dieser Benutzer kommt alle paar Tage auf www.ccc.de zurueck, um sich ueber Neuigkeiten zu informieren.
 
-Auf der Startseite sollte daher eine Liste der aktuellen Updates (inklusive Pressemeldungen und Calenderevents) gelistet werden, neben einer prominenten Ausstellung der aktuellen 
+Auf der Startseite sollte daher eine Liste der aktuellen Updates (inklusive Pressemeldungen und Calenderevents) gelistet werden, neben einer prominenten Ausstellung der aktuellen
 Ausgaben des Chaosradios, der Datenschleuder (mit Cover zum Draufclicken) und anderer Medien.
 
-In der Theorie koennte ihm ein zufaelliges Thema des Tages praesentiert oder in irgendwas weniger Peinlichem als einer Tagcloud ein Zufalls- oder "Recently 
+In der Theorie koennte ihm ein zufaelliges Thema des Tages praesentiert oder in irgendwas weniger Peinlichem als einer Tagcloud ein Zufalls- oder "Recently
 Changed"-Einstiegspunkt in eine tiefere Projekt/Themenseite dargeboten werden.
 
-Auf bevorstehende Veranstaltungen sollten deutliche sichtbare Banner hinweisen. Alle Projekte, die mit eigener visueller Kennzeichnung kommen, koennten im Bannerbereich verlinkt 
+Auf bevorstehende Veranstaltungen sollten deutliche sichtbare Banner hinweisen. Alle Projekte, die mit eigener visueller Kennzeichnung kommen, koennten im Bannerbereich verlinkt
 werden (der Fingerabdruck zeigt in die Biometrie- oder Fingerabdruck-kopieren Themenseite). Auf Mitgliederversammlungen muss hier auch hingewiesen werden.
 
 --

@@ -1,14 +1,14 @@
 class AssetsController < ApplicationController
-  
+
   # Private
-  
+
   before_filter :login_required
-  
+
   layout 'admin'
-  
+
   def index
     @assets = Asset.all.paginate(
-      :page => params[:page], 
+      :page => params[:page],
       :per_page => 20,
       :order => 'id DESC'
     )

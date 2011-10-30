@@ -1,7 +1,7 @@
 module RoutingFilter
   class Base
     attr_accessor :successor, :options
-    
+
     def initialize(options)
       @options = options
       options.each{|name, value| instance_variable_set :"@#{name}", value }

@@ -1,13 +1,13 @@
 module RoutingFilter
   mattr_accessor :active
   @@active = true
-  
+
   class Chain < Array
     def << (filter)
       filter.successor = last
       super
     end
-  
+
     def run(method, *args, &final)
       RoutingFilter.active ? last.run(method, *args, &final) : final.call
     end
@@ -46,7 +46,7 @@ ActionController::Routing::RouteSet.class_eval do
     filters.run :around_recognize, path, env, &lambda{ recognize_path_without_filtering(path, env) }
   end
   alias_method_chain :recognize_path, :filtering
-  
+
   def generate_with_filtering(*args)
     filters.run :around_generate, args.first, &lambda{ generate_without_filtering(*args) }
   end

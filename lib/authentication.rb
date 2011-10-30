@@ -1,5 +1,5 @@
 module Authentication
-  mattr_accessor :login_regex, :bad_login_message, 
+  mattr_accessor :login_regex, :bad_login_message,
     :name_regex, :bad_name_message,
     :email_name_regex, :domain_head_regex, :domain_tld_regex, :email_regex, :bad_email_message
 
@@ -37,14 +37,14 @@ module Authentication
 
   module ModelInstanceMethods
   end # instance methods
-  
+
   module ByPassword
     # Stuff directives into including module
     def self.included(recipient)
       recipient.extend(ModelClassMethods)
       recipient.class_eval do
         include ModelInstanceMethods
-        
+
         # Virtual attribute for the unencrypted password
         attr_accessor :password
         validates_presence_of     :password,                   :if => :password_required?
@@ -72,24 +72,24 @@ module Authentication
           digest = secure_digest(digest, salt, password, REST_AUTH_SITE_KEY)
         end
         digest
-      end      
+      end
     end # class methods
 
     #
     # Instance Methods
     #
     module ModelInstanceMethods
-      
+
       # Encrypts the password with the user salt
       def encrypt(password)
         self.class.password_digest(password, salt)
       end
-      
+
       def authenticated?(password)
         crypted_password == encrypt(password)
       end
-      
-      # before filter 
+
+      # before filter
       def encrypt_password
         return if password.blank?
         self.salt = self.class.make_token if new_record?

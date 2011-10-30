@@ -54,7 +54,7 @@ class UserTest < ActiveSupport::TestCase
   def test_should_authenticate_user
     assert_equal users(:quentin), User.authenticate('quentin', 'monkey')
   end
-  
+
 protected
   def create_user(options = {})
     record = User.new({ :login => 'quire', :email => 'quire@example.com', :password => 'quire69', :password_confirmation => 'quire69' }.merge(options))

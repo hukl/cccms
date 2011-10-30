@@ -5,7 +5,7 @@ quentin:
   salt:                      cf993996a70d31f924aff17a5f997722cb6ec2dd
   crypted_password:          11c672158b0eb6e8c91c438b3eb844902308b138 # 'monkey'
   created_at:                <%= 5.days.ago.to_s :db  %>
-      
+
 aaron:
   id:                        2
   login:                     aaron

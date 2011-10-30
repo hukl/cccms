@@ -11,7 +11,7 @@ This is a new implementation of nested set based off of BetterNestedSet that fix
 Install as a plugin:
 
   script/plugin install git://github.com/collectiveidea/awesome_nested_set.git
-  
+
 == Usage
 
 To make use of awesome_nested_set, your model needs to have 3 fields: lft, rgt, and parent_id:
@@ -36,12 +36,12 @@ Enable the nested set functionality by declaring acts_as_nested_set on your mode
   class Category < ActiveRecord::Base
     acts_as_nested_set
   end
-  
+
 Run `rake rdoc` to generate the API docs and see CollectiveIdea::Acts::NestedSet::SingletonMethods for more info.
 
 == View Helper
 
-The view helper is called #nested_set_options. 
+The view helper is called #nested_set_options.
 
 Example usage:
 

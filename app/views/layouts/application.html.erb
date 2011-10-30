@@ -4,18 +4,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  
+
     <title><%= page_title %></title>
     <%= stylesheet_link_tag "ccc" %>
     <%= javascript_include_tag 'jquery-1.3.2.min' %>
     <%= javascript_include_tag 'shadowbox/shadowbox' %>
     <%= stylesheet_link_tag "shadowbox" %>
     <%= javascript_include_tag 'public' %>
-    
+
     <%= auto_discovery_link_tag(:atom, {:locale => :de, :controller => "rss", :action => "updates", :format => :xml}) %>
     <%= auto_discovery_link_tag(:rss,  {:locale => :de, :controller => "rss", :action => "updates", :format => :rdf}) %>
   </head>
-  
+
   <body>
     <div id="wrapper">
       <div id="header">
@@ -26,23 +26,23 @@
       </div>
       <div id="left_column">
         <%= main_menu %>
-        
+
         <div class="main_navigation">
           <ul>
             <li><a class="inactive" href="http://dasalte.ccc.de/"><%= t(:old_ccc_de) %></a></li>
           </ul>
         </div>
-        
+
         <%= language_selector %>
         <% if current_user && @page.node %>
           <%= link_to "Edit", node_path(:id => @page.node) %>
         <% end %>
-      
+
         <%= calendar %>
       </div>
       <div id="center_column">
         <%= yield :layout %>
-        
+
         <div id="footer">
           <br />
           <br />
