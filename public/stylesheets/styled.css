@@ -1,10 +1,10 @@
 /* CCC CSS:
  * Start: 29. Oct. 2008
  * Url: http://ccc.de//css/style.css
- * 
+ *
  * Body fontsize: 11px = 0.69em
  * em calc: http://riddle.pl/emcalc/
- * 
+ *
  * Colors:
  * #EEE = Header BG
  * #FFCA08 = Yellow
@@ -13,7 +13,7 @@
  * #eab407 = Content Headers
  * #fbb03b = Orange, Teaserbar Subheaders
  */
- 
+
 body div#preview_disclaimer {
   font-size: 16px;
   background-color: #ff0000;
@@ -133,7 +133,7 @@ body div#preview_disclaimer a {
 }
 
 #content .article img {
-	float:left; 
+	float:left;
 	margin: .5em 1em 1em;
 	border: .09em solid silver;
 }
@@ -157,7 +157,7 @@ body div#preview_disclaimer a {
 	text-align: left;
 }
 
-#content h2 a {	
+#content h2 a {
 	margin: 0;
 	padding: 0;
 	text-align: center;
@@ -193,7 +193,7 @@ hr.subtitle {
 	font-size: 1em;
 	line-height: 1.3em;
 	font-family: "Courier New",Courier,monospace;
-	
+
 }
 
 #content p {

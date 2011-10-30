@@ -82,7 +82,7 @@ module ExceptionNotifiable
         when *self.class.exceptions_to_treat_as_404
           render_404
 
-        else          
+        else
           render_500
 
           deliverer = self.class.exception_data

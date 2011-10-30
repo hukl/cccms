@@ -1,23 +1,23 @@
 class NodesController < ApplicationController
-  
+
   # Private
-  
+
   layout 'admin'
-  
+
   before_filter :login_required
   before_filter :find_node, :only => [
-                              :show, 
-                              :edit, 
-                              :update, 
+                              :show,
+                              :edit,
+                              :update,
                               :destroy,
                               :publish,
                               :unlock
                             ]
 
   def index
-    @nodes = Node.root.descendants.paginate( 
+    @nodes = Node.root.descendants.paginate(
       :include => [:head, :draft],
-      :page => params[:page], 
+      :page => params[:page],
       :per_page => 25,
       :order => 'id DESC'
     )
@@ -26,14 +26,14 @@ class NodesController < ApplicationController
   def new
     @node = Node.new params[:node]
   end
-  
+
   def create
     params[:title] ||= ""
-    
+
     @node = Node.new
     @node.parent_id = find_parent
     @node.slug = params[:title].parameterize.to_s
-    
+
     if @node.save
       @node.draft.update_attributes(:title => params[:title])
       redirect_to(edit_node_path(@node))
@@ -41,7 +41,7 @@ class NodesController < ApplicationController
       render :new
     end
   end
-  
+
   def show
     node = Node.find(params[:id])
     @page = node.draft || node.head
@@ -78,29 +78,29 @@ class NodesController < ApplicationController
   def destroy
     @node.destroy
   end
-  
+
   def publish
     @node.publish_draft!
     flash[:notice] = "Draft has been published"
     redirect_to node_path
   end
-  
+
   def unlock
     if @node.unlock!
       flash[:notice] = "Node unlocked"
     else
       flash[:notice] = "Already unlocked"
     end
-    
+
     redirect_to node_path(@node)
   end
-  
+
   private
-  
+
     def find_node
       @node = Node.find(params[:id])
     end
-    
+
     def find_parent
       case params[:kind]
       when "top_level"

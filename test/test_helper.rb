@@ -3,9 +3,9 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 
 class ActiveSupport::TestCase
-  
+
   include AuthenticatedTestHelper
-  
+
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
   # test database remains unchanged so your fixtures don't have to be reloaded
@@ -19,7 +19,7 @@ class ActiveSupport::TestCase
   # don't care one way or the other, switching from MyISAM to InnoDB tables
   # is recommended.
   #
-  # The only drawback to using transactional fixtures is when you actually 
+  # The only drawback to using transactional fixtures is when you actually
   # need to test transactions.  Since your test is bracketed by a transaction,
   # any transactions started in your code will be automatically rolled back.
   self.use_transactional_fixtures = true
@@ -38,7 +38,7 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
-  
+
   def create_node_with_published_page
     node = create_node_with_draft
     draft = node.draft
@@ -49,7 +49,7 @@ class ActiveSupport::TestCase
     node.publish_draft!
     node
   end
-  
+
   def create_node_with_draft
     Node.root.children.create :slug => "test_node"
   end

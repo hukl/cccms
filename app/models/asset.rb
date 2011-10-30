@@ -1,8 +1,8 @@
 class Asset < ActiveRecord::Base
-  
+
   has_many :related_assets, :dependent => :destroy
   has_many :pages, :through => :related_assets
-  
+
   has_attached_file(
     :upload,
     :styles => {
@@ -11,7 +11,7 @@ class Asset < ActiveRecord::Base
       :headline => "460x250#"
     }
   )
-  
+
   named_scope :images, :conditions => {
     :upload_content_type => [
       "image/gif",
@@ -19,7 +19,7 @@ class Asset < ActiveRecord::Base
       "image/png"
     ]
   }
-  
+
   named_scope :documents, :conditions => {
     :upload_content_type => [
       "application/pdf",
@@ -27,7 +27,7 @@ class Asset < ActiveRecord::Base
       "text/rtf"
     ]
   }
-  
+
   named_scope :audio, :conditions => {
     :upload_content_type => [
       "audio/mpeg",

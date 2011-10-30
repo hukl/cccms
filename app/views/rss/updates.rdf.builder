@@ -8,13 +8,13 @@ xml.tag!("rdf:RDF", "xmlns:rdf" => "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xml.description("Kabelsalat ist gesund.")
     xml.tag!("dc:date", @items.first.published_at.xmlschema)
   end
-  
+
   xml.image( "rdf:about" => "http://www.ccc.de/images/chaosknoten.gif") do
     xml.title("Chaos Computer Club (Chaosknoten)")
     xml.link("http://www.ccc.de")
     xml.url("http://www.ccc.de/images/chaosknoten.gif")
   end
-  
+
   @items.each do |item|
     xml.item("rdf:about" => content_url(:page_path => item.node.unique_path)) do
       xml.title(item.title)

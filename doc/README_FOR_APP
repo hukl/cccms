@@ -24,7 +24,7 @@ i.import_xml
 ===Nodes
 
 The whole structure of the website is built from nodes. They live within a
-nested set structure. Therefor a given node has parents, children, descendants 
+nested set structure. Therefor a given node has parents, children, descendants
 etc.
 
 The position of a node within the nested set corresponds directly to the URL
@@ -34,25 +34,25 @@ root
     \__updates
               \__2009
                      \___ultra_important_news
-                     
+
 http://domain/de/updates/2009/ultra_important_news
 
 Note that the first parameter after the domain is the locale. Everything after
 the locale identifier is the unique path of a given node. The unique path itself
-is generated from the slugs of the ancestors of a node. The last part of the 
+is generated from the slugs of the ancestors of a node. The last part of the
 unique path is taken from the slug of the node.
 
 Once a node is added to the nested set or moved within, the unique path of that
 node is generated from all its ancestors up to the root node. The computed path
-is then saved on the node object itself, allowing the system to retrieve a 
-node simply by looking for the right url in the unique_path column. This is a 
+is then saved on the node object itself, allowing the system to retrieve a
+node simply by looking for the right url in the unique_path column. This is a
 lot faster then walking down the tree.
 
-Nodes are really just proxy objects. They point to information but they don't 
-hold that information themselves. Instead they have pages associated to them. 
-When you want to render a particular node, you actually render a page associated 
-to that node. When multiple pages are attached to a node, they act as one page 
-with many revisions. The node itself holds the pointer to current or head 
+Nodes are really just proxy objects. They point to information but they don't
+hold that information themselves. Instead they have pages associated to them.
+When you want to render a particular node, you actually render a page associated
+to that node. When multiple pages are attached to a node, they act as one page
+with many revisions. The node itself holds the pointer to current or head
 revision.
 
 ===Pages
@@ -60,7 +60,7 @@ revision.
 Although there is really one Page class, the pages associated to one node differ
 slightly. Obviously there is a slight difference between the head and the other
 revisions. While the head is always the most recent page which is publicly
-available, all the older revisions are only kind of a history. 
+available, all the older revisions are only kind of a history.
 
 Now when a user wants to modify or edit the content of the head revision he or
 she is editing a new revision instead. This new revision is considered a draft
@@ -69,15 +69,15 @@ and has the current content of the head revision copied onto itself.
 ====Draft
 
 A draft has an author attached to it which makes sure that only the creator of
-that draft is able to edit it. This is a form of pessimistic locking as it 
+that draft is able to edit it. This is a form of pessimistic locking as it
 prevents more than one user from editing and saving the same page.
 
 However, if an author should choose to abandon his draft or to let somebody else
-finish it, the author can withdraw his lock. In this case, the draft has no 
+finish it, the author can withdraw his lock. In this case, the draft has no
 longer an author associated to itself which enables another user to edit this
 draft.
 
-To abandon or revert a draft, the author can also delete it entirely so that 
+To abandon or revert a draft, the author can also delete it entirely so that
 when another user is editing, he or she would get a fresh copy from the current
 head revision.
 
@@ -88,13 +88,13 @@ that draft or the lock on it, enabling other users to edit that page again.
 ===Tags
 
 Pages of course come with meta data attached to them. Tags are one kind of
-meta data. They can be understood and used as keywords, categories, tags or any 
+meta data. They can be understood and used as keywords, categories, tags or any
 similar concept.
 
 ===Templates
 
-Although there is only one, simple and unified, template for editing pages, it 
-is possible to select from different templates for public display. This 
+Although there is only one, simple and unified, template for editing pages, it
+is possible to select from different templates for public display. This
 selection of templates allows slight alterations of the layout. For example one
 template would display every attribute of a page (like date, author, abstract)
 while another template would hide this information away. One would show the tags
@@ -103,9 +103,9 @@ of a page, another wouldn't.
 ===Aggregation
 
 Keywords and other meta data can be used to aggregate any amount of pages
-into the body of another page. 
+into the body of another page.
 
-<aggregate 
+<aggregate
   tags="update pressemitteilung"
   limit="20"
   order_by="published_at"
@@ -119,9 +119,9 @@ the standard create/update/destroy derived permissions.
 Every user without having any permissions is allowed to perform non-destructive
 tasks that won't affect the frontend (published pages). What am I talking about?
 
-Bob has no permissions whatsoever still he is allowed to edit a #Page anywhere, 
-because this action will only create a new revision of the #Page which is not 
-immediately published. He won't be able to manipulate a #Node in any way 
+Bob has no permissions whatsoever still he is allowed to edit a #Page anywhere,
+because this action will only create a new revision of the #Page which is not
+immediately published. He won't be able to manipulate a #Node in any way
 (unique_name, slug, ordering, structure) because this would affect the frontend
 without further notice.
 
@@ -132,4 +132,4 @@ things as:
 	- Reorder children of the #Node
 	- Rejecting a draft and telling the author to get his/her spelling right.
 	- Clear a stale lock on a #Node
-	
+

@@ -1,6 +1,6 @@
 $(document).ready(function () {
   admin_search.initialize();
-  
+
   $(".with_editor").tinymce({
     script_url : '/javascripts/tiny_mce/tiny_mce.js',
     theme: "advanced",
@@ -21,31 +21,31 @@ $(document).ready(function () {
     entity_encoding : "raw",
     oninit : cccms.setup_autosave()
   });
-  
+
   if ($("#menu_search_term").length != 0) {
     menu_items.initialize_search();
   }
-  
+
   if ($("#menu_item_list").length != 0) {
     menu_item_sorter.initialize();
   }
-  
+
   if ($("#metadata").length != 0) {
     meta_data.initialize();
   }
-  
+
   if ($("#parent_search_term").length != 0) {
     parent_search.initialize_search();
   }
-  
+
   if ($("#move_to_search_term").length != 0) {
     move_to_search.initialize_search();
   }
-  
+
   if ($('#recent_changes_toggle').length != 0) {
     $('#current_drafts_table').hide();
     $('#recent_changes_toggle').attr("class", "selected");
-    
+
     $('#recent_changes_toggle').bind("click", function(){
       $('#recent_changes_toggle').attr("class", "selected");
       $('#current_drafts_toggle').attr("class", "unselected");
@@ -53,7 +53,7 @@ $(document).ready(function () {
       $('#current_drafts_table').hide();
       return false;
     });
-    
+
     $('#current_drafts_toggle').bind("click", function(){
       $('#recent_changes_toggle').attr("class", "unselected");
       $('#current_drafts_toggle').attr("class", "selected");
@@ -62,18 +62,18 @@ $(document).ready(function () {
       return false;
     });
   }
-  
-  jQuery.ajaxSetup({ 
+
+  jQuery.ajaxSetup({
     'beforeSend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript");}
   });
-  
+
   $(document).ajaxSend(function(event, request, settings) {
     if (typeof(AUTH_TOKEN) == "undefined") return;
     // settings.data is a serialized string like "foo=bar&baz=boink" (or null)
     settings.data = settings.data || "";
     settings.data += (settings.data ? "&" : "") + "authenticity_token=" + encodeURIComponent(AUTH_TOKEN);
   });
-  
+
 });
 
 
@@ -82,20 +82,20 @@ meta_data = {
     $("#metadata").hide();
 
     $("#button").click(function () {
-      
+
       $("#metadata").slideToggle(1200);
       image_interface.initialize();
 
       if ($("#button").attr("class") == "unselected") {
-        $("#button").attr("class", "selected");        
-        
+        $("#button").attr("class", "selected");
+
       }
       else {
         $("#button").attr("class", "unselected");
         $("#image_browser").hide();
         $("#image_browser_toggle").attr("class", "unselected");
       }
-      
+
       return false;
     });
   }
@@ -103,50 +103,50 @@ meta_data = {
 
 cccms = {
   setup_autosave : function() {
-    
+
     var elements = {
       title     : $('#page_title'),
       abstract  : $('#page_abstract'),
       body      : $('#page_body_ifr').contents().find('#tinymce'),
     }
-  
-    var page = {         
+
+    var page = {
       cached_title    : elements.title.val(),
       cached_abstract : elements.abstract.val(),
       cached_body     : elements.body.html(),
-  
+
       title_has_changed : function() {
          return (elements.title.val() != this.cached_title)
        },
-  
+
        abstract_has_changed : function() {
          return (elements.abstract.val() != this.cached_abstract)
        },
-  
+
        body_has_changed : function() {
          return elements.body.html() != this.cached_body
        }
     }
-  
+
     jQuery.fn.submitWithAjax = function(options) {
       if (page.title_has_changed() || page.abstract_has_changed() || page.body_has_changed()) {
-  
+
         page.cached_title      = elements.title.val();
         page.cached_abstract   = elements.abstract.val();
         page.cached_body       = elements.body.html();
-  
+
         $("#flash").append("<img src='/images/ajax-loader.gif' alt='' />");
         $.post(this.attr("action"), $(this).serialize(), null, "script");
-        
+
       }
     };
-  
+
     setInterval('$("#page_editor > form").submitWithAjax()', 7000);
   }
 }
 
 menu_item_sorter = {
-  
+
   initialize : function() {
     $("#menu_item_list").sortable({
       axis: 'y',
@@ -169,24 +169,24 @@ menu_item_sorter = {
       }
     });
   },
-  
+
   placeholder_helper : function(e,ui) {
     $(".ui-state-highlight").html("<td colspan='100%'></td>");
   }
 }
 
 image_interface = {
-    
+
   initialize : function() {
-    
+
     $("#image_browser").hide();
     image_interface.initialize_sortable_image_box();
     image_interface.connect_browser_and_box();
     image_interface.set_droppable_behavior();
-    image_interface.bind_image_browser_toggle();    
+    image_interface.bind_image_browser_toggle();
   },
-  
-  
+
+
   set_droppable_behavior : function() {
     $("ul#image_box").droppable({
       out : function(event, ui) {
@@ -202,7 +202,7 @@ image_interface = {
       }
     });
   },
-  
+
   connect_browser_and_box : function() {
     $("#image_browser ul li").draggable({
       connectToSortable : 'ul#image_box',
@@ -210,9 +210,9 @@ image_interface = {
       revert : 'invalid'
     });
   },
-  
+
   initialize_sortable_image_box : function() {
-    
+
     $("ul#image_box").sortable({
       revert  : true,
       update    : function(event, ui) {
@@ -227,9 +227,9 @@ image_interface = {
           }
         });
       }
-    });    
+    });
   },
-  
+
   bind_image_browser_toggle : function() {
     $("#image_browser_toggle").bind("click", function(){
       if ($("#image_browser_toggle").attr("class") == "unselected") {
@@ -240,10 +240,10 @@ image_interface = {
         $("#image_browser_toggle").attr("class", "unselected");
         $("#image_browser").hide();
       }
-      
+
       return false;
     });
   }
 }
-      
+
 

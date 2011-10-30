@@ -1,12 +1,12 @@
 admin_search = {
-  
+
   initialize : function() {
     $(document).bind("keydown", 'Alt+f', function(){
       admin_search.display_toggle();
       return false;
     });
   },
-  
+
   display_toggle : function() {
     if ($('#search_widget').css("display") != "none") {
       $('#search_widget').fadeOut();
@@ -16,7 +16,7 @@ admin_search = {
       $('#search_term').attr("value", "");
       $('#search_term').focus();
     }
-    
+
     $("#search_term").bind("keyup", function() {
       if ($(this).attr("value")) {
         $.ajax({
@@ -31,11 +31,11 @@ admin_search = {
       }
       else {
         $('#search_results').slideUp();
-        $('#search_results').empty(); 
+        $('#search_results').empty();
       }
     });
   },
-    
+
   show_results : function(results) {
      $('#search_results').empty();
      for (result in results) {
@@ -46,7 +46,7 @@ admin_search = {
 };
 
 menu_items = {
-  
+
   initialize_search : function() {
     $("#menu_search_term").bind("keyup", function() {
       if ($(this).attr("value")) {
@@ -62,28 +62,28 @@ menu_items = {
       }
       else {
         $('#search_results').slideUp();
-        $('#search_results').empty(); 
+        $('#search_results').empty();
       }
     });
   },
-  
+
   show_results : function(results) {
     $("#search_results").empty();
     for (result in results) {
       var link = $(("<a href='#'>"+ results[result].title + "</a>"));
       $(link).bind("click", menu_items.link_closure(results[result]));
-      
-      
+
+
       // Sometimes I don't get jquery; wrap() didn't work *sigh*
       // Guess I'll need a book someday or another framework
       var wrapper = $("<div></div>");
       $(wrapper).append(link)
-      
+
       $("#search_results").append(wrapper);
-      
+
     }
   },
-  
+
   link_closure : function(node) {
     var barf = function(){
       $("#menu_item_node_id").val(node.node_id);
@@ -91,7 +91,7 @@ menu_items = {
       $("#menu_item_title").val(node.title);
       return false;
     }
-    
+
     return barf;
   }
 };
@@ -99,7 +99,7 @@ menu_items = {
 parent_search = {
   initialize_search : function() {
     parent_search.initialize_radio_buttons();
-    
+
     $("#parent_search_term").bind("keyup", function() {
       if ($(this).attr("value")) {
         $.ajax({
@@ -114,28 +114,28 @@ parent_search = {
       }
       else {
         $('#search_results').slideUp();
-        $('#search_results').empty(); 
+        $('#search_results').empty();
       }
     });
   },
-  
+
   show_results : function(results) {
     $("#search_results").empty();
     for (result in results) {
       var link = $(("<a href='#'>"+ results[result].title + "</a>"));
       $(link).bind("click", parent_search.link_closure(results[result]));
-      
-      
+
+
       // Sometimes I don't get jquery; wrap() didn't work *sigh*
       // Guess I'll need a book someday or another framework
       var wrapper = $("<div></div>");
       $(wrapper).append(link)
-      
+
       $("#search_results").append(wrapper);
-      
+
     }
   },
-  
+
   link_closure : function(node) {
     var barf = function(){
       $("#parent_search_term").attr("value", node.title);
@@ -144,28 +144,28 @@ parent_search = {
       $('#search_results').empty();
       return false;
     }
-    
+
     return barf;
   },
-  
+
   initialize_radio_buttons : function() {
     $("#kind_top_level").bind("change", function(){
       $("#parent_search_field").hide();
     });
-    
+
     $("#kind_update").bind("change", function(){
       $("#parent_search_field").hide();
     });
-    
+
     $("#kind_generic").bind("change", function(){
       $("#parent_search_field").show();
     });
-    
+
   }
 }
 
 move_to_search = {
-  initialize_search : function() {    
+  initialize_search : function() {
     $("#move_to_search_term").bind("keyup", function() {
       if ($(this).attr("value")) {
         $.ajax({
@@ -180,28 +180,28 @@ move_to_search = {
       }
       else {
         $('#search_results').slideUp();
-        $('#search_results').empty(); 
+        $('#search_results').empty();
       }
     });
   },
-  
+
   show_results : function(results) {
     $("#search_results").empty();
     for (result in results) {
       var link = $(("<a href='#'>"+ results[result].title + "</a>"));
       $(link).bind("click", move_to_search.link_closure(results[result]));
-      
-      
+
+
       // Sometimes I don't get jquery; wrap() didn't work *sigh*
       // Guess I'll need a book someday or another framework
       var wrapper = $("<div></div>");
       $(wrapper).append(link)
-      
+
       $("#search_results").append(wrapper);
-      
+
     }
   },
-  
+
   link_closure : function(node) {
     var barf = function(){
       $("#move_to_search_term").attr("value", node.title);
@@ -210,7 +210,7 @@ move_to_search = {
       $('#search_results').empty();
       return false;
     }
-    
+
     return barf;
   }
 }

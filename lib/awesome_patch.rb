@@ -3,7 +3,7 @@ module CollectiveIdea
     module NestedSet
       module InstanceMethods
         alias_method :move_to_original, :move_to
-        
+
         def move_to target, position
           move_to_original target, position
           if self.class == Node

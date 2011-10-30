@@ -6,7 +6,7 @@ class AddIndices < ActiveRecord::Migration
       t.index :user_id
       t.index :revision
     end
-    
+
     change_table :nodes do |t|
       t.index :id
       t.index :slug
@@ -18,7 +18,7 @@ class AddIndices < ActiveRecord::Migration
       t.index :draft_id
       t.index :locking_user_id
     end
-    
+
     change_table :page_translations do |t|
       t.index :locale
     end
@@ -31,7 +31,7 @@ class AddIndices < ActiveRecord::Migration
       t.remove_index :user_id
       t.remove_index :revision
     end
-    
+
     change_table :nodes do |t|
       t.remove_index :id
       t.remove_index :slug
@@ -43,7 +43,7 @@ class AddIndices < ActiveRecord::Migration
       t.remove_index :draft_id
       t.remove_index :locking_user_id
     end
-    
+
     change_table :page_translations do |t|
       t.remove_index :page_id
       t.remove_index :locale

@@ -5,7 +5,7 @@ class CreateMenuItems < ActiveRecord::Migration
       t.string  :path
       t.timestamps
     end
-    
+
     MenuItem.create_translation_table! :title => :string
   end
 

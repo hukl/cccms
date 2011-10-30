@@ -9,7 +9,7 @@ xml.feed(:xmlns => "http://www.w3.org/2005/Atom", "xml:base" => @host) do
     xml.name("Chaos Computer Club e.V.")
   end
   xml.id("http://www.ccc.de/")
-  
+
   @items.each do |item|
     xml.entry do
       xml.title(item.title)
@@ -23,7 +23,7 @@ xml.feed(:xmlns => "http://www.w3.org/2005/Atom", "xml:base" => @host) do
         xml.div("changed by #{item.user.login}")
       end
     end
-    
+
   end
-  
+
 end

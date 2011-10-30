@@ -6,7 +6,7 @@ class CreatePages < ActiveRecord::Migration
 
       t.timestamps
     end
-    
+
     Page.create_translation_table! :title => :string, :abstract => :text, :body => :text
   end
 

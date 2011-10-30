@@ -26,7 +26,7 @@ second_child:
   draft_id: 101
   slug: second_child
   unique_name: second_child
-  
+
 third_child:
   id: 4
   lft: 6
@@ -35,7 +35,7 @@ third_child:
   draft_id: 102
   slug: third_child
   unique_name: third_child
-  
+
 fourth_child:
   id: 5
   lft: 8

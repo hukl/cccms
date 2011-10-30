@@ -1,11 +1,11 @@
 <h2><%= t(:show_tag_headline) %> »<%=h @tag %>«</h2>
 
-<%= 
+<%=
     render(
       :partial => 'custom/partials/no_date_and_author',
       :collection => @pages,
       :as => :page
     )
   %>
-  
+
 <%= will_paginate @pages %>

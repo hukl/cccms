@@ -1,60 +1,60 @@
 require 'csv'
 
-namespace :cccms do 
+namespace :cccms do
 
   desc "Setup everythin"
   task :setup_environment => [
-    :create_admin_user, 
+    :create_admin_user,
     :import_authors,
-    :import_updates, 
+    :import_updates,
     :create_home_page
-  ] do |t| 
+  ] do |t|
 
   end
 
   desc "Create admin:foobar user:password"
-  task :create_admin_user  => :environment do |t| 
+  task :create_admin_user  => :environment do |t|
     User.create!(
-      :login => 'admin', 
-      :email => 'admin@cccms.de', 
+      :login => 'admin',
+      :email => 'admin@cccms.de',
       :password => 'foobar',
       :password_confirmation => 'foobar',
       :admin => true
     )
   end
-  
+
   desc "Import the authors"
   task :import_authors  => :environment do |t|
     importer = AuthorsImporter.new("#{RAILS_ROOT}/db/authors.csv")
     importer.import_authors
-  end  
-  
+  end
+
   desc "Update authors on pages"
   task :update_authors_on_pages => :environment do |t|
     i = ChaosImporter.new("#{RAILS_ROOT}/db/updates")
     i.update_authors_on_pages
   end
-  
+
   desc "Import the old XML Files"
   task :import_updates  => :environment do |t|
     i = ChaosImporter.new("#{RAILS_ROOT}/db/updates")
     i.import_updates
   end
-  
+
   desc "Create Home Page"
   task :create_home_page  => :environment do |t|
     n = Node.create :slug => 'home'
     n.move_to_child_of Node.root
-    
+
     d = n.draft
     d.title = "Startseite"
     d.abstract = "Wilkommen auf der Seite des CCC"
     d.body = "Hier gibts content"
     d.save
-    
+
     n.publish_draft!
   end
-  
+
   desc "Convert Entities to real charactes"
   task :convert_entities  => :environment do |t|
     Page.all.each do |page|
@@ -82,33 +82,33 @@ namespace :cccms do
       end
     end
   end
-  
+
   desc "Migrate users to editors"
   task :migrate_editors => :environment do |t|
     Page.record_timestamps = false
     Page.before_save.reject! {|filter| filter.method == :rewrite_links_in_body}
-    
+
     Page.all.each do |page|
       if page.node.locked?
         page.editor = page.node.lock_owner
       else
         page.editor = page.user if page.user
       end
-      
+
       page.save!
     end
-    
+
   end
-  
+
   desc "Change Update Templates from standard to update"
   task :change_update_templates => :environment do |t|
     Page.record_timestamps = false
     Page.before_save.reject! {|filter| filter.method == :rewrite_links_in_body}
-    
+
     updates = (Node.find_by_unique_name("updates") || raise("No Update Node"))
-    
+
     years = updates.children
-    
+
     years.each do |year|
       year.descendants.each do |update|
         update.pages.each do |page|
@@ -118,7 +118,7 @@ namespace :cccms do
       end
     end
   end
-  
+
   desc "Repair pages without published_at set"
   task :set_published_at => :environment do |t|
     unpublished = Page.all(:conditions => {:published_at => nil})
@@ -127,11 +127,11 @@ namespace :cccms do
       p.save!
     end
   end
-  
+
   desc "Remove pages without a node"
   task :remove_orphans => :environment do |t|
     orphans = Page.all.select { |x| x.node == nil }
     orphans.each { |page| page.destroy }
   end
-  
+
 end

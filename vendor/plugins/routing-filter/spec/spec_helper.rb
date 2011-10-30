@@ -17,9 +17,9 @@ end
 class Section
   def id; 1 end
   alias :to_param :id
-  
+
   def type; 'Section' end
-  
+
   def path; 'section' end
 end
 

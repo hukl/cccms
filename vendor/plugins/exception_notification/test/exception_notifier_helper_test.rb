@@ -12,13 +12,13 @@ class ExceptionNotifierHelperTest < Test::Unit::TestCase
   end
 
   # No controller
-  
+
   def test_should_not_exclude_raw_post_parameters_if_no_controller
     assert !@helper.exclude_raw_post_parameters?
   end
-  
+
   # Controller, no filtering
-  
+
   class ControllerWithoutFilterParameters; end
 
   def test_should_not_filter_env_values_for_raw_post_data_keys_if_controller_can_not_filter_parameters
@@ -27,7 +27,7 @@ class ExceptionNotifierHelperTest < Test::Unit::TestCase
   end
   def test_should_not_exclude_raw_post_parameters_if_controller_can_not_filter_parameters
     stub_controller(ControllerWithoutFilterParameters.new)
-    assert !@helper.exclude_raw_post_parameters?    
+    assert !@helper.exclude_raw_post_parameters?
   end
   def test_should_return_params_if_controller_can_not_filter_parameters
     stub_controller(ControllerWithoutFilterParameters.new)
@@ -53,7 +53,7 @@ class ExceptionNotifierHelperTest < Test::Unit::TestCase
     stub_controller(ControllerWithFilterParameters.new)
     assert_equal :filtered, @helper.filter_sensitive_post_data_parameters(:params)
   end
-  
+
   private
     def stub_controller(controller)
       @helper.instance_variable_set(:@controller, controller)
