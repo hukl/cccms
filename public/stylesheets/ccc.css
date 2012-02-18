@@ -139,6 +139,10 @@ div#featured_articles #ds_icon img {
   padding-top: 10px;
 }
 
+div#featured_articles #events_icon img {
+  padding-left: 10px;
+}
+
 div#frontpage_calendar li {
   margin-bottom: 20px;
 }
