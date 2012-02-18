@@ -73,7 +73,7 @@ div.article_partial h2 a {
 h3 {
   font-size: 13px;
   text-decoration: none;
-  
+
 }
 
 h4 {
@@ -135,6 +135,10 @@ div#frontpage_calendar ul, div#tags ul, div#featured_articles ul {
   font-size: 11px;
 }
 
+div#featured_articles #ds_icon img {
+  padding-top: 10px;
+}
+
 div#frontpage_calendar li {
   margin-bottom: 20px;
 }
@@ -148,8 +152,8 @@ div#frontpage_calendar li a, div#tags li a, div#featured_articles li a {
   color: #535353;
 }
 
-div#frontpage_calendar li a:hover, 
-div#tags li a:hover, 
+div#frontpage_calendar li a:hover,
+div#tags li a:hover,
 div#featured_articles li a:hover {
   text-decoration: none;
   color: #ff9600;
@@ -182,7 +186,7 @@ div#center_column {
   left: 200px;
   width: 460px;
   padding-left: 15px;
-  padding-right: 15px; 
+  padding-right: 15px;
   padding-bottom: 40px;
 }
 
@@ -191,7 +195,7 @@ div#right_column {
   background-color: #ffffff;
   padding-left: 70px;
   left: 675px;
-  width: 155px; 
+  width: 155px;
   height: 100px;
 }
 
