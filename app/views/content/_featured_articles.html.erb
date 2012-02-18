@@ -1,9 +1,18 @@
 <div id="featured_articles">
   <h2>Featured</h2>
-  <ul>
-    <% @featured_articles.each do |item| %>
-    <li><%= link_to_path item.title, item.path %></li>
-    <% end %>
-  </ul>
+  <%= link_to(
+        image_tag( 'chaosradio.png' ),
+        "http://chaosradio.ccc.de/"
+  )%>
+
+  <%= link_to(
+        image_tag( 'ds.png' ),
+        "http://ds.ccc.de/"
+  )%>
+
+  <%= link_to(
+        image_tag( 'twitter.png' ),
+        "https://twitter.com/chaosupdates"
+  )%>
 </div>
 
