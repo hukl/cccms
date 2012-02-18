@@ -63,7 +63,8 @@ div#center_column h2 a:hover {
 
 div#center_column h2.headline {
   margin-top: 10px;
-  border-bottom: 2px solid #cccccc;
+  padding-top: 30px;
+  border-top: 2px solid #cccccc;
 }
 
 div.article_partial h2 a {
