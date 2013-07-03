@@ -347,4 +347,40 @@ class NodesControllerTest < ActionController::TestCase
     assert_equal "quentin", node.draft.user.login
     assert_equal "aaron", node.draft.editor.login
   end
+
+  test "destroy a published node" do
+    node = create_node_with_published_page
+    node.destroy
+
+    login_as :quentin
+    get :index
+  end
+
+  test "no dangling pages remain after node removal" do
+    node = create_node_with_published_page
+    page_id = node.pages.first.id
+    node.destroy
+
+    assert_raises(ActiveRecord::RecordNotFound) do
+      assert Page.find page_id
+    end
+  end
+
+  test "can remove a node with an event" do
+    node = create_node_with_published_page
+    Event.create!(
+      :start_time   => "2009-01-01T15:23:42".to_time,
+      :end_time     => "2009-01-01T20:05:23".to_time,
+      :url          => "http://events.ccc.de/congress/2082",
+      :latitude     => 52.525308,
+      :longitude    => 13.378944,
+      :allday       => true,
+      :node_id      => node.id
+    )
+    node.destroy
+
+    login_as :quentin
+    get :index
+  end
+
 end

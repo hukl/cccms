@@ -3,11 +3,11 @@ class Node < ActiveRecord::Base
   acts_as_nested_set
 
   # Associations
-  has_many    :pages, :order => "revision ASC"
-  belongs_to  :head,  :class_name => "Page",  :foreign_key => :head_id
-  belongs_to  :draft, :class_name => "Page",  :foreign_key => :draft_id
-  has_many    :permissions
-  has_one     :event
+  has_many    :pages, :order => "revision ASC", :dependent => :destroy
+  belongs_to  :head,  :class_name => "Page",  :foreign_key => :head_id, :dependent => :destroy
+  belongs_to  :draft, :class_name => "Page",  :foreign_key => :draft_id, :dependent => :destroy
+  has_many    :permissions, :dependent => :destroy
+  has_one     :event, :dependent => :destroy
   belongs_to  :lock_owner, :class_name => "User", :foreign_key => :locking_user_id
 
   # Callbacks
