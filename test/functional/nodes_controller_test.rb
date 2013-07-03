@@ -347,4 +347,9 @@ class NodesControllerTest < ActionController::TestCase
     assert_equal "quentin", node.draft.user.login
     assert_equal "aaron", node.draft.editor.login
   end
+
+  test "index works for logged in user" do
+    login_as :quentin
+    get :index
+  end
 end

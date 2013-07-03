@@ -3,11 +3,22 @@ module NodesHelper
   def title_for_node node
     if node.head
       node.head.title
-    else
+    elsif node.draft
       node.draft.title
+    else
+      ""
     end
   end
-  
+
+  def revision_for_node node
+    if node.head
+      node.head.revision
+    elsif node.draft
+      node.draft.revision
+    else
+      ""
+    end
+  end
   
   def truncated_title_for_node node
     if (title = title_for_node node) && title.size > 20
